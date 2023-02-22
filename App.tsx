@@ -1,8 +1,8 @@
-import "text-encoding-polyfill";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { generatePrivateKey, getPublicKey } from "nostr-tools";
-import { useEffect } from "react";
+import 'text-encoding-polyfill';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import { generatePrivateKey, getPublicKey } from 'nostr-tools';
+import { useEffect } from 'react';
 
 export default function App() {
   useEffect(() => {
@@ -21,8 +21,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 });
