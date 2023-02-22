@@ -6,14 +6,15 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "postinstall": "npx patch-package"
   },
   "dependencies": {
     "@noble/secp256k1": "1.7.0",
     "expo": "~47.0.12",
     "expo-random": "^13.0.0",
     "expo-status-bar": "~1.4.2",
-    "nostr-tools": "^1.6.0",
+    "nostr-tools": "1.1.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
