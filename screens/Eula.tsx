@@ -18,7 +18,9 @@ This End User License Agreement ("EULA") is a legal agreement between you and Wh
 
 * Is defamatory, libelous, or threatening
 
-* Is pornographic, obscene, or offensive * Is discriminatory or promotes hate speech
+* Is pornographic, obscene, or offensive 
+
+* Is discriminatory or promotes hate speech
 
 * Is harmful to minors
 
@@ -99,7 +101,7 @@ This End User License Agreement ("EULA") is a legal agreement between you and Wh
         <Text style={styles.text}> {eulaText} </Text>
         <Button
           title="Accept"
-          onPress={() => navigation.navigate("CreateAccount")}
+          onPress={() => navigation.navigate("Keys")}
         ></Button>
         <Button title="Reject" onPress={() => console.log("Reject")}></Button>
       </ScrollView>
