@@ -3,18 +3,23 @@ import { View, Text, TextInput, ScrollView, Alert, Button } from "react-native";
 import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { generateKeys } from "../nostr/generateKeys";
-import { useStorage } from "../utils/storage-context";
-import { copyToClipboard } from "../utils/copy-to-clipboard";
+import { useStorage } from "../utils/useStorage";
+import { copyToClipboard } from "../utils/copyToClipboard";
 
 export function Keys() {
   const { connectAccount } = useStorage();
   const navigation = useNavigation<any>();
-  const [accountPrivateKey, setAccountPrivateKey] = useState("");
-  const [accountPublicKey, setAccountPublicKey] = useState("");
+  const [privateKey, setPrivateKey] = useState("");
+  const [publicKey, setPublicKey] = useState("");
   const [publicKeyCopied, setPublicKeyCopied] = React.useState(false);
+
+  const accountPublicKey = `npub1${publicKey}`;
+  const accountPrivateKey = `nsec1${privateKey}`;
+
   const publicKeyTitle = "Public Key";
   const publicKeyText = `
     This is your account ID. Save it, otherwise you will not be able to log in the future if you uninstall the app.`;
+
   const [privateKeyCopied, setPrivateKeyCopied] = React.useState(false);
   const privateKeyTitle = "Private Key";
   const privateKeyText = `
@@ -34,14 +39,14 @@ export function Keys() {
 
   useEffect(() => {
     const { publicKey, privateKey } = generateKeys();
-    setAccountPrivateKey(privateKey);
-    setAccountPublicKey(publicKey);
+    setPrivateKey(privateKey);
+    setPublicKey(publicKey);
     connectAccount(publicKey, privateKey);
   }, []);
 
   const onContinuePress = async () => {
     if (privateKeyCopied && publicKeyCopied) {
-      navigation.navigate("Keys");
+      navigation.navigate("PublishEvent");
     }
   };
 

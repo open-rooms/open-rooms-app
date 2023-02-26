@@ -2,10 +2,30 @@ export enum StorageKeys {
   PRIVATE_KEY = "private_key",
   PUBLICK_KEY = "public_key",
 }
+
 export interface IStorageContext {
   accountConnected: boolean;
-  connectAccount: (publicKey: string, private_key: string) => any;
+  connectAccount: (publicKey: string, privateKey: string) => any;
   disconnectAccount: () => any;
-  accountPublicKey: string;
-  accountPrivateKey: string;
+  publicKey: string;
+  privateKey: string;
+}
+
+export interface IFeed {
+  proposals: IProposal[];
+}
+
+export interface IProposal {
+  id: string;
+  content: string; // proposal content
+  authorPublicKey: string; // author pubkey
+  tags: string[]; // includes a "room" tag
+}
+
+export interface IRoom {
+  id: string;
+  name: string;
+  username: string; // @room-name
+  pubkey: string; // author pubkey
+  tags: string[];
 }

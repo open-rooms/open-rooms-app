@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getData, removeData, storeData } from "./store-data";
+import { getData, removeData, storeData } from "./storeData";
 import { IStorageContext } from "./types";
 import { StorageKeys } from "./types";
 
@@ -7,8 +7,8 @@ const defaultState: IStorageContext = {
   accountConnected: false,
   connectAccount: (publicKey: string, privateKey: string) => Promise<void>,
   disconnectAccount: () => Promise<void>,
-  accountPublicKey: "",
-  accountPrivateKey: "",
+  publicKey: "",
+  privateKey: "",
 };
 
 export const StorageContext = createContext<IStorageContext>(defaultState);
@@ -17,15 +17,15 @@ export const useStorage = () => useContext(StorageContext);
 
 export function StorageContextProvider({ children }: any) {
   const [accountConnected, setAccountConnected] = useState(false);
-  const [accountPublicKey, setAccountPublicKey] = useState("");
-  const [accountPrivateKey, setAccountPrivateKey] = useState("");
+  const [publicKey, setPublicKey] = useState("");
+  const [privateKey, setPrivateKey] = useState("");
 
   useEffect(() => {
     async function fetchPublicKey() {
       try {
         const pubKey = await getData(StorageKeys.PUBLICK_KEY);
         if (pubKey) {
-          setAccountPublicKey(pubKey);
+          setPublicKey(pubKey);
           setAccountConnected(true);
         }
       } catch {
@@ -36,7 +36,7 @@ export function StorageContextProvider({ children }: any) {
       try {
         const privKey = await getData(StorageKeys.PRIVATE_KEY);
         if (privKey) {
-          setAccountPrivateKey(privKey);
+          setPrivateKey(privKey);
           setAccountConnected(true);
         }
       } catch {
@@ -53,8 +53,8 @@ export function StorageContextProvider({ children }: any) {
         (await storeData(publicKey, StorageKeys.PUBLICK_KEY)) &&
         (await storeData(publicKey, StorageKeys.PRIVATE_KEY));
       if (resp === true) {
-        setAccountPublicKey(publicKey);
-        setAccountPrivateKey(privateKey);
+        setPublicKey(publicKey);
+        setPrivateKey(privateKey);
         setAccountConnected(true);
         Promise.resolve();
       } else {
@@ -70,8 +70,8 @@ export function StorageContextProvider({ children }: any) {
         (await removeData(StorageKeys.PUBLICK_KEY)) &&
         (await removeData(StorageKeys.PRIVATE_KEY));
       if (resp === true) {
-        setAccountPublicKey("");
-        setAccountPrivateKey("");
+        setPublicKey("");
+        setPrivateKey("");
         setAccountConnected(false);
         Promise.resolve();
       } else {
@@ -86,8 +86,8 @@ export function StorageContextProvider({ children }: any) {
     <StorageContext.Provider
       value={{
         accountConnected,
-        accountPublicKey,
-        accountPrivateKey,
+        publicKey,
+        privateKey,
         connectAccount,
         disconnectAccount,
       }}
