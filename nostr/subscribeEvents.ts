@@ -1,13 +1,17 @@
-import { getPublicKey, relayInit } from "nostr-tools";
+import { getPublicKey, relayInit } from 'nostr-tools';
 
-export async function subscribeEvents(kind: number, privateKey: string, url: string) {
+export async function subscribeEvents(
+  kind: number,
+  privateKey: string,
+  url: string
+) {
   const pubkey = getPublicKey(privateKey);
 
   const relay = relayInit(url);
-  relay.on("connect", () => {
+  relay.on('connect', () => {
     console.log(`connected sub to ${relay.url}`);
   });
-  relay.on("error", () => {
+  relay.on('error', () => {
     console.log(`failed to connect to ${relay.url}`);
   });
 
@@ -16,15 +20,16 @@ export async function subscribeEvents(kind: number, privateKey: string, url: str
   let sub = relay.sub([
     {
       kinds: [kind],
-      authors: [pubkey],
-    },
+      // authors: [pubkey],
+      '#t': ['negru']
+    }
   ]);
 
-  console.log("subscribed to events", sub);
+  console.log('subscribed to events', sub);
 
   return new Promise((resolve) => {
-    sub.on("event", (event: any) => {
-      console.log("got event:", event);
+    sub.on('event', (event: any) => {
+      console.log('got event:', event);
       relay.close();
       resolve(event);
     });
