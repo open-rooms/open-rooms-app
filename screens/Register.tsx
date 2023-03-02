@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, ScrollView, Alert, Button } from "react-native";
+import { View, Text, Button } from "react-native";
 import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { generateKeys } from "../nostr/generateKeys";
 import { useStorage } from "../utils/useStorage";
 import { copyToClipboard } from "../utils/copyToClipboard";
 
-export function Keys() {
+export function Register() {
   const { connectAccount } = useStorage();
   const navigation = useNavigation<any>();
   const [privateKey, setPrivateKey] = useState("");
@@ -79,4 +79,4 @@ export function Keys() {
   );
 }
 
-export default Keys;
+export default Register;

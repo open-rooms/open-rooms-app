@@ -10,7 +10,8 @@ import { StorageContextProvider } from "./utils/useStorage";
 
 import Welcome from "./screens/Welcome";
 import Eula from "./screens/Eula";
-import Keys from "./screens/GenerateKeys";
+import Register from "./screens/Register";
+import Login from "./screens/Login";
 import PublishEvent from "./screens/PublishEvent";
 import Feed from "./screens/Feed";
 
@@ -25,7 +26,8 @@ export function App() {
           <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Eula" component={Eula} />
-            <Stack.Screen name="Keys" component={Keys} />
+            <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="PublishEvent" component={PublishEvent} />
             <Stack.Screen name="Feed" component={Feed} />
           </Stack.Navigator>

@@ -1,3 +1,5 @@
+import { TextStyle, TouchableOpacityProps, ViewStyle } from "react-native";
+
 export enum StorageKeys {
   PRIVATE_KEY = "private_key",
   PUBLICK_KEY = "public_key",
@@ -28,4 +30,13 @@ export interface IRoom {
   username: string; // @room-name
   pubkey: string; // author pubkey
   tags: string[];
+}
+
+export interface ButtonProps extends TouchableOpacityProps {
+  title: string;
+  buttonColor?: string;
+  titleColor?: string;
+  buttonStyle?: ViewStyle;
+  textStyle?: TextStyle;
+  isLoading?: boolean;
 }

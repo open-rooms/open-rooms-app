@@ -10,3 +10,7 @@ export function generateKeys() {
   };
 }
 export default generateKeys;
+
+export function generatePublickKey(privateKey: string) {
+  return getPublicKey(privateKey);
+}

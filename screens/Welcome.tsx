@@ -14,9 +14,12 @@ export function Welcome() {
       <Text style={styles.text}> {welcomeText} </Text>
       <Button
         title="Create Account"
-        onPress={() => navigation.navigate('Eula')}
+        onPress={() => navigation.navigate("Eula", { screen: "Register" })}
       ></Button>
-      <Button title="Sign In" onPress={() => console.log("Sign In")}></Button>
+      <Button
+        title="Login"
+        onPress={() => navigation.navigate("Eula", { screen: "Login" })}
+      ></Button>
     </View>
   );
 }

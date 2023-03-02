@@ -3,8 +3,14 @@ import { View, Text, Button, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./styles";
 
-export function Eula() {
+export function Eula({ route }: any) {
   const navigation = useNavigation<any>();
+
+  const handleAccept = () => {
+    const { screen } = route.params;
+    navigation.navigate(screen);
+  };
+
   const eulaTitle = "EULA";
   const eulaText = `End User License Agreement
     
@@ -99,11 +105,11 @@ This End User License Agreement ("EULA") is a legal agreement between you and Wh
       <ScrollView>
         <Text style={styles.text}> {eulaTitle} </Text>
         <Text style={styles.text}> {eulaText} </Text>
+        <Button title="Accept" onPress={handleAccept}></Button>
         <Button
-          title="Accept"
-          onPress={() => navigation.navigate("Keys")}
+          title="Reject"
+          onPress={() => navigation.navigate("Welcome")}
         ></Button>
-        <Button title="Reject" onPress={() => console.log("Reject")}></Button>
       </ScrollView>
     </View>
   );
