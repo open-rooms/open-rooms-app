@@ -1,45 +1,31 @@
-import React from "react";
-import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
-import { ButtonProps } from "../utils/types";
+import React from 'react';
+import {ActivityIndicator, Text, TouchableOpacity} from 'react-native';
+import {IButtonProps} from '../utils/types';
+import {styles} from './styles';
 
-const Button: React.FC<ButtonProps> = ({
-  title,
-  onPress,
-  buttonColor = "white",
-  titleColor = "black",
-  buttonStyle,
-  textStyle,
-  disabled,
-  isLoading,
-  ...rest
-}) => (
-  <TouchableOpacity
-    style={{
-      alignItems: "center",
-      justifyContent: "center",
-      borderRadius: 8,
-      borderColor: "black",
-      backgroundColor: buttonColor,
-      ...buttonStyle,
-    }}
-    disabled={disabled || false}
-    onPress={onPress}
-    {...rest}
-  >
-    {isLoading ? (
-      <ActivityIndicator size="small" color="white" />
-    ) : (
-      <Text
-        style={{
-          color: titleColor,
-          fontSize: 14,
-          ...textStyle,
-        }}
-      >
-        {title}
-      </Text>
-    )}
-  </TouchableOpacity>
-);
+export const Button = (props: IButtonProps) => {
+  return (
+    <TouchableOpacity
+      style={{
+        ...styles.container,
+        ...props.buttonStyle,
+        backgroundColor: props.buttonColor || 'black',
+      }}
+      disabled={props.disabled || false}
+      onPress={props.onPress}>
+      {props.isLoading && props.isLoading === true ? (
+        <ActivityIndicator size="small" color="white" />
+      ) : (
+        <Text
+          style={{
+            ...styles.title,
+            color: props.titleColor || 'black',
+          }}>
+          {props.title}
+        </Text>
+      )}
+    </TouchableOpacity>
+  );
+};
 
 export default Button;
