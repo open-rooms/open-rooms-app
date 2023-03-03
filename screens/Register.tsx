@@ -1,29 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
 import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { generateKeys } from "../nostr/generateKeys";
 import { useStorage } from "../utils/useStorage";
 import { copyToClipboard } from "../utils/copyToClipboard";
+import { BackButton } from "../components/BackButton";
+import { PRIMARY_COLOR } from "../utils/colors";
+import { publicKeyText, privateKeyText } from "../texts/registerText";
+import { Button } from "../components/Button";
 
 export function Register() {
   const { connectAccount } = useStorage();
   const navigation = useNavigation<any>();
   const [privateKey, setPrivateKey] = useState("");
   const [publicKey, setPublicKey] = useState("");
-  const [publicKeyCopied, setPublicKeyCopied] = React.useState(false);
-
-  const accountPublicKey = `npub1${publicKey}`;
-  const accountPrivateKey = `nsec1${privateKey}`;
-
-  const publicKeyTitle = "Public Key";
-  const publicKeyText = `
-    This is your account ID. Save it, otherwise you will not be able to log in the future if you uninstall the app.`;
-
   const [privateKeyCopied, setPrivateKeyCopied] = React.useState(false);
+  const [publicKeyCopied, setPublicKeyCopied] = React.useState(false);
+  const accountPrivateKey = `nsec1${privateKey}`;
+  const accountPublicKey = `npub1${publicKey}`;
+  const publicKeyTitle = "Public Key";
   const privateKeyTitle = "Private Key";
-  const privateKeyText = `
-    This is your secret account key. You need this to access your account. Don't share this with anyone! Save it in a password manager and keep it safe!`;
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <BackButton color={PRIMARY_COLOR} style={styles.backButton} />
+      ),
+      headerTitle: "",
+    });
+  }, [navigation]);
+
+  useEffect(() => {
+    const { publicKey, privateKey } = generateKeys();
+    setPrivateKey(privateKey);
+    setPublicKey(publicKey);
+    connectAccount(publicKey, privateKey);
+  }, []);
 
   const copyPublicKeytoClipboard = async () => {
     copyToClipboard(accountPublicKey).then((status) =>
@@ -37,43 +50,46 @@ export function Register() {
     );
   };
 
-  useEffect(() => {
-    const { publicKey, privateKey } = generateKeys();
-    setPrivateKey(privateKey);
-    setPublicKey(publicKey);
-    connectAccount(publicKey, privateKey);
-  }, []);
-
   const onContinuePress = async () => {
     if (privateKeyCopied && publicKeyCopied) {
       navigation.navigate("PublishEvent");
     }
   };
-
   return (
     <View style={styles.container}>
-      <Text style={styles.text}> {publicKeyTitle} </Text>
+      <Text style={styles.title}> {publicKeyTitle} </Text>
       <Text style={styles.text}> {publicKeyText} </Text>
       <Text style={styles.text}> {accountPublicKey} </Text>
-      <Button
-        title={publicKeyCopied ? "Done!" : "Copy Public Key"}
-        onPress={copyPublicKeytoClipboard}
-      ></Button>
 
+      <Button
+        title={publicKeyCopied ? "Done" : "Copy Public Key"}
+        onPress={copyPublicKeytoClipboard}
+        buttonColor={publicKeyCopied ? "white" : PRIMARY_COLOR}
+        titleColor={publicKeyCopied ? PRIMARY_COLOR : "white"}
+        buttonStyle={styles.button}
+      ></Button>
       {publicKeyCopied && (
         <>
-          <Text style={styles.text}> {privateKeyTitle} </Text>
+          <Text style={styles.title}> {privateKeyTitle} </Text>
           <Text style={styles.text}> {privateKeyText} </Text>
           <Text style={styles.text}> {accountPrivateKey} </Text>
           <Button
-            title={privateKeyCopied ? "Done!" : "Copy Private Key"}
+            title={privateKeyCopied ? "Done" : "Copy Private Key"}
             onPress={copyPrivateKeytoClipboard}
+            buttonColor={privateKeyCopied ? "white" : PRIMARY_COLOR}
+            titleColor={privateKeyCopied ? PRIMARY_COLOR : "white"}
+            buttonStyle={styles.button}
           ></Button>
         </>
       )}
-
       {privateKeyCopied && publicKeyCopied && (
-        <Button title="Continue" onPress={onContinuePress}></Button>
+        <Button
+          title="Continue"
+          onPress={onContinuePress}
+          buttonColor={PRIMARY_COLOR}
+          titleColor={"white"}
+          buttonStyle={styles.button}
+        ></Button>
       )}
     </View>
   );

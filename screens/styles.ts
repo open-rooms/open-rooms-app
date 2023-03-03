@@ -28,9 +28,10 @@ export const styles = StyleSheet.create({
     marginRight: 24,
   },
   textInput: {
-    borderRadius: 4,
+    borderRadius: 20,
     borderWidth: 1,
-    borderColor: "lightgrey",
+    borderColor: PRIMARY_COLOR,
+    color: SECONDARY_COLOR,
     paddingHorizontal: 8,
     justifyContent: "flex-start",
     height: 36,

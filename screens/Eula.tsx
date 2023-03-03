@@ -10,13 +10,13 @@ import { eulaText } from "../texts/eulaText";
 export function Eula({ route }: any) {
   const navigation = useNavigation<any>();
   const [showHeaderTitle, setShowHeaderTitle] = React.useState(false);
-  
+
   const eulaTitle = "EULA";
-  
+
   const handleScroll = ({ nativeEvent }: any) => {
     setShowHeaderTitle(nativeEvent.contentOffset.y > 0);
   };
-  
+
   const handleAccept = () => {
     const { screen } = route.params;
     navigation.navigate(screen);
