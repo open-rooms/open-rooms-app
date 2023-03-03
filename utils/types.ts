@@ -1,6 +1,6 @@
 export enum StorageKeys {
   PRIVATE_KEY = "private_key",
-  PUBLICK_KEY = "public_key",
+  PUBLIC_KEY = "public_key",
 }
 export interface IStorageContext {
   accountConnected: boolean;

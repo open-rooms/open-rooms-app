@@ -23,7 +23,7 @@ export function StorageContextProvider({ children }: any) {
   useEffect(() => {
     async function fetchPublicKey() {
       try {
-        const pubKey = await getData(StorageKeys.PUBLICK_KEY);
+        const pubKey = await getData(StorageKeys.PUBLIC_KEY);
         if (pubKey) {
           setPublicKey(pubKey);
           setAccountConnected(true);
@@ -50,7 +50,7 @@ export function StorageContextProvider({ children }: any) {
   const connectAccount = async (publicKey: string, privateKey: string) => {
     try {
       const resp =
-        (await storeData(publicKey, StorageKeys.PUBLICK_KEY)) &&
+        (await storeData(publicKey, StorageKeys.PUBLIC_KEY)) &&
         (await storeData(publicKey, StorageKeys.PRIVATE_KEY));
       if (resp === true) {
         setPublicKey(publicKey);
@@ -67,7 +67,7 @@ export function StorageContextProvider({ children }: any) {
   const disconnectAccount = async () => {
     try {
       const resp =
-        (await removeData(StorageKeys.PUBLICK_KEY)) &&
+        (await removeData(StorageKeys.PUBLIC_KEY)) &&
         (await removeData(StorageKeys.PRIVATE_KEY));
       if (resp === true) {
         setPublicKey("");
