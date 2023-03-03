@@ -14,6 +14,7 @@ import Register from "./screens/Register";
 import Login from "./screens/Login";
 import PublishEvent from "./screens/PublishEvent";
 import Feed from "./screens/Feed";
+import CreateRoom from "./screens/CreateRoom";
 
 export function App() {
   const Stack = createNativeStackNavigator();
@@ -23,13 +24,14 @@ export function App() {
       <PaperProvider>
         <NavigationContainer>
           <StatusBar />
-          <Stack.Navigator initialRouteName="Welcome">
+          <Stack.Navigator initialRouteName="CreateRoom">
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Eula" component={Eula} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="PublishEvent" component={PublishEvent} />
             <Stack.Screen name="Feed" component={Feed} />
+            <Stack.Screen name="CreateRoom" component={CreateRoom} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
