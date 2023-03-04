@@ -1,27 +1,27 @@
-import { StyleSheet } from "react-native";
-import { PRIMARY_COLOR, SECONDARY_COLOR } from "../utils/colors";
+import {StyleSheet} from 'react-native';
+import {PRIMARY_COLOR, SECONDARY_COLOR} from '../utils/colors';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   content: {
-    justifyContent: "center",
+    justifyContent: 'center',
     flex: 1,
     padding: 12,
   },
   title: {
     fontSize: 24,
     color: SECONDARY_COLOR,
-    fontWeight: "bold",
-    alignSelf: "center",
+    fontWeight: 'bold',
+    alignSelf: 'center',
     marginTop: 24,
   },
   text: {
     fontSize: 14,
     color: SECONDARY_COLOR,
-    alignSelf: "center",
+    alignSelf: 'center',
     marginTop: 12,
     marginBottom: 12,
     marginLeft: 24,
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     borderColor: PRIMARY_COLOR,
     color: SECONDARY_COLOR,
     paddingHorizontal: 8,
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
     height: 36,
     marginLeft: 24,
     marginRight: 24,
@@ -42,12 +42,12 @@ export const styles = StyleSheet.create({
     marginTop: 12,
     width: 144,
     height: 36,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   buttonsContainer: {
     bottom: 12,
-    width: "100%",
-    alignItems: "center",
+    width: '100%',
+    alignItems: 'center',
     marginBottom: 24,
   },
   backButton: {
@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
   },
   headerTitle: {
     color: PRIMARY_COLOR,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 18,
   },
 });

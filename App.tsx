@@ -1,20 +1,20 @@
 // App.tsx is the entry point of the app
-import "text-encoding-polyfill";
-import React from "react";
-import { StatusBar } from "react-native";
-import { Provider as PaperProvider } from "react-native-paper";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import 'text-encoding-polyfill';
+import React from 'react';
+import { StatusBar } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { StorageContextProvider } from "./utils/useStorage";
+import { StorageContextProvider } from './utils/useStorage';
 
-import Welcome from "./screens/Welcome";
-import Eula from "./screens/Eula";
-import Register from "./screens/Register";
-import Login from "./screens/Login";
-import PublishEvent from "./screens/PublishEvent";
-import Feed from "./screens/Feed";
-import CreateRoom from "./screens/CreateRoom";
+import Welcome from './screens/Welcome';
+import Eula from './screens/Eula';
+import Register from './screens/Register';
+import Login from './screens/Login';
+import PublishEvent from './screens/PublishEvent';
+import Feed from './screens/Feed';
+import CreateRoom from './screens/CreateRoom';
 
 export function App() {
   const Stack = createNativeStackNavigator();
@@ -23,8 +23,7 @@ export function App() {
     <StorageContextProvider>
       <PaperProvider>
         <NavigationContainer>
-          <StatusBar />
-          <Stack.Navigator initialRouteName="CreateRoom">
+          <Stack.Navigator initialRouteName="Feed">
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Eula" component={Eula} />
             <Stack.Screen name="Register" component={Register} />

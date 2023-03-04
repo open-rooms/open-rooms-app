@@ -1,12 +1,12 @@
-import { generatePrivateKey, getPublicKey } from "nostr-tools";
+import {generatePrivateKey, getPublicKey} from 'nostr-tools';
 
 export function generateKeys() {
   let privateKey = generatePrivateKey();
   let publicKey = getPublicKey(privateKey);
 
   return {
-    publicKey: publicKey,
-    privateKey: privateKey,
+    publicKey,
+    privateKey,
   };
 }
 export default generateKeys;

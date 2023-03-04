@@ -1,31 +1,31 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { getData, removeData, storeData } from "./storeData";
-import { IStorageContext } from "./types";
-import { StorageKeys } from "./types";
+import React, {createContext, useContext, useEffect, useState} from 'react';
+import {getData, removeData, storeData} from './storeData';
+import {IStorageContext} from './types';
+import {StorageKeys} from './types';
 
 const defaultState: IStorageContext = {
   accountConnected: false,
   connectAccount: (publicKey: string, privateKey: string) => Promise<void>,
   disconnectAccount: () => Promise<void>,
-  publicKey: "",
-  privateKey: "",
+  publicKey: '',
+  privateKey: '',
 };
 
 export const StorageContext = createContext<IStorageContext>(defaultState);
 
 export const useStorage = () => useContext(StorageContext);
 
-export function StorageContextProvider({ children }: any) {
+export function StorageContextProvider({children}: any) {
   const [accountConnected, setAccountConnected] = useState(false);
-  const [publicKey, setPublicKey] = useState("");
-  const [privateKey, setPrivateKey] = useState("");
+  const [publicKey, setPublicKey] = useState('');
+  const [privateKey, setPrivateKey] = useState('');
 
   useEffect(() => {
     async function fetchPublicKey() {
       try {
-        const pubKey = await getData(StorageKeys.PUBLIC_KEY);
-        if (pubKey) {
-          setPublicKey(pubKey);
+        const storedKey = await getData(StorageKeys.PUBLIC_KEY);
+        if (storedKey) {
+          setPublicKey(storedKey);
           setAccountConnected(true);
         }
       } catch {
@@ -34,9 +34,9 @@ export function StorageContextProvider({ children }: any) {
     }
     async function fetchPrivateKey() {
       try {
-        const privKey = await getData(StorageKeys.PRIVATE_KEY);
-        if (privKey) {
-          setPrivateKey(privKey);
+        const storedKey = await getData(StorageKeys.PRIVATE_KEY);
+        if (storedKey) {
+          setPrivateKey(storedKey);
           setAccountConnected(true);
         }
       } catch {
@@ -47,14 +47,14 @@ export function StorageContextProvider({ children }: any) {
     fetchPublicKey();
   }, []);
 
-  const connectAccount = async (publicKey: string, privateKey: string) => {
+  const connectAccount = async (pubKey: string, prvKey: string) => {
     try {
       const resp =
-        (await storeData(publicKey, StorageKeys.PUBLIC_KEY)) &&
-        (await storeData(publicKey, StorageKeys.PRIVATE_KEY));
+        (await storeData(pubKey, StorageKeys.PUBLIC_KEY)) &&
+        (await storeData(prvKey, StorageKeys.PRIVATE_KEY));
       if (resp === true) {
-        setPublicKey(publicKey);
-        setPrivateKey(privateKey);
+        setPublicKey(pubKey);
+        setPrivateKey(prvKey);
         setAccountConnected(true);
         Promise.resolve();
       } else {
@@ -70,8 +70,8 @@ export function StorageContextProvider({ children }: any) {
         (await removeData(StorageKeys.PUBLIC_KEY)) &&
         (await removeData(StorageKeys.PRIVATE_KEY));
       if (resp === true) {
-        setPublicKey("");
-        setPrivateKey("");
+        setPublicKey('');
+        setPrivateKey('');
         setAccountConnected(false);
         Promise.resolve();
       } else {
@@ -90,8 +90,7 @@ export function StorageContextProvider({ children }: any) {
         privateKey,
         connectAccount,
         disconnectAccount,
-      }}
-    >
+      }}>
       {children}
     </StorageContext.Provider>
   );
