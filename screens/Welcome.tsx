@@ -26,13 +26,15 @@ export function Welcome() {
           onPress={() => navigation.navigate('Eula', {screen: 'Register'})}
           buttonColor={PRIMARY_COLOR}
           titleColor={'white'}
-          buttonStyle={styles.button}></Button>
+          buttonStyle={styles.button}
+        />
         <Button
           title="Login"
           onPress={() => navigation.navigate('Eula', {screen: 'Login'})}
           buttonColor={'white'}
           titleColor={PRIMARY_COLOR}
-          buttonStyle={styles.button}></Button>
+          buttonStyle={styles.button}
+        />
       </View>
     </View>
   );

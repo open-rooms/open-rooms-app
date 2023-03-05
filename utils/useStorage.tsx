@@ -5,7 +5,7 @@ import {StorageKeys} from './types';
 
 const defaultState: IStorageContext = {
   accountConnected: false,
-  connectAccount: (publicKey: string, privateKey: string) => Promise<void>,
+  connectAccount: () => Promise<void>,
   disconnectAccount: () => Promise<void>,
   publicKey: '',
   privateKey: '',

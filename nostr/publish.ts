@@ -5,7 +5,7 @@ import {
   getEventHash,
   getPublicKey,
   Event,
-  relayInit
+  relayInit,
 } from 'nostr-tools';
 
 export async function publish(
@@ -13,7 +13,7 @@ export async function publish(
   privateKey: string,
   url: string,
   fields: Record<string, string>,
-  tags: string[][]
+  tags: string[][],
 ) {
   const created_at = Math.floor(Date.now() / 1000);
   const pubkey = getPublicKey(privateKey);
@@ -30,14 +30,14 @@ export async function publish(
 
   const content = JSON.stringify(fields);
 
-  const event: Event & { sig: string } = {
+  const event: Event & {sig: string} = {
     kind,
     created_at,
     tags,
     content,
     pubkey,
     id: '',
-    sig: ''
+    sig: '',
   };
 
   event.id = getEventHash(event);

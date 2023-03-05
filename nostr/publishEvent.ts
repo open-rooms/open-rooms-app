@@ -5,20 +5,20 @@ import {
   getEventHash,
   getPublicKey,
   Event,
-  relayInit
+  relayInit,
 } from 'nostr-tools';
 
 export async function publishEvent(
   kind: number,
   content: string,
   privateKey: string,
-  url: string
+  url: string,
 ) {
   const created_at = Math.floor(Date.now() / 1000);
   const pubkey = getPublicKey(privateKey);
   const tags: string[][] = [
     ['t', 'whiteroom'],
-    ['r', 'roomid']
+    ['r', 'roomid'],
   ];
 
   const relay = relayInit(url);
@@ -31,14 +31,14 @@ export async function publishEvent(
 
   await relay.connect();
 
-  const event: Event & { sig: string } = {
+  const event: Event & {sig: string} = {
     kind,
     created_at,
     tags,
-    content: JSON.stringify({ '#whiteroom': 'test', key: 'value' }),
+    content: JSON.stringify({'#whiteroom': 'test', key: 'value'}),
     pubkey,
     id: '',
-    sig: ''
+    sig: '',
   };
 
   event.id = getEventHash(event);

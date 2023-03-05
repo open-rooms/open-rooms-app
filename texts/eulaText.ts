@@ -1,4 +1,3 @@
-
 export const eulaText = `End User License Agreement
 
 

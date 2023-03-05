@@ -1,9 +1,9 @@
-import { getPublicKey, relayInit } from 'nostr-tools';
+import {getPublicKey, relayInit} from 'nostr-tools';
 
 export async function subscribeEvents(
   kind: number,
   privateKey: string,
-  url: string
+  url: string,
 ) {
   const pubkey = getPublicKey(privateKey);
 
@@ -21,13 +21,13 @@ export async function subscribeEvents(
     {
       kinds: [kind],
       // authors: [pubkey],
-      '#t': ['negru']
-    }
+      '#t': ['negru'],
+    },
   ]);
 
   console.log('subscribed to events', sub);
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     sub.on('event', (event: any) => {
       console.log('got event:', event);
       relay.close();

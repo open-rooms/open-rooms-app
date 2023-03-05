@@ -50,9 +50,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
   },
-  backButton: {
-    marginLeft: 14,
-  },
+
   headerTitle: {
     color: PRIMARY_COLOR,
     fontWeight: 'bold',

@@ -1,20 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {View, Text} from 'react-native';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
+import {BackButton} from '../components/BackButton';
+import {Button} from '../components/Button';
 import {generateKeys} from '../nostr/generateKeys';
 import {useStorage} from '../utils/useStorage';
 import {copyToClipboard} from '../utils/copyToClipboard';
-import {BackButton} from '../components/BackButton';
 import {PRIMARY_COLOR} from '../utils/colors';
 import {publicKeyText, privateKeyText} from '../texts/registerText';
-import {Button} from '../components/Button';
 
 export function Register() {
   const {connectAccount} = useStorage();
   const navigation = useNavigation<any>();
-  const [prvKey, setPrvKey] = useState('');
-  const [pubKey, setPubKey] = useState('');
+  const [prvKey, setPrvKey] = React.useState('');
+  const [pubKey, setPubKey] = React.useState('');
   const [privateKeyCopied, setPrivateKeyCopied] = React.useState(false);
   const [publicKeyCopied, setPublicKeyCopied] = React.useState(false);
   const accountPrivateKey = `nsec1${prvKey}`;
@@ -22,20 +22,19 @@ export function Register() {
   const publicKeyTitle = 'Public Key';
   const privateKeyTitle = 'Private Key';
 
+  const accountConnected = useStorage();
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => (
-        <BackButton color={PRIMARY_COLOR} style={styles.backButton} />
-      ),
+      headerLeft: () => <BackButton />,
       headerTitle: '',
     });
   }, [navigation]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const {publicKey, privateKey} = generateKeys();
     setPrvKey(privateKey);
     setPubKey(publicKey);
-    connectAccount(publicKey, privateKey);
   }, []);
 
   const copyPublicKeytoClipboard = async () => {
@@ -52,9 +51,14 @@ export function Register() {
 
   const onContinuePress = async () => {
     if (privateKeyCopied && publicKeyCopied) {
-      navigation.navigate('PublishEvent');
+      connectAccount(pubKey, prvKey).then(() => {
+        navigation.navigate('Feed');
+      });
     }
   };
+
+  console.log('accountConnected', accountConnected);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}> {publicKeyTitle} </Text>
@@ -66,7 +70,8 @@ export function Register() {
         onPress={copyPublicKeytoClipboard}
         buttonColor={publicKeyCopied ? 'white' : PRIMARY_COLOR}
         titleColor={publicKeyCopied ? PRIMARY_COLOR : 'white'}
-        buttonStyle={styles.button}></Button>
+        buttonStyle={styles.button}
+      />
       {publicKeyCopied && (
         <>
           <Text style={styles.title}> {privateKeyTitle} </Text>
@@ -77,7 +82,8 @@ export function Register() {
             onPress={copyPrivateKeytoClipboard}
             buttonColor={privateKeyCopied ? 'white' : PRIMARY_COLOR}
             titleColor={privateKeyCopied ? PRIMARY_COLOR : 'white'}
-            buttonStyle={styles.button}></Button>
+            buttonStyle={styles.button}
+          />
         </>
       )}
       {privateKeyCopied && publicKeyCopied && (
@@ -86,7 +92,8 @@ export function Register() {
           onPress={onContinuePress}
           buttonColor={PRIMARY_COLOR}
           titleColor={'white'}
-          buttonStyle={styles.button}></Button>
+          buttonStyle={styles.button}
+        />
       )}
     </View>
   );

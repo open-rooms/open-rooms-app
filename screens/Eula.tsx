@@ -1,35 +1,33 @@
-import React, { useEffect } from "react";
-import { View, Text, ScrollView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Button } from "../components/Button";
-import { BackButton } from "../components/BackButton";
-import { styles } from "./styles";
-import { PRIMARY_COLOR } from "../utils/colors";
-import { eulaText } from "../texts/eulaText";
+import React from 'react';
+import {View, Text, ScrollView} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {Button} from '../components/Button';
+import {BackButton} from '../components/BackButton';
+import {styles} from './styles';
+import {PRIMARY_COLOR} from '../utils/colors';
+import {eulaText} from '../texts/eulaText';
 
-export function Eula({ route }: any) {
+export function Eula({route}: any) {
   const navigation = useNavigation<any>();
   const [showHeaderTitle, setShowHeaderTitle] = React.useState(false);
 
-  const eulaTitle = "EULA";
+  const eulaTitle = 'EULA';
 
-  const handleScroll = ({ nativeEvent }: any) => {
+  const handleScroll = ({nativeEvent}: any) => {
     setShowHeaderTitle(nativeEvent.contentOffset.y > 0);
   };
 
   const handleAccept = () => {
-    const { screen } = route.params;
+    const {screen} = route.params;
     navigation.navigate(screen);
   };
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => (
-        <BackButton color={PRIMARY_COLOR} style={styles.backButton} />
-      ),
-      headerTitle: showHeaderTitle ? <Text>{eulaTitle}</Text> : "",
+      headerLeft: () => <BackButton />,
+      headerTitle: showHeaderTitle ? <Text>{eulaTitle}</Text> : '',
       headerTitleStyle: {
-        color: showHeaderTitle ? PRIMARY_COLOR : "",
+        color: showHeaderTitle ? PRIMARY_COLOR : '',
       },
     });
   }, [navigation, showHeaderTitle]);
@@ -46,16 +44,16 @@ export function Eula({ route }: any) {
             title="Accept"
             onPress={handleAccept}
             buttonColor={PRIMARY_COLOR}
-            titleColor={"white"}
+            titleColor={'white'}
             buttonStyle={styles.button}
-          ></Button>
+          />
           <Button
             title="Reject"
-            onPress={() => navigation.navigate("Welcome")}
+            onPress={() => navigation.navigate('Welcome')}
             titleColor={PRIMARY_COLOR}
-            buttonColor={"white"}
+            buttonColor={'white'}
             buttonStyle={styles.button}
-          ></Button>
+          />
         </View>
       </ScrollView>
     </View>

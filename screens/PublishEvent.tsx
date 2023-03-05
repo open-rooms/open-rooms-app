@@ -1,3 +1,4 @@
+import React from 'react';
 import {publishEvent} from '../nostr/publishEvent';
 import {useStorage} from '../utils/useStorage';
 import {useNavigation} from '@react-navigation/native';
@@ -6,7 +7,7 @@ import {Text, TextInput, Button, View} from 'react-native';
 import {RELAY_URL} from '../utils/constants';
 
 export function PublishEvent() {
-  const [kind, setKind] = useState<number>(1);
+  const kind = 1;
   const [content, setContent] = useState<string>('');
   const privateKey = useStorage().privateKey;
   const url = RELAY_URL;

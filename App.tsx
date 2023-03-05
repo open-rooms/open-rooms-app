@@ -1,12 +1,11 @@
 // App.tsx is the entry point of the app
 import 'text-encoding-polyfill';
-import React from 'react';
-import { StatusBar } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import { StorageContextProvider } from './utils/useStorage';
+import React, {useEffect} from 'react';
+import {Provider as PaperProvider} from 'react-native-paper';
+import {StatusBar} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {StorageContextProvider, useStorage} from './utils/useStorage';
 
 import Welcome from './screens/Welcome';
 import Eula from './screens/Eula';
@@ -18,12 +17,19 @@ import CreateRoom from './screens/CreateRoom';
 
 export function App() {
   const Stack = createNativeStackNavigator();
+  const {accountConnected} = useStorage();
+  console.log('account connected', accountConnected);
+
+  useEffect(() => {
+    StatusBar.setBarStyle(accountConnected ? 'dark-content' : 'light-content');
+  }, [accountConnected]);
 
   return (
     <StorageContextProvider>
       <PaperProvider>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Feed">
+          <Stack.Navigator
+            initialRouteName={accountConnected ? 'Feed' : 'Welcome'}>
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Eula" component={Eula} />
             <Stack.Screen name="Register" component={Register} />

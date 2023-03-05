@@ -1,28 +1,26 @@
-import React, { useState } from "react";
-import { View, Text, TextInput } from "react-native";
-import { styles } from "./styles";
-import { useNavigation } from "@react-navigation/native";
-import { generatePublickKey } from "../nostr/generateKeys";
-import { useStorage } from "../utils/useStorage";
-import { BackButton } from "../components/BackButton";
-import { PRIMARY_COLOR } from "../utils/colors";
-import { Button } from "../components/Button";
+import React, {useState} from 'react';
+import {View, Text, TextInput} from 'react-native';
+import {styles} from './styles';
+import {useNavigation} from '@react-navigation/native';
+import {generatePublickKey} from '../nostr/generateKeys';
+import {useStorage} from '../utils/useStorage';
+import {BackButton} from '../components/BackButton';
+import {PRIMARY_COLOR} from '../utils/colors';
+import {Button} from '../components/Button';
 
 export function Login() {
-  const { connectAccount } = useStorage();
+  const {connectAccount} = useStorage();
   const navigation = useNavigation<any>();
-  const [accountPrivateKey, setAccountPrivateKey] = useState("");
+  const [accountPrivateKey, setAccountPrivateKey] = useState('');
 
-  const loginTitle = "Login";
+  const loginTitle = 'Login';
   const privateKeyText = `
       Enter your private key to login.`;
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => (
-        <BackButton color={PRIMARY_COLOR} style={styles.backButton} />
-      ),
-      headerTitle: "",
+      headerLeft: () => <BackButton />,
+      headerTitle: '',
     });
   }, [navigation]);
 
@@ -31,9 +29,9 @@ export function Login() {
       const privateKey = accountPrivateKey.slice(5);
       const publicKey = generatePublickKey(privateKey);
       connectAccount(publicKey, privateKey);
-      navigation.navigate("Feed");
+      navigation.navigate('Feed');
     } else {
-      alert("Invalid private key");
+      alert('Invalid private key');
     }
   };
 
@@ -49,12 +47,12 @@ export function Login() {
       />
 
       <Button
-        title={"Login"}
+        title={'Login'}
         onPress={onLoginPress}
         buttonColor={PRIMARY_COLOR}
-        titleColor={"white"}
+        titleColor={'white'}
         buttonStyle={styles.button}
-      ></Button>
+      />
     </View>
   );
 }
