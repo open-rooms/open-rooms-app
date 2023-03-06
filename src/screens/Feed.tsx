@@ -9,20 +9,13 @@ import {useNavigation} from '@react-navigation/native';
 
 const Feed = () => {
   const [event, setEvent] = useState<any>([]);
-  const storage = useStorage();
-  const privateKey = storage.privateKey;
+
+  const {privateKey, disconnectAccount} = useStorage();
 
   const url = RELAY_URL;
   const kind = 1;
 
   const navigation = useNavigation<any>();
-
-  useEffect(() => {
-    if (!privateKey) {
-      // Redirect to Welcome screen if private key is not found in local storage
-      navigation.navigate('Welcome');
-    }
-  }, [privateKey]);
 
   const onSubscribePress = async () => {
     try {
@@ -36,7 +29,7 @@ const Feed = () => {
 
   const onLogoutPress = () => {
     // Clear private key from local storage and disconnect account
-    storage.disconnectAccount();
+    disconnectAccount();
     navigation.navigate('Welcome');
   };
 

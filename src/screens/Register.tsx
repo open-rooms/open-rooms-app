@@ -13,10 +13,14 @@ import {publicKeyText, privateKeyText} from '../texts/registerText';
 export function Register() {
   const {connectAccount} = useStorage();
   const navigation = useNavigation<any>();
-  const [prvKey, setPrvKey] = React.useState('');
-  const [pubKey, setPubKey] = React.useState('');
-  const [privateKeyCopied, setPrivateKeyCopied] = React.useState(false);
-  const [publicKeyCopied, setPublicKeyCopied] = React.useState(false);
+  const [prvKey, setPrvKey] = React.useState(
+    'nsec15558b158124e5da8dd850c10533aa984aae38eb612a2bad225a8ccc896a34dc2',
+  );
+  const [pubKey, setPubKey] = React.useState(
+    'npub1291f8dd2fa4f568eec41f6f202a75cd12394e8edfd66a3b2524c1d9f478bddd2',
+  );
+  const [privateKeyCopied, setPrivateKeyCopied] = React.useState(true);
+  const [publicKeyCopied, setPublicKeyCopied] = React.useState(true);
   const accountPrivateKey = `nsec1${prvKey}`;
   const accountPublicKey = `npub1${pubKey}`;
   const publicKeyTitle = 'Public Key';
