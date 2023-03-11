@@ -37,4 +37,3 @@ export const removeData = async (key: string): Promise<boolean> => {
     }
   });
 };
-

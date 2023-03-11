@@ -9,9 +9,7 @@ import Welcome from './screens/Welcome';
 import Eula from './screens/Eula';
 import Register from './screens/Register';
 import Login from './screens/Login';
-import PublishEvent from './screens/PublishEvent';
-import Feed from './screens/Feed';
-import CreateRoom from './screens/CreateRoom';
+import Rooms from './screens/Rooms';
 import {WithSplashScreen} from './screens/splash/SplashScreen';
 
 export function RootNavigator() {
@@ -32,14 +30,13 @@ export function RootNavigator() {
 
   return (
     <WithSplashScreen isAppReady={isAppReady}>
-      <Stack.Navigator initialRouteName={accountConnected ? 'Feed' : 'Welcome'}>
+      <Stack.Navigator
+        initialRouteName={accountConnected ? 'Rooms' : 'Welcome'}>
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Eula" component={Eula} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="PublishEvent" component={PublishEvent} />
-        <Stack.Screen name="Feed" component={Feed} />
-        <Stack.Screen name="CreateRoom" component={CreateRoom} />
+        <Stack.Screen name="Rooms" component={Rooms} />
       </Stack.Navigator>
     </WithSplashScreen>
   );

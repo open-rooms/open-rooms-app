@@ -37,6 +37,8 @@ export const styles = StyleSheet.create({
     height: 36,
     marginLeft: 24,
     marginRight: 24,
+    marginTop: 12,
+    marginBottom: 12,
   },
   button: {
     marginTop: 12,
@@ -55,5 +57,39 @@ export const styles = StyleSheet.create({
     color: PRIMARY_COLOR,
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  name: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    marginRight: 10,
+  },
+  username: {
+    fontSize: 14,
+    color: '#666',
+  },
+  list: {
+    backgroundColor: '#ffffff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 10,
+    elevation: 5,
+  },
+  modal: {
+    flex: 1,
+    //  backgroundColor: '#666',
+    marginHorizontal: 10,
+    marginTop: 144,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    //  overflow: 'hidden',
   },
 });

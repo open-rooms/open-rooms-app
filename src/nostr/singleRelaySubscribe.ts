@@ -1,9 +1,11 @@
 import {getPublicKey, relayInit} from 'nostr-tools';
+import {IEvent} from '../utils/types';
 
-export async function subscribeEvents(
+export async function singleRelaySubscribe(
   kind: number,
   privateKey: string,
   url: string,
+  callback: (event: IEvent) => void,
 ) {
   const pubkey = getPublicKey(privateKey);
 
@@ -17,23 +19,24 @@ export async function subscribeEvents(
 
   await relay.connect();
 
-  let sub = relay.sub([
+  const sub = relay.sub([
     {
       kinds: [kind],
-      // authors: [pubkey],
-      '#t': ['negru'],
+      authors: [pubkey],
+      '#t': ['white-room'],
     },
   ]);
 
   console.log('subscribed to events', sub);
 
-  return new Promise(resolve => {
-    sub.on('event', (event: any) => {
-      console.log('got event:', event);
-      relay.close();
-      resolve(event);
-    });
+  sub.on('event', (event: IEvent) => {
+    console.log('got event:', event);
+    if (
+      event.tags.some((tag: string | string[]) => tag.includes('white-room'))
+    ) {
+      callback(event);
+    }
   });
-}
 
-export default subscribeEvents;
+  return sub.off.bind(sub, 'event');
+}

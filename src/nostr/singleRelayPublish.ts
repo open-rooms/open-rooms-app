@@ -8,7 +8,7 @@ import {
   relayInit,
 } from 'nostr-tools';
 
-export async function publish(
+export async function singleRelayPublish(
   kind: number,
   privateKey: string,
   url: string,

@@ -56,7 +56,7 @@ export function Register() {
   const onContinuePress = async () => {
     if (privateKeyCopied && publicKeyCopied) {
       connectAccount(pubKey, prvKey).then(() => {
-        navigation.navigate('Feed');
+        navigation.navigate('Rooms');
       });
     }
   };

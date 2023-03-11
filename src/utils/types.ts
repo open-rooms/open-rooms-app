@@ -1,6 +1,6 @@
 export enum StorageKeys {
-  PRIVATE_KEY = "private_key",
-  PUBLIC_KEY = "public_key",
+  PRIVATE_KEY = 'private_key',
+  PUBLIC_KEY = 'public_key',
 }
 export interface IStorageContext {
   accountConnected: boolean;
@@ -21,4 +21,14 @@ export interface IButtonProps {
 export interface IBackButton {
   color: string;
   style?: object;
+}
+export interface IRoom {
+  id: string;
+  name: string;
+  username: string;
+}
+export interface IEvent {
+  id: string;
+  content: string;
+  tags: string[][];
 }
