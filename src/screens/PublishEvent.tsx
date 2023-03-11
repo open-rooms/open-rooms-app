@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useState} from 'react';
 import {Text, TextInput, Button, View} from 'react-native';
 import {RELAY_URL} from '../utils/constants';
+import multiRelayPublish from '../nostr/multiRelayPublish';
 
 export function PublishEvent() {
   const kind = 1;
@@ -20,7 +21,7 @@ export function PublishEvent() {
 
   const onPublishPress = async () => {
     try {
-      await publishEvent(kind, content, privateKey, url);
+      await multiRelayPublish(kind, content, privateKey, url);
       navitation.navigate('Feed');
     } catch (error) {
       console.log(error);

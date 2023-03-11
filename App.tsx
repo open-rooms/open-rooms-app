@@ -1,5 +1,6 @@
 // App.tsx is the entry point of the app
 import 'text-encoding-polyfill';
+import 'react-native-url-polyfill/auto';
 import React from 'react';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
