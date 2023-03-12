@@ -3,11 +3,11 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput} from 'react-native';
 import {useStorage} from '../utils/useStorage';
-import {singleRelayPublish} from '../nostr/singleRelayPublish';
+import {multiRelayPublish} from '../nostr/multiRelayInteractions';
 import {styles} from './styles';
 import {Button} from '../components/Button';
 import {PRIMARY_COLOR} from '../utils/colors';
-import {RELAY_URL} from '../utils/constants';
+import {RELAYS_URL} from '../utils/constants';
 
 const CreateRoom = (props: {
   onClose: () => void;
@@ -17,7 +17,7 @@ const CreateRoom = (props: {
   const [username, setUsername] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
-  const url = RELAY_URL;
+  const relays = RELAYS_URL;
   const kind = 1;
   const fields = {
     name,
@@ -28,10 +28,10 @@ const CreateRoom = (props: {
 
   const onCreateRoomPress = async () => {
     try {
-      const event = await singleRelayPublish(
+      const event = await multiRelayPublish(
         kind,
         privateKey,
-        url,
+        relays,
         fields,
         tags,
       );
