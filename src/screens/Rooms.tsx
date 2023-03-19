@@ -6,15 +6,15 @@ import CreateRoom from './CreateRoom';
 import {IRoom} from '../utils/types';
 import {Button} from '../components/Button';
 import {PRIMARY_COLOR} from '../utils/colors';
-import useNostr from '../nostr/useNostr';
+import useNostr from '../nostr/useNostrRooms';
 
 const Rooms = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const {getRooms, rooms} = useNostr();
+  const {get, rooms} = useNostr();
 
   useEffect(() => {
-    getRooms();
+    get();
   }, []);
 
   const onModalClose = () => {

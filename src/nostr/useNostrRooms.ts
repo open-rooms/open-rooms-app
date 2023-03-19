@@ -2,10 +2,10 @@ import {useState} from 'react';
 import {SimplePool} from 'nostr-tools';
 import {RELAYS_URL} from '../utils/constants';
 import {useStorage} from '../utils/useStorage';
-import {formatEvent} from './utils';
+import {formatEvent} from './utils/utils';
 import {IRoom} from '../utils/types';
 
-const useNostr = () => {
+const useNostrRooms = () => {
   const [rooms, setRooms] = useState<IRoom[]>([]);
   const {privateKey} = useStorage();
   const pool = new SimplePool();
@@ -32,7 +32,7 @@ const useNostr = () => {
     });
   };
 
-  const getRooms = () => {
+  const get = () => {
     console.log('efect nostr');
     let roomsSub = pool.sub(RELAYS_URL, [{'#t': ['white-room']}]); // get everything from me
     roomsSub.on('event', (event: any) => {
@@ -47,10 +47,10 @@ const useNostr = () => {
   };
 
   return {
-    getRooms,
+    get,
     rooms,
     publish,
   };
 };
 
-export default useNostr;
+export default useNostrRooms;

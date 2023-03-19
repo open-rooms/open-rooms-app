@@ -4,7 +4,7 @@ import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {BackButton} from '../components/BackButton';
 import {Button} from '../components/Button';
-import {generateKeys} from '../nostr/generateKeys';
+import {generateKeys} from '../nostr/utils/generateKeys';
 import {useStorage} from '../utils/useStorage';
 import {copyToClipboard} from '../utils/copyToClipboard';
 import {PRIMARY_COLOR} from '../utils/colors';

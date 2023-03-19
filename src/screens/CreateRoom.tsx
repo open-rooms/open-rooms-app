@@ -5,13 +5,13 @@ import {View, Text, TextInput} from 'react-native';
 import {styles} from './styles';
 import {Button} from '../components/Button';
 import {PRIMARY_COLOR} from '../utils/colors';
-import useNostr from '../nostr/useNostr';
+import useNostrRooms from '../nostr/useNostrRooms';
 
 const CreateRoom = (props: {onClose: () => void}) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-  const {publish} = useNostr();
+  const {publish} = useNostrRooms();
 
   const kind = 1;
   const fields = {

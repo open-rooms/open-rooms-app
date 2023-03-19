@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, TextInput} from 'react-native';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
-import {generatePublickKey} from '../nostr/generateKeys';
+import {generatePublickKey} from '../nostr/utils/generateKeys';
 import {useStorage} from '../utils/useStorage';
 import {BackButton} from '../components/BackButton';
 import {PRIMARY_COLOR} from '../utils/colors';
