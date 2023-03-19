@@ -1,4 +1,4 @@
-// multiRelayInteractions.ts
+// multiRelayInteractions.ts --- DON'T use it anymore
 import {
   validateEvent,
   verifySignature,
