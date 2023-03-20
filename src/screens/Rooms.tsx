@@ -1,14 +1,16 @@
 // Room.tsx
-import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, FlatList, Modal} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, FlatList, Modal, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import CreateRoom from './CreateRoom';
 import {IRoom} from '../utils/types';
 import {Button} from '../components/Button';
 import {PRIMARY_COLOR} from '../utils/colors';
 import useNostr from '../nostr/useNostrRooms';
+import {useNavigation} from '@react-navigation/native';
 
 const Rooms = () => {
+  const navigation = useNavigation<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const {get, rooms} = useNostr();
@@ -24,8 +26,16 @@ const Rooms = () => {
   const renderRooms = ({item}: {item: IRoom}) => {
     return (
       <View key={item.id} style={styles.row}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.username}>{item.username}</Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Room', {
+              roomId: item.id,
+              roomName: item.name,
+              roomUsername: item.username,
+            })
+          }>
+          <Text style={styles.name}>{item.name}</Text>
+        </TouchableOpacity>
       </View>
     );
   };

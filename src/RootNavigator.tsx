@@ -10,6 +10,7 @@ import Eula from './screens/Eula';
 import Register from './screens/Register';
 import Login from './screens/Login';
 import Rooms from './screens/Rooms';
+import Room from './screens/Room';
 import {WithSplashScreen} from './screens/splash/SplashScreen';
 
 export function RootNavigator() {
@@ -37,6 +38,7 @@ export function RootNavigator() {
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Rooms" component={Rooms} />
+        <Stack.Screen name="Room" component={Room} />
       </Stack.Navigator>
     </WithSplashScreen>
   );
