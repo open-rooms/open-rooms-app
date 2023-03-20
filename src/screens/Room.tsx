@@ -7,9 +7,9 @@ import {PRIMARY_COLOR} from '../utils/colors';
 import {Button} from '../components/Button';
 
 // display details of a Room/ roomName and roomUsername
-export function Room() {
+export function Room({route}: any) {
   const navigation = useNavigation<any>();
-  const {roomName, roomUsername} = navigation.state.params;
+  const {roomName, roomUsername} = route.params;
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
