@@ -11,12 +11,12 @@ export function Room({route}: any) {
   const navigation = useNavigation<any>();
   const {roomName, roomUsername} = route.params;
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => <BackButton />,
-      headerTitle: '',
-    });
-  }, [navigation]);
+  // React.useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerLeft: () => <BackButton />,
+  //     headerTitle: '',
+  //   });
+  // }, [navigation]);
 
   return (
     <View style={styles.container}>

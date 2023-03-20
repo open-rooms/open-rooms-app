@@ -38,7 +38,11 @@ export function RootNavigator() {
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Rooms" component={Rooms} />
-        <Stack.Screen name="Room" component={Room} />
+        <Stack.Screen
+          name="Room"
+          component={Room}
+          options={{headerShown: true}}
+        />
       </Stack.Navigator>
     </WithSplashScreen>
   );
