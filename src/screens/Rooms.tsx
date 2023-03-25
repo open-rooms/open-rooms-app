@@ -6,17 +6,17 @@ import CreateRoom from './CreateRoom';
 import {IRoom} from '../utils/types';
 import {Button} from '../components/Button';
 import {PRIMARY_COLOR} from '../utils/colors';
-import useNostr from '../nostr/useNostrRooms';
+import useNostr from '../nostr/useNostr';
 import {useNavigation} from '@react-navigation/native';
 
 const Rooms = () => {
   const navigation = useNavigation<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const {get, rooms} = useNostr();
+  const {getRooms, rooms} = useNostr();
 
   useEffect(() => {
-    get();
+    getRooms();
   }, []);
 
   const onModalClose = () => {

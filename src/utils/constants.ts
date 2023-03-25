@@ -5,3 +5,9 @@ export const RELAYS_URL = [
   'wss://nostr.mado.io',
   'wss://relay.damus.io',
 ];
+
+export const DEFAULT_TAG: string[] = ['t', 'white-room'];
+
+export const ROOM_TAG: string[] = ['t', 'room'];
+
+export const PROPOSAL_TAG: string[] = ['t', 'proposal'];
