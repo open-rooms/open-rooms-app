@@ -10,7 +10,7 @@ const CreateRoom = (props: {onClose: () => void}) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-  const {publish} = useNostrRooms();
+  const {publishRoom, publishProposal} = useNostr();
 
   const kind = 1;
   const fields = {
@@ -18,27 +18,17 @@ const CreateRoom = (props: {onClose: () => void}) => {
     username,
     imageUrl,
   };
-  const tags = [['t', 'white-room-test']];
 
   const onCreateRoomPress = async () => {
     try {
-      publish(kind, fields, tags, () => {
-        console.log('published');
+      publishRoom(kind, fields, [], () => {
+        console.log('room Published');
       });
 
-      // const event = await multiRelayPublish(
-      //   kind,
-      //   privateKey,
-      //   relays,
-      //   fields,
-      //   tags,
-      // );
-      // if (
-      //   event.tags.some((tag: string | string[]) => tag.includes('white-room'))
-      // ) {
-      //   props.setEvents((prevEvents: any) => [...prevEvents, event]);
-      // }
-      props.onClose(); // Call the onClose function passed as a prop
+      // just for testing
+      publishProposal(kind, fields, [['#t', 'roomId']], () => {
+        console.log('room Published');
+      });
     } catch (error) {
       console.log(error);
     }

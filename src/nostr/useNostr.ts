@@ -1,16 +1,49 @@
 import {useState} from 'react';
 import {SimplePool} from 'nostr-tools';
-import {RELAYS_URL} from '../utils/constants';
+import {
+  DEFAULT_TAG,
+  PROPOSAL_TAG,
+  RELAYS_URL,
+  ROOM_TAG,
+} from '../utils/constants';
 import {useStorage} from '../utils/useStorage';
 import {formatEvent} from './utils/utils';
 import {IRoom} from '../utils/types';
 
-const useNostrRooms = () => {
+const useNostr = () => {
   const [rooms, setRooms] = useState<IRoom[]>([]);
   const {privateKey} = useStorage();
   const pool = new SimplePool();
 
-  const publish = (
+  const publishRoom = (
+    kind: number,
+    fields: {[key: string]: string},
+    tags: string[][],
+    callback: () => void,
+  ) => {
+    const content = JSON.stringify(fields);
+    const defaultTags: string[][] = [DEFAULT_TAG, ROOM_TAG];
+
+    const event = formatEvent(
+      kind,
+      content,
+      privateKey,
+      defaultTags.concat(tags),
+    );
+    console.log('start publishing room');
+
+    const pubEvent = pool.publish(RELAYS_URL, event);
+
+    pubEvent.on('ok', (reason: any) => {
+      console.log('Room published to relays: ', reason);
+      callback();
+    });
+    pubEvent.on('failed', (reason: any) => {
+      console.log('failed to publish Room to relays:', reason);
+    });
+  };
+
+  const publishProposal = (
     kind: number,
 
     fields: {[key: string]: string},
@@ -18,8 +51,16 @@ const useNostrRooms = () => {
     callback: () => void,
   ) => {
     const content = JSON.stringify(fields);
-    const event = formatEvent(kind, content, privateKey, tags);
-    console.log('start posting event');
+
+    const defaultTags: string[][] = [DEFAULT_TAG, PROPOSAL_TAG];
+
+    const event = formatEvent(
+      kind,
+      content,
+      privateKey,
+      defaultTags.concat(tags),
+    );
+    console.log('start posting proposal');
 
     const pubEvent = pool.publish(RELAYS_URL, event);
 
@@ -32,7 +73,7 @@ const useNostrRooms = () => {
     });
   };
 
-  const get = () => {
+  const getRooms = () => {
     console.log('efect nostr');
     let roomsSub = pool.sub(RELAYS_URL, [{'#t': ['white-room']}]); // get everything from me
     roomsSub.on('event', (event: any) => {
@@ -47,10 +88,11 @@ const useNostrRooms = () => {
   };
 
   return {
-    get,
+    getRooms,
     rooms,
-    publish,
+    publishRoom,
+    publishProposal,
   };
 };
 
-export default useNostrRooms;
+export default useNostr;

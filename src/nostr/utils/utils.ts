@@ -11,7 +11,7 @@ export const formatEvent = (
   kind: number,
   content: string,
   privateKey: string,
-  tags: string[][] = [['t', 'white-room']],
+  tags: string[][],
 ) => {
   const created_at = Math.floor(Date.now() / 1000);
 
@@ -24,6 +24,8 @@ export const formatEvent = (
     id: '',
     sig: '',
   };
+
+  console.log('tags on event', tags);
 
   event.pubkey = getPublicKey(privateKey);
   event.id = getEventHash(event);
