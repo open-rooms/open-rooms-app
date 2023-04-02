@@ -27,6 +27,16 @@ export const styles = StyleSheet.create({
     marginLeft: 24,
     marginRight: 24,
   },
+  textRooms: {
+    fontSize: 14,
+    color: SECONDARY_COLOR,
+    marginTop: 8,
+    marginBottom: 8,
+    //  marginLeft: 24,
+    // marginRight: 24,
+    textAlign: 'left',
+  },
+
   textInput: {
     borderRadius: 20,
     borderWidth: 1,
@@ -62,7 +72,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 12,
-    paddingHorizontal: 24,
+    // paddingHorizontal: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
@@ -91,5 +101,51 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     //  overflow: 'hidden',
+  },
+  robot: {
+    width: 75,
+    height: 75,
+    borderRadius: 0,
+    marginRight: 0,
+  },
+  textContainer: {
+    flex: 1,
+  },
+  robotContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    borderRadius: 20,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+  },
+  robotImageContainer: {
+  //  backgroundColor: '#eee',
+   // borderRadius: 50,
+    overflow: 'hidden',
+    marginRight: 10,
+  },
+  robotImage: {
+    width: 60,
+    height: 60,
+  },
+  robotDetailsContainer: {},
+  robotName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  robotUsername: {
+    fontSize: 16,
+    color: PRIMARY_COLOR,
   },
 });

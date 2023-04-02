@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
-import {BackButton} from '../components/BackButton';
 import {PRIMARY_COLOR} from '../utils/colors';
 import {Button} from '../components/Button';
 
@@ -10,13 +9,6 @@ import {Button} from '../components/Button';
 export function Room({route}: any) {
   const navigation = useNavigation<any>();
   const {roomName, roomUsername} = route.params;
-
-  // React.useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerLeft: () => <BackButton />,
-  //     headerTitle: '',
-  //   });
-  // }, [navigation]);
 
   return (
     <View style={styles.container}>

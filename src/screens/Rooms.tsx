@@ -1,29 +1,26 @@
-// Room.tsx
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, Modal, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import CreateRoom from './CreateRoom';
 import {IRoom} from '../utils/types';
 import {Button} from '../components/Button';
 import {PRIMARY_COLOR} from '../utils/colors';
-import useNostr from '../nostr/useNostrRooms';
 import {useNavigation} from '@react-navigation/native';
+import rooms from '../utils/fakeRooms.json';
+import RandomRobot from '../components/RandomRobot';
 
 const Rooms = () => {
   const navigation = useNavigation<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const {get, rooms} = useNostr();
-
-  useEffect(() => {
-    get();
-  }, []);
 
   const onModalClose = () => {
     setIsModalVisible(false);
   };
 
   const renderRooms = ({item}: {item: IRoom}) => {
+    const startDate = new Date(item.start_date * 1000);
+    const formattedStartDate = startDate.toLocaleDateString();
+
     return (
       <View key={item.id} style={styles.row}>
         <TouchableOpacity
@@ -34,7 +31,13 @@ const Rooms = () => {
               roomUsername: item.username,
             })
           }>
+          <RandomRobot style={styles.robot} />
+
           <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.username}>{item.username}</Text>
+          <Text style={styles.textRooms}>{item.about}</Text>
+          <Text style={styles.username}>{formattedStartDate}</Text>
+          <Text style={styles.textRooms}>Members {item.users.length}</Text>
         </TouchableOpacity>
       </View>
     );

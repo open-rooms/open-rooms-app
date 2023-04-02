@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Button} from '../components/Button';
-import {BackButton} from '../components/BackButton';
+// import {BackButton} from '../components/BackButton';
 import {styles} from './styles';
 import {PRIMARY_COLOR} from '../utils/colors';
 import {eulaText} from '../texts/eulaText';
@@ -24,7 +24,7 @@ export function Eula({route}: any) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => <BackButton />,
+   //   headerLeft: () => <BackButton />,
       headerTitle: showHeaderTitle ? <Text>{eulaTitle}</Text> : '',
       headerTitleStyle: {
         color: showHeaderTitle ? PRIMARY_COLOR : '',

@@ -26,9 +26,22 @@ export interface IRoom {
   id: string;
   name: string;
   username: string;
+  about: string;
+  start_date: number;
+  creator: string;
+  users: string[];
 }
 export interface IEvent {
   id: string;
   content: string;
   tags: string[][];
 }
+export type RootStackParamList = {
+  Welcome: undefined;
+  Eula: undefined;
+  Register: undefined;
+  Login: undefined;
+  Rooms: undefined;
+  Room: {roomId: string};
+  Profile: undefined;
+};
