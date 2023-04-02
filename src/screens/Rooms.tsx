@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, FlatList, Modal, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import CreateRoom from './CreateRoom';
 import {IRoom} from '../utils/types';
 import {Button} from '../components/Button';
 import {PRIMARY_COLOR} from '../utils/colors';
-import useNostr from '../nostr/useNostr';
+// import useNostr from '../nostr/useNostr';
 import {useNavigation} from '@react-navigation/native';
 import rooms from '../utils/fakeRooms.json';
 import RandomRobot from '../components/RandomRobot';
@@ -14,11 +14,11 @@ const Rooms = () => {
   const navigation = useNavigation<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const {getRooms, rooms} = useNostr();
+  // const {getRooms, rooms} = useNostr();
 
-  useEffect(() => {
-    getRooms();
-  }, []);
+  // useEffect(() => {
+  //   getRooms();
+  // }, []);
 
   const onModalClose = () => {
     setIsModalVisible(false);

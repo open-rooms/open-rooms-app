@@ -5,6 +5,7 @@ import {Button} from '../components/Button';
 import {PRIMARY_COLOR} from '../utils/colors';
 import useNostrRooms from '../nostr/useNostrRooms';
 import RandomRobot from '../components/RandomRobot';
+import useNostr from '../nostr/useNostr';
 
 const CreateRoom = (props: {onClose: () => void}) => {
   const [name, setName] = useState('');

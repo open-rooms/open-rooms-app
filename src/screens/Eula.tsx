@@ -24,7 +24,7 @@ export function Eula({route}: any) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-   //   headerLeft: () => <BackButton />,
+      //   headerLeft: () => <BackButton />,
       headerTitle: showHeaderTitle ? <Text>{eulaTitle}</Text> : '',
       headerTitleStyle: {
         color: showHeaderTitle ? PRIMARY_COLOR : '',

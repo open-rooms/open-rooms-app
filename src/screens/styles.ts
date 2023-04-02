@@ -130,8 +130,8 @@ export const styles = StyleSheet.create({
     elevation: 4,
   },
   robotImageContainer: {
-  //  backgroundColor: '#eee',
-   // borderRadius: 50,
+    //  backgroundColor: '#eee',
+    // borderRadius: 50,
     overflow: 'hidden',
     marginRight: 10,
   },
