@@ -8,7 +8,7 @@ import {PRIMARY_COLOR} from '../utils/colors';
 // import useNostr from '../nostr/useNostr';
 import {useNavigation} from '@react-navigation/native';
 import rooms from '../utils/fakeRooms.json';
-import RandomRobot from '../components/RandomRobot';
+import DecisionRoom from '../components/DecisionRoom';
 
 const Rooms = () => {
   const navigation = useNavigation<any>();
@@ -38,7 +38,7 @@ const Rooms = () => {
               roomUsername: item.username,
             })
           }>
-          <RandomRobot style={styles.robot} />
+          <DecisionRoom style={styles.robot} />
 
           <Text style={styles.name}>{item.name}</Text>
           <Text style={styles.username}>{item.username}</Text>

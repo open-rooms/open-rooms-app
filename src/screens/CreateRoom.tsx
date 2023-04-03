@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Image} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import {styles} from './styles';
 import {Button} from '../components/Button';
 import {PRIMARY_COLOR} from '../utils/colors';
-import useNostrRooms from '../nostr/useNostrRooms';
-import RandomRobot from '../components/RandomRobot';
+// import useNostrRooms from '../nostr/useNostrRooms';
+import DecisionRoom from '../components/DecisionRoom';
 import useNostr from '../nostr/useNostr';
 
 const CreateRoom = (props: {onClose: () => void}) => {
@@ -65,7 +65,7 @@ const CreateRoom = (props: {onClose: () => void}) => {
           <Text style={styles.text}>Preview:</Text>
           <View style={[styles.robotContainer, {backgroundColor: '#fff'}]}>
             <View style={styles.robotImageContainer}>
-              <RandomRobot style={styles.robotImage} seed={imageUrl} />
+              <DecisionRoom style={styles.robotImage} />
             </View>
             <View style={styles.robotDetailsContainer}>
               <Text style={styles.robotName}>{name}</Text>
@@ -78,7 +78,7 @@ const CreateRoom = (props: {onClose: () => void}) => {
           <Text style={styles.text}>Preview:</Text>
           <View style={[styles.robotContainer, {backgroundColor: '#fff'}]}>
             <View style={styles.robotImageContainer}>
-              <RandomRobot style={styles.robotImage} />
+              <DecisionRoom style={styles.robotImage} />
             </View>
             <View style={styles.robotDetailsContainer}>
               <Text style={styles.robotName}>{name}</Text>

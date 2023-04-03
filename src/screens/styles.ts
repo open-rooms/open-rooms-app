@@ -103,8 +103,8 @@ export const styles = StyleSheet.create({
     //  overflow: 'hidden',
   },
   robot: {
-    width: 75,
-    height: 75,
+    width: 40,
+    height: 40,
     borderRadius: 0,
     marginRight: 0,
   },
@@ -136,8 +136,8 @@ export const styles = StyleSheet.create({
     marginRight: 10,
   },
   robotImage: {
-    width: 60,
-    height: 60,
+    width: 10,
+    height: 10,
   },
   robotDetailsContainer: {},
   robotName: {
