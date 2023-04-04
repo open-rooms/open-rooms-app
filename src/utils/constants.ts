@@ -1,9 +1,9 @@
 // constants.ts
 export const RELAYS_URL = [
+  'wss://relay.nostrati.com',
   'wss://relay.taxi',
   'wss://nostramsterdam.vpx.moe',
-  'wss://nostr.mado.io',
-  'wss://relay.damus.io',
+  'wss://nostr.anchel.nl',
 ];
 
 export const DEFAULT_TAG: string[] = ['e', 'white-room'];

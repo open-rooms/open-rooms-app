@@ -29,38 +29,35 @@ const useNostr = () => {
       kind,
       content,
       privateKey,
-
       defaultTags.concat(tags),
     );
+    const pubEvent = pool.publish(RELAYS_URL, event);
+
     console.log('start publishing room', event);
 
-    // console.log('--------------------------');
-
-    const relay = relayInit(RELAYS_URL[0]);
-    await relay.connect();
-
-    let pub = relay.publish(event);
-    pub.on('ok', () => {
-      console.log(`${relay.url} has accepted our event`);
+    pubEvent.on('ok', (reason: any) => {
+      console.log('Event published to relays: ', reason);
       callback();
     });
-    pub.on('failed', (reason: any) => {
-      console.log(`failed to publish to ${relay.url}: ${reason}`);
+    pubEvent.on('failed', (reason: any) => {
+      console.log('failed to publish Event to relays:', reason);
     });
 
     // console.log('--------------------------');
-    // const pubEvent = pool.publish(RELAYS_URL, event);
 
-    // console.log('pub', pubEvent);
+    // const relay = relayInit(RELAYS_URL[0]);
+    // await relay.connect();
 
-    // pubEvent.on('ok', (reason: any) => {
-    //   console.log('Room published to relays: ', reason);
+    // let pub = relay.publish(event);
+    // pub.on('ok', () => {
+    //   console.log(`${relay.url} has accepted our event`);
     //   callback();
     // });
-
-    // pubEvent.on('failed', (reason: any) => {
-    //   console.log('failed to publish Room to relays:', reason);
+    // pub.on('failed', (reason: any) => {
+    //   console.log(`failed to publish to ${relay.url}: ${reason}`);
     // });
+
+    // console.log('--------------------------');
   };
 
   const publishProposal = (
