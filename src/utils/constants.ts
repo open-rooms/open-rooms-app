@@ -6,7 +6,7 @@ export const RELAYS_URL = [
   'wss://relay.damus.io',
 ];
 
-export const DEFAULT_TAG: string[] = ['t', 'white-room'];
+export const DEFAULT_TAG: string[] = ['e', 'white-room'];
 
 export const ROOM_TAG: string[] = ['t', 'room'];
 

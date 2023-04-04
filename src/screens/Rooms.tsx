@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, Modal, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import CreateRoom from './CreateRoom';
@@ -9,15 +9,17 @@ import {PRIMARY_COLOR} from '../utils/colors';
 import {useNavigation} from '@react-navigation/native';
 import rooms from '../utils/fakeRooms.json';
 import DecisionRoom from '../components/DecisionRoom';
+import useNostr from '../nostr/useNostr';
 
 const Rooms = () => {
   const navigation = useNavigation<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  // const {getRooms, rooms} = useNostr();
+  // const {getRooms, rooms2} = useNostr();
 
   // useEffect(() => {
   //   getRooms();
+  //   console.log('rooms2', rooms2);
   // }, []);
 
   const onModalClose = () => {

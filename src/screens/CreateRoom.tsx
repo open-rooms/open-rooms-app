@@ -11,25 +11,29 @@ const CreateRoom = (props: {onClose: () => void}) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-  const {publishRoom, publishProposal} = useNostr();
+  const {publishRoom} = useNostr();
 
   const kind = 1;
   const fields = {
     name,
     username,
     imageUrl,
+    about: 'about',
+    start_date: 111,
+    creator: 'creator',
+    users: ['sadsf', 'fsds'],
   };
 
   const onCreateRoomPress = async () => {
     try {
-      publishRoom(kind, fields, [], () => {
+      publishRoom(kind, JSON.stringify(fields), [], () => {
         console.log('room Published');
       });
 
       // just for testing
-      publishProposal(kind, fields, [['#t', 'roomId']], () => {
-        console.log('room Published');
-      });
+      // publishProposal(kind, fields, [['#t', 'roomId']], () => {
+      //   console.log('room Published');
+      // });
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {SimplePool} from 'nostr-tools';
+import {SimplePool, relayInit} from 'nostr-tools';
 import {
   DEFAULT_TAG,
   PROPOSAL_TAG,
@@ -15,32 +15,52 @@ const useNostr = () => {
   const {privateKey} = useStorage();
   const pool = new SimplePool();
 
-  const publishRoom = (
+  const publishRoom = async (
     kind: number,
-    fields: {[key: string]: string},
+    content: string,
     tags: string[][],
     callback: () => void,
   ) => {
-    const content = JSON.stringify(fields);
-    const defaultTags: string[][] = [DEFAULT_TAG, ROOM_TAG];
+    // const poolNew = new SimplePool();
+
+    const defaultTags: string[][] = [DEFAULT_TAG];
 
     const event = formatEvent(
       kind,
       content,
       privateKey,
+
       defaultTags.concat(tags),
     );
-    console.log('start publishing room');
+    console.log('start publishing room', event);
 
-    const pubEvent = pool.publish(RELAYS_URL, event);
+    // console.log('--------------------------');
 
-    pubEvent.on('ok', (reason: any) => {
-      console.log('Room published to relays: ', reason);
+    const relay = relayInit(RELAYS_URL[0]);
+    await relay.connect();
+
+    let pub = relay.publish(event);
+    pub.on('ok', () => {
+      console.log(`${relay.url} has accepted our event`);
       callback();
     });
-    pubEvent.on('failed', (reason: any) => {
-      console.log('failed to publish Room to relays:', reason);
+    pub.on('failed', (reason: any) => {
+      console.log(`failed to publish to ${relay.url}: ${reason}`);
     });
+
+    // console.log('--------------------------');
+    // const pubEvent = pool.publish(RELAYS_URL, event);
+
+    // console.log('pub', pubEvent);
+
+    // pubEvent.on('ok', (reason: any) => {
+    //   console.log('Room published to relays: ', reason);
+    //   callback();
+    // });
+
+    // pubEvent.on('failed', (reason: any) => {
+    //   console.log('failed to publish Room to relays:', reason);
+    // });
   };
 
   const publishProposal = (
@@ -75,21 +95,23 @@ const useNostr = () => {
 
   const getRooms = () => {
     console.log('efect nostr');
-    let roomsSub = pool.sub(RELAYS_URL, [{'#t': ['white-room']}]); // get everything from me
+    let roomsSub = pool.sub(RELAYS_URL, [
+      {'#t': ['white-room', 'white-room2']},
+    ]); // get everything from me
     roomsSub.on('event', (event: any) => {
       console.log('event generated', event.id, event.tags);
-      // roomsPubSub.emit('rooms', event);
-      const {name, username} = JSON.parse(event.content);
+      const roomContent: IRoom = JSON.parse(event.content);
+      roomContent.id = event.id;
       setRooms(prevRooms => [
         ...prevRooms.filter(room => room.id !== event.id),
-        {id: event.id, name: name, username: username},
+        roomContent,
       ]);
     });
   };
 
   return {
     getRooms,
-    rooms,
+    rooms2: rooms,
     publishRoom,
     publishProposal,
   };
