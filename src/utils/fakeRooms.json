@@ -1,117 +1,145 @@
 [
   {
     "id": "1",
-    "name": "Decentralized Organization for Renewable Energy",
-    "username": "@dore",
+    "name": "DORE",
+    "username": "@DORE",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
     "about": "We are a group of enthusiasts committed to increasing the adoption of renewable energy sources for a sustainable future.",
     "start_date": 1617295805,
     "creator": "9ad9239df5d9415eea2cabe7f143204c790655c2",
-    "users": ["9ad9239df5d9415eea2cabe7f143204c790655c2", "24d0bd5c44f92b47"]
+    "members": ["9ad9239df5d9415eea2cabe7f143204c790655c2", "24d0bd5c44f92b47"]
   },
   {
     "id": "2",
-    "name": "Decentralized Group for Sustainable Agriculture",
-    "username": "@dgsa",
+    "name": "DGS Agriculture",
+    "username": "@DGSA",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
     "about": "We are a community of farmers, consumers, and activists committed to promoting sustainable agriculture and food systems.",
     "start_date": 1621494169,
-    "creator": "24d0bd5c44f92b47",
-    "users": ["9ad9239df5d9415eea2cabe7f143204c790655c2", "24d0bd5c44f92b47"]
+    "creator": "9ad9239df5d9415eea2cabe7f143204c790655c2",
+    "members": ["9ad9239df5d9415eea2cabe7f143204c790655c2", "24d0bd5c44f92b47"]
   },
   {
     "id": "3",
-    "name": "Blockchain-based Research Collaboration Network",
-    "username": "@brcn",
+    "name": "BRCN",
+    "username": "@BRCN",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
     "about": "We are a global network of researchers and scientists using blockchain technology to collaborate on cutting-edge research projects.",
     "start_date": 1619243503,
     "creator": "9ad9239df5d9415eea2cabe7f143204c790655c2",
-    "users": ["9ad9239df5d9415eea2cabe7f143204c790655c2", "24d0bd5c44f92b47"]
+    "members": ["9ad9239df5d9415eea2cabe7f143204c790655c2", "24d0bd5c44f92b47"]
   },
   {
     "id": "4",
-    "name": "Decentralized Education and Learning Platform",
-    "username": "@delp",
+    "name": "DELP",
+    "username": "@DELP",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
     "about": "We are a platform for educators and learners to connect and exchange knowledge in a decentralized, open-source environment.",
     "start_date": 1624371100,
-    "creator": "24d0bd5c44f92b47",
-    "users": ["9ad9239df5d9415eea2cabe7f143204c790655c2", "24d0bd5c44f92b47"]
+    "creator": "9ad9239df5d9415eea2cabe7f143204c790655c2",
+    "members": [
+      "9ad9239df5d9415eea2cabe7f143204c790655c2",
+      "9ad9239df5d9415eea2cabe7f143204c790655c2"
+    ]
   },
   {
     "id": "5",
-    "name": "Decentralized Healthcare Network",
-    "username": "@dhn",
+    "name": "DHN",
+    "username": "@DHN",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
     "about": "We are a group of healthcare providers, researchers, and patients using blockchain technology to improve healthcare delivery and outcomes.",
     "start_date": 1615586857,
     "creator": "9ad9239df5d9415eea2cabe7f143204c790655c2",
-    "users": ["9ad9239df5d9415eea2cabe7f143204c790655c2", "24d0bd5c44f92b47"]
+    "members": [
+      "9ad9239df5d9415eea2cabe7f143204c790655c2",
+      "9ad9239df5d9415eea2cabe7f143204c790655c2"
+    ]
   },
   {
     "id": "6",
-    "name": "Decentralized Platform for Social Impact Investing",
-    "username": "@Social_Impact_Platform",
-    "about": "We aim to create a decentralized platform for social impact investing. Our platform will enable investors to directly fund social projects and receive returns on their investments. Our mission is to make investing in social impact projects accessible to everyone, regardless of their financial status.",
+    "name": "Social Impact Platform",
+    "username": "@SocialImpact",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
+    "about": "Our mission is to make investing in social impact projects accessible to everyone, regardless of their financial status. We aim to create a decentralized platform that enables investors to directly fund social projects and receive returns on their investments.",
     "start_date": 1620832687,
     "creator": "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
-    "users": [
+    "members": [
       "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
-      "24d0bd5c44f92b47"
+      "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5"
     ]
   },
   {
     "id": "7",
-    "name": "@Green Energy for a Better World",
-    "username": "@Green_Energy_Platform",
+    "name": "Green Energy Platform",
+    "username": "@GreenEnergy",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
     "about": "Our organization is dedicated to promoting the use of green energy and reducing the carbon footprint of businesses and individuals. We provide access to green energy solutions and offer resources to help people understand the importance of sustainable energy practices.",
     "start_date": 1622404978,
     "creator": "24d0bd5c44f92b47",
-    "users": [
+    "members": [
       "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
-      "24d0bd5c44f92b47"
+      "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5"
     ]
   },
   {
     "id": "8",
-    "name": "Blockchain for Supply Chain Management",
-    "username": "@Blockchain_Supply_Chain",
-    "about": "Our organization aims to bring transparency and efficiency to supply chain management using blockchain technology. We offer a platform that allows businesses to track their products from source to delivery, ensuring that they meet quality and safety standards.",
+    "name": "Blockchain Supply Chain",
+    "username": "@BlockChainSCM",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
+    "about": "Our organization aims to bring transparency and efficiency to supply chain management using blockchain technology. Our platform allows businesses to track their products from source to delivery, ensuring that they meet quality and safety standards.",
     "start_date": 1618049812,
     "creator": "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
-    "users": [
+    "members": [
       "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
-      "24d0bd5c44f92b47"
+      "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5"
     ]
   },
   {
     "id": "9",
-    "name": "Empowering Women in Tech",
-    "username": "@Women_in_Tech",
+    "name": "Women in Tech",
+    "username": "@WomenTech",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
     "about": "We are a community of women in tech who aim to empower and support each other. We offer mentorship programs, networking events, and resources to help women advance their careers in the tech industry.",
     "start_date": 1618049812,
     "creator": "24d0bd5c44f92b47",
-    "users": [
+    "members": [
       "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
-      "24d0bd5c44f92b47"
+      "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5"
     ]
   },
   {
     "id": "10",
-    "name": "Crypto Trading Signals",
-    "username": "@Crypto_Trading",
+    "name": "Crypto Signals",
+    "username": "@CryptoSignals",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
     "about": "We offer signals for cryptocurrency traders that provide insights into market trends and predictions. Our goal is to help traders make informed decisions and maximize their profits.",
     "start_date": 1616707794,
     "creator": "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
-    "users": [
-      "24d0bd5c44f92b47",
+    "members": [
+      "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
       "abf194c7cc0e53d2d9e86b646e94b0a65104e3b4730473f36c1e80e7cfd425d9"
     ]
   },
   {
     "id": "11",
-    "name": "Decentralized Governance for Sustainable Agriculture",
-    "username": "@sustainable_agriculture",
+    "name": "Sustainable Agriculture",
+    "username": "@SustainableAgri",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
     "about": "We are a global organization committed to promoting sustainable agriculture and building a decentralized governance system for our members. Our goal is to create a fair and equitable system that rewards sustainable practices and empowers farmers to take control of their own futures.",
     "start_date": 1616707794,
-    "creator": "24d0bd5c44f92b47",
-    "users": [
+    "creator": "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
+    "members": [
       "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
       "abf194c7cc0e53d2d9e86b646e94b0a65104e3b4730473f36c1e80e7cfd425d9"
     ]
@@ -119,25 +147,15 @@
   {
     "id": "12",
     "name": "Decentralized Education Network",
-    "username": "@decentralized_education",
+    "username": "@DecentralizedEdu",
+    "profilePic": "https://i.imgur.com/7YXWJjM.png",
+    "damus": "@DORE",
     "about": "We are a global network of educators committed to creating a decentralized education system that empowers learners and teachers. Our goal is to create a system that is accessible to everyone, regardless of their location or socio-economic status.",
     "start_date": 1622234804,
     "creator": "abf194c7cc0e53d2d9e86b646e94b0a65104e3b4730473f36c1e80e7cfd425d9",
-    "users": [
+    "members": [
       "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
-      "24d0bd5c44f92b47"
-    ]
-  },
-  {
-    "id": "13",
-    "name": "Decentralized Healthcare Network",
-    "username": "@decentralized_healthcare",
-    "about": "We are a global network of healthcare professionals committed to creating a decentralized healthcare system that puts patients first. Our goal is to create a system that is transparent, accessible, and affordable for everyone.",
-    "start_date": 1622234804,
-    "creator": "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5",
-    "users": [
-      "24d0bd5c44f92b47",
-      "abf194c7cc0e53d2d9e86b646e94b0a65104e3b4730473f36c1e80e7cfd425d9"
+      "9ad9239df5d9415eea2cabe7f143204c790655c26a72f5"
     ]
   }
 ]

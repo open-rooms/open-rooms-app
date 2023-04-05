@@ -24,12 +24,14 @@ export interface IBackButton {
 }
 export interface IRoom {
   id: string;
+  profilePic: string;
   name: string;
   username: string;
   about: string;
   start_date: number;
   creator: string;
-  users: string[];
+  damus: string;
+  members: string[];
 }
 export interface IEvent {
   id: string;

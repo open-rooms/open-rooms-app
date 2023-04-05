@@ -28,7 +28,10 @@ const Rooms = () => {
 
   const renderRooms = ({item}: {item: IRoom}) => {
     const startDate = new Date(item.start_date * 1000);
-    const formattedStartDate = startDate.toLocaleDateString();
+    const formattedStartDate = startDate.toLocaleString('default', {
+      month: 'short',
+      year: 'numeric',
+    });
 
     return (
       <View key={item.id} style={styles.row}>
@@ -40,13 +43,20 @@ const Rooms = () => {
               roomUsername: item.username,
             })
           }>
-          <DecisionRoom style={styles.robot} />
-
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.username}>{item.username}</Text>
-          <Text style={styles.textRooms}>{item.about}</Text>
-          <Text style={styles.username}>{formattedStartDate}</Text>
-          <Text style={styles.textRooms}>Members {item.users.length}</Text>
+          <View style={styles.profileContainer}>
+            <DecisionRoom style={styles.robot} />
+            <View style={styles.profileTextContainer}>
+              <Text style={styles.name}>{item.name}</Text>
+              <Text style={styles.username}>
+                {`${item.username} \u00B7 ${formattedStartDate}`}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.textRooms}>{item.about}</Text>
+            <Text
+              style={styles.textRooms}>{`Members ${item.members.length}`}</Text>
+          </View>
         </TouchableOpacity>
       </View>
     );
@@ -59,7 +69,7 @@ const Rooms = () => {
         onPress={() => setIsModalVisible(true)}
         buttonColor={PRIMARY_COLOR}
         titleColor={'white'}
-        buttonStyle={styles.button}
+        buttonStyle={styles.createRoomButtonContainer}
       />
     );
   };

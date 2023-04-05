@@ -148,4 +148,36 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: PRIMARY_COLOR,
   },
+  createRoomButtonContainer: {
+    marginTop: 12,
+    width: 144,
+    height: 36,
+    alignSelf: 'center',
+    bottom: 20,
+    position: 'absolute',
+  },
+  profileContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  profileTextContainer: {
+    marginLeft: 10,
+  },
+  descriptionContainer: {
+    marginTop: 10,
+  },
+  creatorContainer: {
+    flexDirection: 'row',
+    marginTop: 5,
+    alignItems: 'center',
+  },
+  creator: {
+    fontSize: 14,
+    color: '#666',
+  },
+  date: {
+    fontSize: 14,
+    color: '#666',
+    marginLeft: 5,
+  },
 });
