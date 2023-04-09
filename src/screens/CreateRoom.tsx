@@ -4,7 +4,7 @@ import {styles} from './styles';
 import {Button} from '../components/Button';
 import {PRIMARY_COLOR} from '../utils/colors';
 // import useNostrRooms from '../nostr/useNostrRooms';
-import DecisionRoom from '../components/DecisionRoom';
+import DecisionRoom from '../components/ProfilePic';
 import useNostr from '../nostr/useNostr';
 
 const CreateRoom = (props: {onClose: () => void}) => {

@@ -37,7 +37,6 @@ export function RootNavigator() {
   return (
     <WithSplashScreen isAppReady={isAppReady}>
       <Stack.Navigator
-        initialRouteName={accountConnected ? 'Rooms' : 'Welcome'}
         screenOptions={{
           headerStyle: {
             backgroundColor: 'white',
@@ -52,60 +51,66 @@ export function RootNavigator() {
             fontWeight: 'bold',
           },
         }}>
-        <Stack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Eula"
-          component={Eula}
-          options={{
-            title: 'End User License Agreement',
-            headerLeft: BackButton,
-          }}
-        />
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{
-            title: 'Create Account',
-            headerLeft: BackButton,
-          }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{
-            title: 'Login',
-            headerLeft: BackButton,
-          }}
-        />
-        <Stack.Screen
-          name="Rooms"
-          component={Rooms}
-          options={{
-            title: 'Rooms',
-            // headerRight: () => <ProfileButton />,
-            headerRight: ProfileButton,
-          }}
-        />
-        <Stack.Screen
-          name="Room"
-          component={Room}
-          options={{
-            title: 'Room Details',
-            headerLeft: BackButton,
-          }}
-        />
-        <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            title: 'Profile',
-            headerLeft: BackButton,
-          }}
-        />
+        {accountConnected ? (
+          <>
+            <Stack.Screen
+              name="Rooms"
+              component={Rooms}
+              options={{
+                title: 'Rooms',
+                headerLeft: ProfileButton,
+              }}
+            />
+            <Stack.Screen
+              name="Room"
+              component={Room}
+              options={{
+                title: 'Room Details',
+                headerLeft: BackButton,
+              }}
+            />
+            <Stack.Screen
+              name="Profile"
+              component={Profile}
+              options={{
+                title: 'Profile',
+                headerLeft: BackButton,
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <Stack.Screen
+              name="Welcome"
+              component={Welcome}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Eula"
+              component={Eula}
+              options={{
+                title: 'End User License Agreement',
+                headerLeft: BackButton,
+              }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={{
+                title: 'Create Account',
+                headerLeft: BackButton,
+              }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                title: 'Login',
+                headerLeft: BackButton,
+              }}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </WithSplashScreen>
   );

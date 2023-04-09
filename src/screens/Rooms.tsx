@@ -5,22 +5,15 @@ import CreateRoom from './CreateRoom';
 import {IRoom} from '../utils/types';
 import {Button} from '../components/Button';
 import {PRIMARY_COLOR} from '../utils/colors';
-// import useNostr from '../nostr/useNostr';
 import {useNavigation} from '@react-navigation/native';
 import rooms from '../utils/fakeRooms.json';
-import DecisionRoom from '../components/DecisionRoom';
+import ProfilePic from '../components/ProfilePic';
 import useNostr from '../nostr/useNostr';
 
 const Rooms = () => {
   const navigation = useNavigation<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  // const {getRooms, rooms2} = useNostr();
-
-  // useEffect(() => {
-  //   getRooms();
-  //   console.log('rooms2', rooms2);
-  // }, []);
+  const [showHeaderTitle, setShowHeaderTitle] = useState(false);
 
   const onModalClose = () => {
     setIsModalVisible(false);
@@ -44,7 +37,7 @@ const Rooms = () => {
             })
           }>
           <View style={styles.profileContainer}>
-            <DecisionRoom style={styles.robot} />
+            <ProfilePic style={styles.robot} />
             <View style={styles.profileTextContainer}>
               <Text style={styles.name}>{item.name}</Text>
               <Text style={styles.username}>
@@ -74,6 +67,16 @@ const Rooms = () => {
     );
   };
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: showHeaderTitle ? 'Rooms' : '',
+    });
+  }, [navigation, showHeaderTitle]);
+
+  const handleScroll = ({nativeEvent}: any) => {
+    setShowHeaderTitle(nativeEvent.contentOffset.y > 0);
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -81,6 +84,15 @@ const Rooms = () => {
         renderItem={renderRooms}
         keyExtractor={item => item.id.toString()}
         style={styles.list}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        ListHeaderComponent={
+          showHeaderTitle ? null : (
+            <Text style={{fontSize: 32, fontWeight: 'bold', marginBottom: 16}}>
+              Rooms
+            </Text>
+          )
+        }
       />
       <Modal visible={isModalVisible} animationType="slide">
         <View style={styles.modal}>

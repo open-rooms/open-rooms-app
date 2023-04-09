@@ -1,10 +1,11 @@
 import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
-import {styles} from './styles';
-
+import {TouchableOpacity} from 'react-native';
 import {useNavigation, RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../utils/types';
+import ProfilePic from './ProfilePic';
+
+
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -29,7 +30,13 @@ export const ProfileButton = () => {
 
   return (
     <TouchableOpacity onPress={handleProfilePress}>
-      <Text style={styles.title}>Profile</Text>
+      <ProfilePic
+        style={{
+          width: 30,
+          height: 30,
+          marginLeft: 12,
+        }}
+      />
     </TouchableOpacity>
   );
 };

@@ -133,7 +133,7 @@ export const styles = StyleSheet.create({
     //  backgroundColor: '#eee',
     // borderRadius: 50,
     overflow: 'hidden',
-    marginRight: 10,
+    marginRight: 12,
   },
   robotImage: {
     width: 10,
