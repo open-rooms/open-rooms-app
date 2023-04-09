@@ -10,17 +10,19 @@ export function Profile() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
-      <Text style={styles.text}>Public Key: {publicKey}</Text>
-      <Text style={styles.text}>Private Key: {privateKey}</Text>
+      <View style={styles.list}>
+        <Text style={styles.screenTitle}>Profile</Text>
+        <Text style={styles.text}>Public Key: {publicKey}</Text>
+        <Text style={styles.text}>Private Key: {privateKey}</Text>
 
-      <Button
-        title="Logout"
-        onPress={disconnectAccount}
-        buttonColor={PRIMARY_COLOR}
-        titleColor={'white'}
-        buttonStyle={styles.button}
-      />
+        <Button
+          title="Logout"
+          onPress={disconnectAccount}
+          buttonColor={PRIMARY_COLOR}
+          titleColor={'white'}
+          buttonStyle={styles.button}
+        />
+      </View>
     </View>
   );
 }

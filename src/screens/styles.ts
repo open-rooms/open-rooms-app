@@ -11,6 +11,18 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 12,
   },
+  screenTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    color: SECONDARY_COLOR,
+  },
+
+  screenProfileContent: {
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
   title: {
     fontSize: 24,
     color: SECONDARY_COLOR,

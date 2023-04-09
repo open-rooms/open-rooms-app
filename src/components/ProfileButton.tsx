@@ -5,8 +5,6 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../utils/types';
 import ProfilePic from './ProfilePic';
 
-
-
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   'Profile'
@@ -34,7 +32,7 @@ export const ProfileButton = () => {
         style={{
           width: 30,
           height: 30,
-          marginLeft: 12,
+          marginRight: 12,
         }}
       />
     </TouchableOpacity>

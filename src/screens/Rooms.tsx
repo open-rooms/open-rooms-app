@@ -48,7 +48,7 @@ const Rooms = () => {
           <View style={styles.descriptionContainer}>
             <Text style={styles.textRooms}>{item.about}</Text>
             <Text
-              style={styles.textRooms}>{`Members ${item.members.length}`}</Text>
+              style={styles.textRooms}>{`${item.members.length} Members`}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -87,11 +87,7 @@ const Rooms = () => {
         onScroll={handleScroll}
         scrollEventThrottle={16}
         ListHeaderComponent={
-          showHeaderTitle ? null : (
-            <Text style={{fontSize: 32, fontWeight: 'bold', marginBottom: 16}}>
-              Rooms
-            </Text>
-          )
+          showHeaderTitle ? null : <Text style={styles.screenTitle}>Rooms</Text>
         }
       />
       <Modal visible={isModalVisible} animationType="slide">

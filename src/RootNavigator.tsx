@@ -58,7 +58,7 @@ export function RootNavigator() {
               component={Rooms}
               options={{
                 title: 'Rooms',
-                headerLeft: ProfileButton,
+                headerRight: ProfileButton,
               }}
             />
             <Stack.Screen
@@ -73,7 +73,7 @@ export function RootNavigator() {
               name="Profile"
               component={Profile}
               options={{
-                title: 'Profile',
+                title: '',
                 headerLeft: BackButton,
               }}
             />
