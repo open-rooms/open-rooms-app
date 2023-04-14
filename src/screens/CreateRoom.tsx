@@ -11,7 +11,7 @@ const CreateRoom = (props: {onClose: () => void}) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-  const {publishRoom} = useNostr();
+  const {publishRoom, publishProposal} = useNostr();
 
   const kind = 1;
   const fields = {
@@ -34,6 +34,21 @@ const CreateRoom = (props: {onClose: () => void}) => {
       // publishProposal(kind, fields, [['#t', 'roomId']], () => {
       //   console.log('room Published');
       // });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onCreateProposalPress = async () => {
+    try {
+      publishRoom(kind, JSON.stringify(fields), [], () => {
+        console.log('room Published');
+      });
+
+      // just for testing
+      publishProposal(kind, fields, [['#t', 'roomId']], () => {
+        console.log('room Published');
+      });
     } catch (error) {
       console.log(error);
     }

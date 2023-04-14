@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {SimplePool, relayInit} from 'nostr-tools';
+import {SimplePool} from 'nostr-tools';
 import {
   DEFAULT_TAG,
   PROPOSAL_TAG,
@@ -42,22 +42,6 @@ const useNostr = () => {
     pubEvent.on('failed', (reason: any) => {
       console.log('failed to publish Event to relays:', reason);
     });
-
-    // console.log('--------------------------');
-
-    // const relay = relayInit(RELAYS_URL[0]);
-    // await relay.connect();
-
-    // let pub = relay.publish(event);
-    // pub.on('ok', () => {
-    //   console.log(`${relay.url} has accepted our event`);
-    //   callback();
-    // });
-    // pub.on('failed', (reason: any) => {
-    //   console.log(`failed to publish to ${relay.url}: ${reason}`);
-    // });
-
-    // console.log('--------------------------');
   };
 
   const publishProposal = (
@@ -106,7 +90,38 @@ const useNostr = () => {
     });
   };
 
+  const createUser = (
+    kind: number,
+
+    fields: {[key: string]: string},
+    tags: string[][],
+    callback: () => void,
+  ) => {
+    const content = JSON.stringify(fields);
+
+    const defaultTags: string[][] = [DEFAULT_TAG];
+
+    const event = formatEvent(
+      kind,
+      content,
+      privateKey,
+      defaultTags.concat(tags),
+    );
+    console.log('start creating user');
+
+    const pubEvent = pool.publish(RELAYS_URL, event);
+
+    pubEvent.on('ok', (reason: any) => {
+      console.log('Event published to relays: ', reason);
+      callback();
+    });
+    pubEvent.on('failed', (reason: any) => {
+      console.log('failed to publish to relays:', reason);
+    });
+  };
+
   return {
+    createUser,
     getRooms,
     rooms2: rooms,
     publishRoom,

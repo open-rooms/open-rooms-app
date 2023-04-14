@@ -6,7 +6,7 @@ export const RELAYS_URL = [
   'wss://nostr.anchel.nl',
 ];
 
-export const DEFAULT_TAG: string[] = ['e', 'white-room'];
+export const DEFAULT_TAG: string[] = ['e', 'white-roomx'];
 
 export const ROOM_TAG: string[] = ['t', 'room'];
 

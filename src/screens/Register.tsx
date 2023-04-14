@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, TextInput} from 'react-native';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {BackButton} from '../components/BackButton';
@@ -12,6 +12,9 @@ import {publicKeyText, privateKeyText} from '../texts/registerText';
 
 export function Register() {
   const {connectAccount} = useStorage();
+  const [username, setUsername] = useState('');
+  const [profilePic, setProfilePic] = useState('');
+  const [damus, setDamus] = useState('');
   const navigation = useNavigation<any>();
   const [prvKey, setPrvKey] = React.useState(
     'nsec15558b158124e5da8dd850c10533aa984aae38eb612a2bad225a8ccc896a34dc2',
@@ -25,8 +28,6 @@ export function Register() {
   const accountPublicKey = `npub1${pubKey}`;
   const publicKeyTitle = 'Public Key';
   const privateKeyTitle = 'Private Key';
-
-  const accountConnected = useStorage();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -61,11 +62,29 @@ export function Register() {
     }
   };
 
-  console.log('accountConnected', accountConnected);
-
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> {publicKeyTitle} </Text>
+      <Text style={styles.text}>Create Room</Text>
+      <TextInput
+        style={styles.textInput}
+        placeholder="Username"
+        onChangeText={text => setUsername(text)}
+        value={username}
+      />
+      <TextInput
+        style={styles.textInput}
+        placeholder="Profile Pic - url"
+        onChangeText={text => setProfilePic(text)}
+        value={profilePic}
+      />
+      <TextInput
+        style={styles.textInput}
+        placeholder="Image URL"
+        onChangeText={text => setDamus(text)}
+        value={damus}
+      />
+
+      {/* <Text style={styles.title}> {publicKeyTitle} </Text> */}
       <Text style={styles.text}> {publicKeyText} </Text>
       <Text style={styles.text}> {accountPublicKey} </Text>
 
@@ -78,7 +97,7 @@ export function Register() {
       />
       {publicKeyCopied && (
         <>
-          <Text style={styles.title}> {privateKeyTitle} </Text>
+          {/* <Text style={styles.title}> {privateKeyTitle} </Text> */}
           <Text style={styles.text}> {privateKeyText} </Text>
           <Text style={styles.text}> {accountPrivateKey} </Text>
           <Button
