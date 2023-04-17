@@ -1,11 +1,11 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
-import authReducer from './auth-slice';
+import userReducer from './user-slice';
 
 const configureCustomStore = () => {
   const reducer = combineReducers({
     // Persistent slices
-    auth: authReducer,
+    user: userReducer,
   });
 
   const store = configureStore({
