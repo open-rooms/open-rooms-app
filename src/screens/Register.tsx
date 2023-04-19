@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {BackButton} from '../components/BackButton';
@@ -9,6 +9,7 @@ import {useStorage} from '../utils/useStorage';
 import {copyToClipboard} from '../utils/copyToClipboard';
 import {PRIMARY_COLOR} from '../utils/colors';
 import {publicKeyText, privateKeyText} from '../texts/registerText';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export function Register() {
   const {connectAccount} = useStorage();
@@ -22,8 +23,8 @@ export function Register() {
   const [pubKey, setPubKey] = React.useState(
     'npub1291f8dd2fa4f568eec41f6f202a75cd12394e8edfd66a3b2524c1d9f478bddd2',
   );
-  const [privateKeyCopied, setPrivateKeyCopied] = React.useState(true);
-  const [publicKeyCopied, setPublicKeyCopied] = React.useState(true);
+  const [privateKeyCopied, setPrivateKeyCopied] = React.useState(false);
+  const [publicKeyCopied, setPublicKeyCopied] = React.useState(false);
   const accountPrivateKey = `nsec1${prvKey}`;
   const accountPublicKey = `npub1${pubKey}`;
   const publicKeyTitle = 'Public Key';
@@ -64,7 +65,7 @@ export function Register() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Create Room</Text>
+      <Text style={styles.text}>Sign Up</Text>
       <TextInput
         style={styles.textInput}
         placeholder="Username"
@@ -73,20 +74,28 @@ export function Register() {
       />
       <TextInput
         style={styles.textInput}
-        placeholder="Profile Pic - url"
+        placeholder="Profile Pic URL"
         onChangeText={text => setProfilePic(text)}
         value={profilePic}
       />
       <TextInput
         style={styles.textInput}
-        placeholder="Image URL"
+        placeholder="Damus account"
         onChangeText={text => setDamus(text)}
         value={damus}
       />
 
-      {/* <Text style={styles.title}> {publicKeyTitle} </Text> */}
-      <Text style={styles.text}> {publicKeyText} </Text>
-      <Text style={styles.text}> {accountPublicKey} </Text>
+      <Text style={styles.title}> {publicKeyTitle} </Text>
+      <TouchableOpacity
+        onPress={() => {
+          copyToClipboard(accountPublicKey);
+          setPublicKeyCopied(true);
+        }}>
+        <Text style={styles.text}>
+          {' '}
+          {accountPublicKey} <Icon name="content-copy" size={20} color="grey" />{' '}
+        </Text>
+      </TouchableOpacity>
 
       <Button
         title={publicKeyCopied ? 'Done' : 'Copy Public Key'}
@@ -97,9 +106,20 @@ export function Register() {
       />
       {publicKeyCopied && (
         <>
-          {/* <Text style={styles.title}> {privateKeyTitle} </Text> */}
+          <Text style={styles.title}> {privateKeyTitle} </Text>
+
           <Text style={styles.text}> {privateKeyText} </Text>
-          <Text style={styles.text}> {accountPrivateKey} </Text>
+          <TouchableOpacity
+            onPress={() => {
+              copyToClipboard(accountPrivateKey);
+              setPrivateKeyCopied(true);
+            }}>
+            <Text style={styles.text}>
+              {' '}
+              {accountPrivateKey}{' '}
+              <Icon name="content-copy" size={20} color="grey" />{' '}
+            </Text>
+          </TouchableOpacity>
           <Button
             title={privateKeyCopied ? 'Done' : 'Copy Private Key'}
             onPress={copyPrivateKeytoClipboard}

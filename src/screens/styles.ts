@@ -192,4 +192,18 @@ export const styles = StyleSheet.create({
     color: '#666',
     marginLeft: 5,
   },
+  keyField: {
+    marginBottom: 20,
+    padding: 20,
+    borderRadius: 5,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  keyText: {
+    color: 'grey',
+    marginRight: 10,
+    fontSize: 18,
+  },
+
 });
