@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
-import {BackButton} from '../components/BackButton';
 import {Button} from '../components/Button';
 import {generateKeys} from '../nostr/utils/generateKeys';
 import {useStorage} from '../utils/useStorage';
@@ -11,7 +10,7 @@ import {PRIMARY_COLOR} from '../utils/colors';
 import {publicKeyText, privateKeyText} from '../texts/registerText';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export function Register() {
+export function CreateAccount() {
   const {connectAccount} = useStorage();
   const [username, setUsername] = useState('');
   const [profilePic, setProfilePic] = useState('');
@@ -29,13 +28,6 @@ export function Register() {
   const accountPublicKey = `npub1${pubKey}`;
   const publicKeyTitle = 'Public Key';
   const privateKeyTitle = 'Private Key';
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => <BackButton />,
-      headerTitle: '',
-    });
-  }, [navigation]);
 
   React.useEffect(() => {
     const {publicKey, privateKey} = generateKeys();
@@ -65,27 +57,29 @@ export function Register() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Sign Up</Text>
+      <Text style={styles.titleInput}> Username </Text>
       <TextInput
         style={styles.textInput}
         placeholder="Username"
         onChangeText={text => setUsername(text)}
         value={username}
       />
+      <Text style={styles.titleInput}> Profile Pic </Text>
       <TextInput
         style={styles.textInput}
         placeholder="Profile Pic URL"
         onChangeText={text => setProfilePic(text)}
         value={profilePic}
       />
+      <Text style={styles.titleInput}> Damus Account </Text>
       <TextInput
         style={styles.textInput}
         placeholder="Damus account"
         onChangeText={text => setDamus(text)}
         value={damus}
       />
-
       <Text style={styles.title}> {publicKeyTitle} </Text>
+      <Text style={styles.text}> {publicKeyText} </Text>
       <TouchableOpacity
         onPress={() => {
           copyToClipboard(accountPublicKey);
@@ -107,8 +101,8 @@ export function Register() {
       {publicKeyCopied && (
         <>
           <Text style={styles.title}> {privateKeyTitle} </Text>
-
           <Text style={styles.text}> {privateKeyText} </Text>
+
           <TouchableOpacity
             onPress={() => {
               copyToClipboard(accountPrivateKey);
@@ -120,6 +114,7 @@ export function Register() {
               <Icon name="content-copy" size={20} color="grey" />{' '}
             </Text>
           </TouchableOpacity>
+
           <Button
             title={privateKeyCopied ? 'Done' : 'Copy Private Key'}
             onPress={copyPrivateKeytoClipboard}
@@ -142,4 +137,4 @@ export function Register() {
   );
 }
 
-export default Register;
+export default CreateAccount;

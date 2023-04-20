@@ -6,6 +6,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+
+  // Welcome Screen & Eula Screen
   content: {
     justifyContent: 'center',
     flex: 1,
@@ -16,6 +18,39 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     color: SECONDARY_COLOR,
+  },
+  text: {
+    fontSize: 14,
+    color: SECONDARY_COLOR,
+    alignSelf: 'center',
+    marginTop: 12,
+    marginBottom: 12,
+    marginLeft: 24,
+    marginRight: 24,
+  },
+
+  // Create Account Screen
+
+  titleInput: {
+    fontSize: 14,
+    color: SECONDARY_COLOR,
+    marginTop: 12,
+    marginBottom: 8,
+    marginLeft: 24,
+    // marginRight: 24,
+    textAlign: 'left',
+  },
+  textInput: {
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: PRIMARY_COLOR,
+    color: SECONDARY_COLOR,
+    paddingHorizontal: 8,
+    justifyContent: 'flex-start',
+    height: 36,
+    marginLeft: 24,
+    marginRight: 24,
+    marginBottom: 12,
   },
 
   screenProfileContent: {
@@ -30,15 +65,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 24,
   },
-  text: {
-    fontSize: 14,
-    color: SECONDARY_COLOR,
-    alignSelf: 'center',
-    marginTop: 12,
-    marginBottom: 12,
-    marginLeft: 24,
-    marginRight: 24,
-  },
+
   textRooms: {
     fontSize: 14,
     color: SECONDARY_COLOR,
@@ -49,19 +76,6 @@ export const styles = StyleSheet.create({
     textAlign: 'left',
   },
 
-  textInput: {
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: PRIMARY_COLOR,
-    color: SECONDARY_COLOR,
-    paddingHorizontal: 8,
-    justifyContent: 'flex-start',
-    height: 36,
-    marginLeft: 24,
-    marginRight: 24,
-    marginTop: 12,
-    marginBottom: 12,
-  },
   button: {
     marginTop: 12,
     width: 144,
@@ -205,5 +219,4 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     fontSize: 18,
   },
-
 });

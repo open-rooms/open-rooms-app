@@ -50,7 +50,7 @@ export interface IEvent {
 export type RootStackParamList = {
   Welcome: undefined;
   Eula: undefined;
-  Register: undefined;
+  CreateAccount: undefined;
   Login: undefined;
   Rooms: undefined;
   Room: {roomId: string};

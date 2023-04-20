@@ -6,7 +6,7 @@ import {useStorage} from './utils/useStorage';
 
 import Welcome from './screens/Welcome';
 import Eula from './screens/Eula';
-import Register from './screens/Register';
+import CreateAccount from './screens/CreateAccount';
 import Login from './screens/Login';
 import Rooms from './screens/Rooms';
 import Room from './screens/Room';
@@ -94,8 +94,8 @@ export function RootNavigator() {
               }}
             />
             <Stack.Screen
-              name="Register"
-              component={Register}
+              name="CreateAccount"
+              component={CreateAccount}
               options={{
                 title: 'Create Account',
                 headerLeft: BackButton,

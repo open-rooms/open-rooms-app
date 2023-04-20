@@ -23,7 +23,7 @@ export function Welcome() {
       <View style={styles.buttonsContainer}>
         <Button
           title="Create Account"
-          onPress={() => navigation.navigate('Eula', {screen: 'Register'})}
+          onPress={() => navigation.navigate('Eula', {screen: 'CreateAccount'})}
           buttonColor={PRIMARY_COLOR}
           titleColor={'white'}
           buttonStyle={styles.button}
