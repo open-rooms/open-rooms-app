@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
   usernameContainer: {
     flexDirection: 'row',
   },
-  usernameTextInput: {
+  usernameImputText: {
     borderRadius: 20,
     borderWidth: 1,
     borderColor: PRIMARY_COLOR,

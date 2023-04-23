@@ -82,7 +82,7 @@ export function CreateAccount() {
       <Text style={styles.inputTitle}> Username </Text>
       <View style={styles.usernameContainer}>
         <TextInput
-          style={styles.usernameTextInput}
+          style={styles.usernameImputText}
           placeholder="Username"
           onChangeText={handleUsernameChange}
           value={username}

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, Modal, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
-import CreateRoom from '../CreateRoom';
+import CreateRoom from '../CreateRoom/CreateRoom';
 import {IRoom} from '../../utils/types';
 import {Button} from '../../components/Button';
 import {PRIMARY_COLOR} from '../../utils/colors';
