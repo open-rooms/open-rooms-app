@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  headerTitle: {
+  screenTitle: {
     fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 16,

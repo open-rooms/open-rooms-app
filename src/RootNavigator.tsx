@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useStorage} from './utils/useStorage';
 
 import Welcome from './screens/Welcome';
-import Eula from './screens/Eula';
+import Eula from './screens/Eula/Eula';
 import CreateAccount from './screens/CreateAccount/CreateAccount';
 import Login from './screens/Login';
 import Rooms from './screens/Rooms/Rooms';
@@ -97,7 +97,7 @@ export function RootNavigator() {
               name="CreateAccount"
               component={CreateAccount}
               options={{
-                title: 'Create Account',
+                title: '',
                 headerLeft: BackButton,
               }}
             />

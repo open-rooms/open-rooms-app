@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Button} from '../components/Button';
+import {Button} from '../../components/Button';
 import {styles} from './styles';
-import {PRIMARY_COLOR} from '../utils/colors';
-// import {eulaText} from '../texts/eulaText';
+import {PRIMARY_COLOR} from '../../utils/colors';
+import {eulaText} from '../../texts/eulaText';
 
 export function Eula({route}: any) {
   const navigation = useNavigation<any>();
@@ -28,11 +28,11 @@ export function Eula({route}: any) {
   }, [navigation, showHeaderTitle]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.screenContainer}>
       <ScrollView onScroll={handleScroll} scrollEventThrottle={16}>
-        <View style={styles.content}>
-          <Text style={styles.title}>{eulaTitle}</Text>
-          <Text style={styles.text}>{eulaPlaceholderText}</Text>
+        <View style={styles.contentContainer}>
+          <Text style={styles.screenTitle}>{eulaTitle}</Text>
+          <Text style={styles.eulaText}>{eulaPlaceholderText}</Text>
         </View>
         <View style={styles.buttonsContainer}>
           <Button
@@ -40,14 +40,14 @@ export function Eula({route}: any) {
             onPress={handleAccept}
             buttonColor={PRIMARY_COLOR}
             titleColor={'white'}
-            buttonStyle={styles.button}
+            buttonStyle={styles.buttonContainer}
           />
           <Button
             title="Reject"
             onPress={() => navigation.navigate('Welcome')}
             titleColor={PRIMARY_COLOR}
             buttonColor={'white'}
-            buttonStyle={styles.button}
+            buttonStyle={styles.buttonContainer}
           />
         </View>
       </ScrollView>

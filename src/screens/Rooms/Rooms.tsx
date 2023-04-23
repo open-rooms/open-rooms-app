@@ -91,7 +91,7 @@ const Rooms = () => {
         onScroll={handleScroll}
         scrollEventThrottle={16}
         ListHeaderComponent={
-          showHeaderTitle ? null : <Text style={styles.headerTitle}>Rooms</Text>
+          showHeaderTitle ? null : <Text style={styles.screenTitle}>Rooms</Text>
         }
       />
       <Modal visible={isModalVisible} animationType="slide">

@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  headerTitle: {
+  screenTitle: {
     marginLeft: 24,
     fontSize: 32,
     fontWeight: 'bold',
@@ -45,7 +45,39 @@ export const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginRight: 24,
     marginBottom: 16,
-    fontSize: 24, // Adjust the icon size as needed
-    color: PRIMARY_COLOR, // Adjust the icon color as needed
+    fontSize: 24,
+    color: PRIMARY_COLOR,
+  },
+  usernameWarningIcon: {
+    fontSize: 20,
+    color: 'red',
+    position: 'absolute',
+    right: 32,
+    top: 8,
+    textAlignVertical: 'center',
+  },
+  usernameValidIcon: {
+    fontSize: 20,
+    color: PRIMARY_COLOR,
+    position: 'absolute',
+    right: 32,
+    top: 8,
+    textAlignVertical: 'center',
+  },
+  usernameContainer: {
+    flexDirection: 'row',
+  },
+  usernameInputText: {
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: PRIMARY_COLOR,
+    color: SECONDARY_COLOR,
+    paddingHorizontal: 8,
+    justifyContent: 'flex-start',
+    height: 36,
+    marginLeft: 24,
+    marginRight: 24,
+    marginBottom: 12,
+    flex: 1, // Add this line
   },
 });
