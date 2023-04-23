@@ -6,7 +6,7 @@ import {useStorage} from './utils/useStorage';
 
 import Welcome from './screens/Welcome';
 import Eula from './screens/Eula';
-import CreateAccount from './screens/CreateAccount';
+import CreateAccount from './screens/CreateAccount/CreateAccount';
 import Login from './screens/Login';
 import Rooms from './screens/Rooms';
 import Room from './screens/Room';

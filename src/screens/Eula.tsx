@@ -4,12 +4,13 @@ import {useNavigation} from '@react-navigation/native';
 import {Button} from '../components/Button';
 import {styles} from './styles';
 import {PRIMARY_COLOR} from '../utils/colors';
-import {eulaText} from '../texts/eulaText';
+// import {eulaText} from '../texts/eulaText';
 
 export function Eula({route}: any) {
   const navigation = useNavigation<any>();
   const [showHeaderTitle, setShowHeaderTitle] = React.useState(false);
   const eulaTitle = 'EULA';
+  const eulaPlaceholderText = 'EULA placeholder text';
 
   const handleScroll = ({nativeEvent}: any) => {
     setShowHeaderTitle(nativeEvent.contentOffset.y > 0);
@@ -31,7 +32,7 @@ export function Eula({route}: any) {
       <ScrollView onScroll={handleScroll} scrollEventThrottle={16}>
         <View style={styles.content}>
           <Text style={styles.title}>{eulaTitle}</Text>
-          <Text style={styles.text}>{eulaText}</Text>
+          <Text style={styles.text}>{eulaPlaceholderText}</Text>
         </View>
         <View style={styles.buttonsContainer}>
           <Button

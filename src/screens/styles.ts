@@ -37,7 +37,6 @@ export const styles = StyleSheet.create({
     marginTop: 12,
     marginBottom: 8,
     marginLeft: 24,
-    // marginRight: 24,
     textAlign: 'left',
   },
   textInput: {
@@ -51,7 +50,59 @@ export const styles = StyleSheet.create({
     marginLeft: 24,
     marginRight: 24,
     marginBottom: 12,
+    // flex: 1, // Add this line
   },
+  keys: {
+    color: PRIMARY_COLOR,
+    fontSize: 14,
+    alignSelf: 'center',
+    marginTop: 12,
+    marginBottom: 12,
+    marginLeft: 24,
+    marginRight: 24,
+  },
+  copyIcon: {
+    fontSize: 20,
+    color: PRIMARY_COLOR,
+  },
+
+  usernameContainer: {
+    flexDirection: 'row',
+    //   alignItems: 'center',
+  },
+  usernameTextInput: {
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: PRIMARY_COLOR,
+    color: SECONDARY_COLOR,
+    paddingHorizontal: 8,
+    justifyContent: 'flex-start',
+    height: 36,
+    marginLeft: 24,
+    marginRight: 24,
+    marginBottom: 12,
+    flex: 1, // Add this line
+  },
+  usernameValidIcon: {
+    fontSize: 20,
+    color: PRIMARY_COLOR,
+    position: 'absolute',
+    right: 32,
+    top: 8, // Add this line
+    bottom: 0, // Add this line
+    textAlignVertical: 'center', // Add this line
+  },
+  usernameWarningIcon: {
+    fontSize: 20,
+    color: 'red',
+    position: 'absolute',
+    right: 32,
+    top: 8, // Add this line
+    bottom: 0, // Add this line
+    textAlignVertical: 'center', // Add this line
+  },
+
+  //
 
   screenProfileContent: {
     padding: 20,
