@@ -16,7 +16,6 @@ export const styles = StyleSheet.create({
   },
   usernameContainer: {
     flexDirection: 'row',
-    //   alignItems: 'center',
   },
   usernameTextInput: {
     borderRadius: 20,
@@ -39,7 +38,6 @@ export const styles = StyleSheet.create({
     top: 8,
     textAlignVertical: 'center',
   },
-
   usernameValidIcon: {
     fontSize: 20,
     color: PRIMARY_COLOR,
@@ -48,15 +46,13 @@ export const styles = StyleSheet.create({
     top: 8,
     textAlignVertical: 'center',
   },
-
-  screenTitle: {
+  screenSubtitle: {
     fontSize: 24,
     color: SECONDARY_COLOR,
     fontWeight: 'bold',
     alignSelf: 'center',
     marginTop: 24,
   },
-
   screenText: {
     fontSize: 14,
     color: SECONDARY_COLOR,

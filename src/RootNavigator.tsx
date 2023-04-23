@@ -8,7 +8,7 @@ import Welcome from './screens/Welcome';
 import Eula from './screens/Eula';
 import CreateAccount from './screens/CreateAccount/CreateAccount';
 import Login from './screens/Login';
-import Rooms from './screens/Rooms';
+import Rooms from './screens/Rooms/Rooms';
 import Room from './screens/Room';
 import Profile from './screens/Profile';
 import {WithSplashScreen} from './screens/splash/SplashScreen';

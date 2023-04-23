@@ -95,7 +95,7 @@ export function CreateAccount() {
         )}
       </View>
 
-      <Text style={styles.screenTitle}> {publicKeyTitle} </Text>
+      <Text style={styles.screenSubtitle}> {publicKeyTitle} </Text>
       <Text style={styles.screenText}> {publicKeyText} </Text>
       <TouchableOpacity
         onPress={() => {
@@ -115,7 +115,7 @@ export function CreateAccount() {
 
       {publicKeyCopied && (
         <>
-          <Text style={styles.screenTitle}> {privateKeyTitle} </Text>
+          <Text style={styles.screenSubtitle}> {privateKeyTitle} </Text>
           <Text style={styles.screenText}> {privateKeyText} </Text>
 
           <TouchableOpacity

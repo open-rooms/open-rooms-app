@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, Modal, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
-import CreateRoom from './CreateRoom';
-import {IRoom} from '../utils/types';
-import {Button} from '../components/Button';
-import {PRIMARY_COLOR} from '../utils/colors';
+import CreateRoom from '../CreateRoom';
+import {IRoom} from '../../utils/types';
+import {Button} from '../../components/Button';
+import {PRIMARY_COLOR} from '../../utils/colors';
 import {useNavigation} from '@react-navigation/native';
-import rooms from '../utils/fakeRooms.json';
-import ProfilePic from '../components/ProfilePic';
-import useNostr from '../nostr/useNostr';
+import ProfilePic from '../../components/ProfilePic';
+
+// data source
+import useNostr from '../../nostr/useNostr';
+import rooms from '../../utils/fakeRooms.json';
 
 const Rooms = () => {
   const navigation = useNavigation<any>();
@@ -27,7 +29,7 @@ const Rooms = () => {
     });
 
     return (
-      <View key={item.id} style={styles.row}>
+      <View key={item.id} style={styles.rowContainer}>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('Room', {
@@ -37,18 +39,20 @@ const Rooms = () => {
             })
           }>
           <View style={styles.profileContainer}>
-            <ProfilePic style={styles.robot} />
+            <ProfilePic style={styles.profilePictureContainer} />
             <View style={styles.profileTextContainer}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.username}>
+              <Text style={styles.nameText}>{item.name}</Text>
+              <Text style={styles.usernameText}>
                 {`${item.username} \u00B7 ${formattedStartDate}`}
               </Text>
             </View>
           </View>
           <View style={styles.descriptionContainer}>
-            <Text style={styles.textRooms}>{item.about}</Text>
+            <Text style={styles.aboutText}>{item.about}</Text>
             <Text
-              style={styles.textRooms}>{`${item.members.length} Members`}</Text>
+              style={
+                styles.membersText
+              }>{`${item.members.length} Members`}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -78,20 +82,20 @@ const Rooms = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.screenContainer}>
       <FlatList
         data={rooms}
         renderItem={renderRooms}
         keyExtractor={item => item.id.toString()}
-        style={styles.list}
+        style={styles.listContainer}
         onScroll={handleScroll}
         scrollEventThrottle={16}
         ListHeaderComponent={
-          showHeaderTitle ? null : <Text style={styles.screenTitle}>Rooms</Text>
+          showHeaderTitle ? null : <Text style={styles.headerTitle}>Rooms</Text>
         }
       />
       <Modal visible={isModalVisible} animationType="slide">
-        <View style={styles.modal}>
+        <View style={styles.modalContainer}>
           <CreateRoom onClose={onModalClose} />
         </View>
       </Modal>
