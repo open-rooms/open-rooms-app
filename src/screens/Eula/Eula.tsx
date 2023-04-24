@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Button} from '../../components/Button';
 import {styles} from './styles';
 import {PRIMARY_COLOR} from '../../utils/colors';
-import {eulaText} from '../../texts/eulaText';
+// import {eulaText} from '../../texts/eulaText';
 
 export function Eula({route}: any) {
   const navigation = useNavigation<any>();

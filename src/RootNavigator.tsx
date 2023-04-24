@@ -9,7 +9,7 @@ import Eula from './screens/Eula/Eula';
 import CreateAccount from './screens/CreateAccount/CreateAccount';
 import Login from './screens/Login';
 import Rooms from './screens/Rooms/Rooms';
-import Room from './screens/Room';
+import Room from './screens/Room/Room';
 import Profile from './screens/Profile';
 import {WithSplashScreen} from './screens/splash/SplashScreen';
 import BackButton from './components/BackButton';
@@ -65,7 +65,7 @@ export function RootNavigator() {
               name="Room"
               component={Room}
               options={{
-                title: 'Room Details',
+                title: '',
                 headerLeft: BackButton,
               }}
             />
