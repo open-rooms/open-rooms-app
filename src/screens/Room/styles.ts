@@ -1,27 +1,52 @@
 import {StyleSheet} from 'react-native';
 import {SECONDARY_COLOR} from '../../utils/colors';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: 'white',
   },
+  profileContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#EBEEF0',
+  },
+  profilePictureContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 32,
+    alignSelf: 'flex-start',
+    marginBottom: 15,
+  },
   screenTitle: {
-    top: 24,
-    marginLeft: 24,
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 14,
-    color: SECONDARY_COLOR,
+    color: '#14171A',
+    marginBottom: 5,
   },
   usernameText: {
-    top: 12,
-    marginLeft: 26,
     fontSize: 14,
-    color: '#666',
+    color: '#657786',
+    marginBottom: 10,
   },
-  contentContainer: {
-    justifyContent: 'center',
-    padding: 12,
+  dateText: {
+    fontSize: 14,
+    color: '#657786',
+    marginBottom: 10,
+  },
+  aboutText: {
+    fontSize: 14,
+    color: SECONDARY_COLOR,
+    marginTop: 8,
+    marginBottom: 8,
+    textAlign: 'left',
+  },
+  membersText: {
+    fontSize: 14,
+    color: '#657786',
   },
 });
+
+export default styles;

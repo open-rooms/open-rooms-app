@@ -36,6 +36,9 @@ const Rooms = () => {
               roomId: item.id,
               roomName: item.name,
               roomUsername: item.username,
+              roomAbout: item.about,
+              roomMembers: item.members.length,
+              roomDate: formattedStartDate,
             })
           }>
           <View style={styles.profileContainer}>
