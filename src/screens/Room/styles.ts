@@ -45,7 +45,40 @@ const styles = StyleSheet.create({
   },
   membersText: {
     fontSize: 14,
-    color: '#657786',
+    color: SECONDARY_COLOR,
+  },
+  proposalsList: {
+    marginTop: 20,
+  },
+  proposalContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#EBEEF0',
+  },
+  proposalTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: SECONDARY_COLOR,
+    marginBottom: 5,
+  },
+  proposalDetails: {
+    fontSize: 14,
+    color: SECONDARY_COLOR,
+    marginBottom: 3,
+  },
+  statusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 8,
+  },
+
+  statusIndicator: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 5,
   },
 });
 

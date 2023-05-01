@@ -14,6 +14,7 @@ import Profile from './screens/Profile';
 import {WithSplashScreen} from './screens/splash/SplashScreen';
 import BackButton from './components/BackButton';
 import ProfileButton from './components/ProfileButton';
+import Proposal from './screens/Proposal/Proposal';
 
 export function RootNavigator() {
   const Stack = createNativeStackNavigator();
@@ -72,6 +73,14 @@ export function RootNavigator() {
             <Stack.Screen
               name="Profile"
               component={Profile}
+              options={{
+                title: '',
+                headerLeft: BackButton,
+              }}
+            />
+            <Stack.Screen
+              name="Proposal"
+              component={Proposal}
               options={{
                 title: '',
                 headerLeft: BackButton,

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, Modal, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {styles} from './styles';
 import CreateRoom from '../CreateRoom/CreateRoom';
 import {IRoom} from '../../utils/types';
-import {Button} from '../../components/Button';
 import {PRIMARY_COLOR} from '../../utils/colors';
-import {useNavigation} from '@react-navigation/native';
+import {Button} from '../../components/Button';
 import ProfilePic from '../../components/ProfilePic';
 
 // data source
