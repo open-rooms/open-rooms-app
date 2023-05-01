@@ -14,12 +14,20 @@ const styles = StyleSheet.create({
     borderBottomColor: '#EBEEF0',
   },
   profilePictureContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 32,
+    alignSelf: 'flex-start',
+    marginBottom: 15,
+  },
+  roomPictureContainer: {
     width: 48,
     height: 48,
     borderRadius: 32,
     alignSelf: 'flex-start',
     marginBottom: 15,
   },
+
   screenTitle: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -50,12 +58,19 @@ const styles = StyleSheet.create({
   proposalsList: {
     marginTop: 20,
   },
-  proposalContainer: {
+  rowContainer: {
     paddingHorizontal: 20,
     paddingTop: 15,
     paddingBottom: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#EBEEF0',
+  },
+  proposalTextContainer: {
+    marginLeft: 10,
+  },
+  porposalContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   proposalTitle: {
     fontSize: 14,
@@ -66,7 +81,7 @@ const styles = StyleSheet.create({
   proposalDetails: {
     fontSize: 14,
     color: SECONDARY_COLOR,
-    marginBottom: 3,
+    marginBottom: 5,
   },
   statusContainer: {
     flexDirection: 'row',

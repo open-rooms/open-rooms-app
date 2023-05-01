@@ -10,7 +10,7 @@ import {RootStackParamList} from '../../utils/types';
 
 const RoomHeader = ({room}: any) => (
   <View style={styles.profileContainer}>
-    <ProfilePic style={styles.profilePictureContainer} />
+    <ProfilePic style={styles.roomPictureContainer} />
     <Text style={styles.screenTitle}> {room.roomName} </Text>
     <Text style={styles.usernameText}> {room.roomUsername} </Text>
     <Text style={styles.dateText}> {room.roomDate} </Text>
@@ -43,21 +43,25 @@ const Proposal = ({proposal}: any) => {
   return (
     <View
       key={proposal.id}
-      style={styles.proposalContainer}
+      style={styles.rowContainer}
       onTouchEnd={handleProposalPress}>
-      <ProfilePic style={styles.profilePictureContainer} />
-      <Text style={styles.proposalDetails}>{proposal.creator}</Text>
-      <Text style={styles.proposalTitle}>{proposal.proposal}</Text>
-      <View style={styles.statusContainer}>
-        <View
-          style={[
-            styles.statusIndicator,
-            {backgroundColor: getStatusIndicatorColor()},
-          ]}
-        />
-        <Text style={styles.proposalDetails}>
-          {`${proposal.status} \u00B7 ${timePassed}`}
-        </Text>
+      <View style={styles.porposalContainer}>
+        <ProfilePic style={styles.profilePictureContainer} />
+        <View style={styles.proposalTextContainer}>
+          <Text style={styles.proposalDetails}>{proposal.creator}</Text>
+          <Text style={styles.proposalTitle}>{proposal.proposal}</Text>
+          <View style={styles.statusContainer}>
+            <View
+              style={[
+                styles.statusIndicator,
+                {backgroundColor: getStatusIndicatorColor()},
+              ]}
+            />
+            <Text style={styles.proposalDetails}>
+              {`${proposal.status} \u00B7 ${timePassed}`}
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
   );
