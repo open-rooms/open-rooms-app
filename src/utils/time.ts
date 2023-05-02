@@ -1,3 +1,13 @@
+export function formatStartDate(startDate: number): string {
+  const date = new Date(startDate * 1000);
+  const formattedDate = date.toLocaleString('default', {
+    month: 'short',
+    year: 'numeric',
+  });
+
+  return formattedDate;
+}
+
 export const getRemainingTime = (start_date: number, duration: number) => {
   const now = Date.now();
   const end_date = start_date * 1000 + duration * 24 * 60 * 60 * 1000;

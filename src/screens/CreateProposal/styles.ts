@@ -40,44 +40,12 @@ export const styles = StyleSheet.create({
     marginRight: 24,
     marginBottom: 12,
   },
-  createRoomButtonContainer: {
+  createProposalButtonContainer: {
     marginTop: 12,
     width: 144,
     height: 36,
     alignSelf: 'center',
     bottom: 48,
     position: 'absolute',
-  },
-  usernameWarningIcon: {
-    fontSize: 20,
-    color: 'red',
-    position: 'absolute',
-    right: 32,
-    top: 8,
-    textAlignVertical: 'center',
-  },
-  usernameValidIcon: {
-    fontSize: 20,
-    color: PRIMARY_COLOR,
-    position: 'absolute',
-    right: 32,
-    top: 8,
-    textAlignVertical: 'center',
-  },
-  usernameContainer: {
-    flexDirection: 'row',
-  },
-  usernameTextInput: {
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: PRIMARY_COLOR,
-    color: SECONDARY_COLOR,
-    paddingHorizontal: 8,
-    justifyContent: 'flex-start',
-    height: 36,
-    marginLeft: 24,
-    marginRight: 24,
-    marginBottom: 12,
-    flex: 1, // Add this line
   },
 });

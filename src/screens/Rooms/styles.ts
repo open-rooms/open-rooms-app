@@ -12,39 +12,7 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
     color: SECONDARY_COLOR,
   },
-  nameText: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    marginRight: 10,
-  },
-  usernameText: {
-    fontSize: 14,
-    color: '#666',
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  profileContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  profilePictureContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 0,
-    marginRight: 0,
-  },
-  profileTextContainer: {
-    marginLeft: 10,
-  },
-  descriptionContainer: {
-    marginTop: 10,
-  },
-  listContainer: {
+  roomsListContainer: {
     backgroundColor: '#ffffff',
     padding: 20,
     marginVertical: 8,
@@ -52,14 +20,46 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 5,
   },
-  aboutText: {
+  roomContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  roomProfileContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  roomPictureContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 0,
+    marginRight: 0,
+  },
+  roomTextContainer: {
+    marginLeft: 10,
+  },
+  roomName: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    marginRight: 10,
+  },
+  roomUsername: {
+    fontSize: 14,
+    color: '#666',
+  },
+  roomAboutContainer: {
+    marginTop: 10,
+  },
+  roomAbout: {
     fontSize: 14,
     color: SECONDARY_COLOR,
     marginTop: 8,
     marginBottom: 8,
     textAlign: 'left',
   },
-  membersText: {
+  roomMembers: {
     fontSize: 14,
     color: SECONDARY_COLOR,
     marginTop: 8,
@@ -81,7 +81,7 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-  buttonsContainer: {
+  buttonContainer: {
     bottom: 12,
     width: '100%',
     alignItems: 'center',

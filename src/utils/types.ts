@@ -24,7 +24,7 @@ export interface IBackButton {
 }
 export interface IRoom {
   id?: string;
-  thumbnailUrl: string;
+  thumbnailUrl?: string;
   name: string;
   username: string;
   about: string;

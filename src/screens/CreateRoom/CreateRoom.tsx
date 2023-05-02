@@ -92,20 +92,20 @@ const CreateRoom = (props: {onClose: () => void}) => {
     <View style={styles.screenContainer}>
       <View style={styles.screenContainer}>
         <TouchableOpacity onPress={props.onClose}>
-          <Icon name="close" style={styles.closeIcon} />
+          <Icon name="close" style={styles.closeModalIcon} />
         </TouchableOpacity>
         <Text style={styles.screenTitle}>Create Room</Text>
-        <Text style={styles.inputTitle}> Room name </Text>
+        <Text style={styles.fieldTitle}> Room name </Text>
         <TextInput
-          style={styles.inputText}
+          style={styles.textInput}
           placeholder="My Community"
           onChangeText={text => setName(text)}
           value={name}
         />
-        <Text style={styles.inputTitle}> Room username </Text>
+        <Text style={styles.fieldTitle}> Room username </Text>
         <View style={styles.usernameContainer}>
           <TextInput
-            style={styles.usernameInputText}
+            style={styles.usernameTextInput}
             placeholder="@username"
             onChangeText={handleUsernameChange}
             value={username}
