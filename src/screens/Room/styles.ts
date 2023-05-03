@@ -105,22 +105,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     flexWrap: 'wrap', // Added this property to wrap text when it reaches the container edge
   },
-  proposalStatusContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 4,
-  },
-  proposalStatusIndicator: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    marginRight: 5,
-  },
-  proposalStatus: {
-    fontSize: 14,
-    color: SECONDARY_COLOR,
-    marginBottom: 4,
-  },
+
   createProposalButtonContainer: {
     marginTop: 12,
     width: 144,
