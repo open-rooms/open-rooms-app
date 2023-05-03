@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {styles} from './styles';
-import {Button} from '../components/Button';
-import {PRIMARY_COLOR} from '../utils/colors';
-import {welcomeText} from '../texts/welcomeText';
+import {styles} from '../styles';
+import {Button} from '../../components/Button';
+import {PRIMARY_COLOR} from '../../utils/colors';
+import {welcomeText} from '../../texts/welcomeText';
 
 export function Welcome() {
   const navigation = useNavigation<any>();

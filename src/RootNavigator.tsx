@@ -4,18 +4,19 @@ import {StatusBar, ViewStyle} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useStorage} from './utils/useStorage';
 
-import Welcome from './screens/Welcome';
+import Welcome from './screens/Welcome/Welcome';
 import Eula from './screens/Eula/Eula';
 import CreateAccount from './screens/CreateAccount/CreateAccount';
-import Login from './screens/Login';
+import Login from './screens/Login/Login';
 import Rooms from './screens/Rooms/Rooms';
 import Room from './screens/Room/Room';
-import Profile from './screens/Profile';
+import Profile from './screens/Profile/Profile';
 import {WithSplashScreen} from './screens/splash/SplashScreen';
 import BackButton from './components/BackButton';
 import ProfileButton from './components/ProfileButton';
 import Proposal from './screens/Proposal/Proposal';
 import EditRoom from './screens/EditRoom/EditRoom';
+import EditProfile from './screens/EditProfile/EditProfile';
 import {IRoom} from './utils/types';
 
 export function RootNavigator() {
@@ -101,6 +102,14 @@ export function RootNavigator() {
               component={Proposal}
               options={{
                 title: '',
+                headerLeft: BackButton,
+              }}
+            />
+            <Stack.Screen
+              name="EditProfile"
+              component={EditProfile}
+              options={{
+                title: 'Edit Profile',
                 headerLeft: BackButton,
               }}
             />

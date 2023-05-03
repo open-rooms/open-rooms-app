@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput} from 'react-native';
-import {styles} from './styles';
+import {styles} from '../styles';
 import {useNavigation} from '@react-navigation/native';
-import {generatePublickKey} from '../nostr/utils/generateKeys';
-import {useStorage} from '../utils/useStorage';
-import {BackButton} from '../components/BackButton';
-import {PRIMARY_COLOR} from '../utils/colors';
-import {Button} from '../components/Button';
+import {generatePublickKey} from '../../nostr/utils/generateKeys';
+import {useStorage} from '../../utils/useStorage';
+import {BackButton} from '../../components/BackButton';
+import {PRIMARY_COLOR} from '../../utils/colors';
+import {Button} from '../../components/Button';
 
 export function Login() {
   const {connectAccount} = useStorage();

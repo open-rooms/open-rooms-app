@@ -77,4 +77,5 @@ export type RootStackParamList = {
     room: IRoom;
     onUpdate: (updatedRoom: IRoom) => void;
   };
+  EditProfile: undefined;
 };
