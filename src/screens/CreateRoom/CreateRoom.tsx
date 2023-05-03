@@ -18,6 +18,7 @@ const CreateRoom = (props: {onClose: () => void}) => {
     null,
   );
   const [usernameStatus, setUsernameStatus] = useState('');
+  const [about, setAbout] = useState('');
   const maxLength = 40;
 
   const kind = 1;
@@ -120,6 +121,15 @@ const CreateRoom = (props: {onClose: () => void}) => {
             <Icon name="done" style={styles.usernameValidIcon} />
           )}
         </View>
+        <Text style={styles.fieldTitle}>About room</Text>
+        <TextInput
+          style={styles.aboutTextInput}
+          value={about}
+          onChangeText={setAbout}
+          placeholder="Enter room description"
+          multiline
+          numberOfLines={4}
+        />
       </View>
       <Button
         title="Create Room"

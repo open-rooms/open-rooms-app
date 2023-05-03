@@ -80,4 +80,17 @@ export const styles = StyleSheet.create({
     marginBottom: 12,
     flex: 1, // Add this line
   },
+  aboutTextInput: {
+    borderWidth: 1,
+    borderColor: '#EBEEF0',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    color: SECONDARY_COLOR,
+    marginLeft: 24,
+    marginRight: 24,
+    marginBottom: 12,
+    height: 120,
+    textAlignVertical: 'top',
+  },
 });
