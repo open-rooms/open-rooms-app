@@ -18,6 +18,7 @@ const CreateRoom = (props: {onClose: () => void}) => {
     null,
   );
   const [usernameStatus, setUsernameStatus] = useState('');
+  const maxLength = 40;
 
   const kind = 1;
   const fields = {
@@ -100,6 +101,7 @@ const CreateRoom = (props: {onClose: () => void}) => {
           style={styles.textInput}
           placeholder="My Community"
           onChangeText={text => setName(text)}
+          maxLength={maxLength}
           value={name}
         />
         <Text style={styles.fieldTitle}> Room username </Text>
@@ -108,6 +110,7 @@ const CreateRoom = (props: {onClose: () => void}) => {
             style={styles.usernameTextInput}
             placeholder="@username"
             onChangeText={handleUsernameChange}
+            maxLength={maxLength}
             value={username}
           />
           {usernameStatus === 'usernameTooShort' && (
