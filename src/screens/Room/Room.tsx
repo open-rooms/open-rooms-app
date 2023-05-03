@@ -5,7 +5,7 @@ import ProfilePic from '../../components/ProfilePic';
 import {useNavigation} from '@react-navigation/native';
 import {getTimePassed} from '../../utils/time';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../utils/types';
+import {IRoom, RootStackParamList} from '../../utils/types';
 import {PRIMARY_COLOR} from '../../utils/colors';
 import CreateProposal from '../CreateProposal/CreateProposal';
 import Button from '../../components/Button';
@@ -13,30 +13,21 @@ import Button from '../../components/Button';
 //fake data
 import fakeProposals from '../../utils/fakeProposals.json';
 
-const RoomHeader = ({room, isCreator, isJoined, setIsJoined}: any) => {
+const RoomHeader = ({
+  room,
+  isCreator,
+  isJoined,
+  setIsJoined,
+  onUpdateRoom,
+}: any) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  // fake data
-  const dummyRoom = {
-    id: '1',
-    thumbnailUrl: 'https://example.com/thumbnail.jpg',
-    name: 'Test Room',
-    username: '@testroom',
-    about: 'This is a test room.',
-    start_date: 1672487263880,
-    creator: 'John Doe',
-    damus: 'Damus',
-    members: ['John Doe', 'Jane Doe'],
-  };
-
-  const handleUpdateRoom = (updatedRoom: any) => {
-    console.log('Room updated:', updatedRoom);
-  };
+  // Update the handleEditRoom function
   const handleEditRoom = () => {
     console.log('Edit room');
     navigation.navigate('EditRoom', {
-      room: dummyRoom,
-      onUpdate: handleUpdateRoom,
+      room,
+      onUpdate: onUpdateRoom, // Change the parameter name to onUpdate
     });
   };
 
@@ -148,6 +139,10 @@ export function Room({route}: any) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showHeaderTitle, setShowHeaderTitle] = useState(false);
   const [isJoined, setIsJoined] = useState(false);
+  const handleUpdateRoom = (updatedRoom: IRoom) => {
+    // Handle the room update here
+    console.log('Updated room:', updatedRoom);
+  };
 
   const onModalClose = () => {
     setIsModalVisible(false);
@@ -183,9 +178,11 @@ export function Room({route}: any) {
             isCreator={true} // Change this to your actual logic to determine if the user is the creator
             isJoined={isJoined}
             setIsJoined={setIsJoined}
+            onUpdateRoom={handleUpdateRoom} // Pass handleUpdateRoom as a prop
           />
         }
       />
+
       <Modal visible={isModalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <CreateProposal onClose={onModalClose} />

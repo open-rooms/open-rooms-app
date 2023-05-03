@@ -12,8 +12,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 14,
     color: SECONDARY_COLOR,
     marginBottom: 8,
   },
@@ -39,9 +38,24 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   updateButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 14,
+    //    fontWeight: 'bold',
     color: 'white',
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+
+  deleteButtonText: {
+    color: 'white',
+    fontSize: 14,
+    // fontWeight: 'bold',
   },
 });
 
