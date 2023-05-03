@@ -11,10 +11,9 @@ interface CreateProposalProps {
 }
 
 const CreateProposal: React.FC<CreateProposalProps> = ({onClose}) => {
-  const [title, setTitle] = useState('');
-
-  // Add any other required fields and their corresponding states
-
+  const [proposal, setProposal] = useState('');
+  const maxLength = 280;
+  const remainingChars = maxLength - proposal.length;
   const onCreateProposalPress = async () => {
     // Implement the logic for creating a proposal
 
@@ -29,14 +28,18 @@ const CreateProposal: React.FC<CreateProposalProps> = ({onClose}) => {
           <Icon name="close" style={styles.closeModalIcon} />
         </TouchableOpacity>
         <Text style={styles.screenTitle}>Create Proposal</Text>
-        <Text style={styles.fieldTitle}>Proposal Title</Text>
+        <Text style={styles.fieldTitle}>Proposal description</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="My Proposal"
-          onChangeText={text => setTitle(text)}
-          value={title}
+          placeholder="My Proposal is about..."
+          onChangeText={text => setProposal(text)}
+          multiline // This allows the user to type on multiple lines
+          maxLength={maxLength}
+          value={proposal}
         />
-        {/* Add any other required input fields */}
+        <Text style={styles.reminingChars}>
+          {remainingChars} characters remaining
+        </Text>
       </View>
       <Button
         title="Create Proposal"
