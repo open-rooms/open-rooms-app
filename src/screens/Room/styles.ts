@@ -13,12 +13,30 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#EBEEF0',
   },
+  roomHeaderContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   roomPictureContainer: {
     width: 48,
     height: 48,
     borderRadius: 32,
     alignSelf: 'flex-start',
     marginBottom: 15,
+  },
+  roomActionContainer: {
+    alignItems: 'flex-end',
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  roomActionButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 112, // Add a fixed width
+    height: 36, // Add a fixed height
   },
   roomNameContainer: {
     flexDirection: 'row',

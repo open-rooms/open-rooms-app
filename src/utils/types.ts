@@ -62,6 +62,10 @@ export interface IEvent {
   content: string;
   tags: string[][];
 }
+export interface EditRoomProps {
+  room: IRoom;
+  onUpdate: (updatedRoom: IRoom) => void;
+}
 export type RootStackParamList = {
   Welcome: undefined;
   Eula: undefined;
@@ -71,4 +75,8 @@ export type RootStackParamList = {
   Room: {roomId: string};
   Profile: undefined;
   Proposal: {proposal: any};
+  EditRoom: {
+    room: IRoom;
+    onUpdate: (updatedRoom: IRoom) => void;
+  };
 };

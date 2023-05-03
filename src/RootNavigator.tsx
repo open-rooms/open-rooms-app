@@ -15,6 +15,8 @@ import {WithSplashScreen} from './screens/splash/SplashScreen';
 import BackButton from './components/BackButton';
 import ProfileButton from './components/ProfileButton';
 import Proposal from './screens/Proposal/Proposal';
+import EditRoom from './screens/EditRoom/EditRoom';
+import {IRoom} from './utils/types';
 
 export function RootNavigator() {
   const Stack = createNativeStackNavigator();
@@ -70,6 +72,22 @@ export function RootNavigator() {
                 headerLeft: BackButton,
               }}
             />
+            <Stack.Screen
+              name="EditRoom"
+              options={{
+                title: 'Edit Room',
+                headerLeft: BackButton,
+              }}
+              children={props => {
+                const {room, onUpdate} = props.route.params as {
+                  room: IRoom;
+                  onUpdate: (updatedRoom: IRoom) => void;
+                };
+
+                return <EditRoom room={room} onUpdate={onUpdate} {...props} />;
+              }}
+            />
+
             <Stack.Screen
               name="Profile"
               component={Profile}
