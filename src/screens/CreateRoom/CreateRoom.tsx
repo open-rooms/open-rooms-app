@@ -1,18 +1,12 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
-import {Button} from '../../components/Button';
-
-import {PRIMARY_COLOR} from '../../utils/colors';
-import {styles} from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
-import useNostr from '../../nostr/useNostr';
-// import useNostrRooms from '../nostr/useNostrRooms';
+import {createRoomStyles as styles} from './createRoomStyles';
+import {handleUsernameChange as handleUsernameChangeUtil} from '../../utils/usernameHandlers';
 
 const CreateRoom = (props: {onClose: () => void}) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
-  const {publishRoom, publishProposal} = useNostr();
   const [hasValidUsername, setHasValidUsername] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
     null,
@@ -21,109 +15,65 @@ const CreateRoom = (props: {onClose: () => void}) => {
   const [about, setAbout] = useState('');
   const maxLength = 40;
 
-  const kind = 1;
-  const fields = {
-    name,
-    username,
-    //  imageUrl,
-    about: 'about',
-    start_date: 111,
-    creator: 'creator',
-    users: ['sadsf', 'fsds'],
-  };
-
   const onCreateRoomPress = async () => {
-    try {
-      publishRoom(kind, JSON.stringify(fields), [], () => {
-        console.log('room Published');
-      });
-
-      // just for testing
-      // publishProposal(kind, fields, [['#t', 'roomId']], () => {
-      //   console.log('room Published');
-      // });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onCreateProposalPress = async () => {
     if (!hasValidUsername) {
-      Alert.alert('Username has to be longer then 4 characters');
+      Alert.alert('Username has to be longer than 4 characters');
       return;
     }
-    try {
-      publishRoom(kind, JSON.stringify(fields), [], () => {
-        console.log('room Published');
-      });
-
-      // just for testing
-      publishProposal(kind, fields, [['#t', 'roomId']], () => {
-        console.log('room Published');
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    // placeholder to insert action to create room here
   };
-
-  const handleUsernameChange = (text: string) => {
-    if (typingTimeout) {
-      clearTimeout(typingTimeout);
-    }
-
-    if (!text.startsWith('@')) {
-      setUsername('@' + text);
-    } else {
-      setUsername(text);
-    }
-
-    if (text.length < 4) {
-      setHasValidUsername(false);
-      setUsernameStatus('usernameTooShort');
-    } else {
-      const timeout = setTimeout(() => {
-        setHasValidUsername(true);
-        setUsernameStatus('valid');
-      }, 1000);
-
-      setTypingTimeout(timeout);
-    }
-  };
+  const handleUsernameChange = useCallback(
+    (text: string) => {
+      handleUsernameChangeUtil(
+        text,
+        setUsername,
+        setHasValidUsername,
+        setUsernameStatus,
+        setTypingTimeout,
+        typingTimeout,
+      );
+    },
+    [typingTimeout],
+  );
 
   return (
-    <View style={styles.screenContainer}>
-      <View style={styles.screenContainer}>
-        <TouchableOpacity onPress={props.onClose}>
-          <Icon name="close" style={styles.closeModalIcon} />
-        </TouchableOpacity>
-        <Text style={styles.screenTitle}>Create Room</Text>
-        <Text style={styles.fieldTitle}> Room name </Text>
+    <View style={styles.container}>
+      <TouchableOpacity onPress={props.onClose}>
+        <Icon name="close" style={styles.closeIcon} />
+      </TouchableOpacity>
+      <Text style={styles.title}>Create Room</Text>
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Room name </Text>
         <TextInput
-          style={styles.textInput}
+          style={styles.input}
           placeholder="My Community"
           onChangeText={text => setName(text)}
           maxLength={maxLength}
           value={name}
         />
-        <Text style={styles.fieldTitle}> Room username </Text>
+      </View>
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Room username </Text>
         <View style={styles.usernameContainer}>
           <TextInput
-            style={styles.usernameTextInput}
+            style={[styles.input, {...styles.usernameInput}]}
             placeholder="@username"
             onChangeText={handleUsernameChange}
             maxLength={maxLength}
             value={username}
           />
           {usernameStatus === 'usernameTooShort' && (
-            <Icon name="error" style={styles.usernameWarningIcon} />
+            <Icon name="error" style={styles.errorIcon} />
           )}
           {usernameStatus === 'valid' && (
-            <Icon name="done" style={styles.usernameValidIcon} />
+            <Icon name="done" style={styles.doneIcon} />
           )}
         </View>
-        <Text style={styles.fieldTitle}>About room</Text>
+      </View>
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>About room</Text>
         <TextInput
-          style={styles.aboutTextInput}
+          style={[styles.input, styles.multiLineInput]}
           value={about}
           onChangeText={setAbout}
           placeholder="Enter room description"
@@ -131,13 +81,11 @@ const CreateRoom = (props: {onClose: () => void}) => {
           numberOfLines={4}
         />
       </View>
-      <Button
-        title="Create Room"
-        onPress={onCreateRoomPress}
-        buttonColor={PRIMARY_COLOR}
-        titleColor={'white'}
-        buttonStyle={styles.createRoomButtonContainer}
-      />
+      <TouchableOpacity
+        style={styles.primaryButton}
+        onPress={onCreateRoomPress}>
+        <Text style={styles.primaryButtonText}>Create Room</Text>
+      </TouchableOpacity>
     </View>
   );
 };

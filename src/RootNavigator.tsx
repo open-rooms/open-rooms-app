@@ -6,6 +6,7 @@ import {useStorage} from './utils/useStorage';
 
 import Welcome from './screens/Welcome/Welcome';
 import Eula from './screens/Eula/Eula';
+import GenerateKeys from './screens/GenerateKeys/GenerateKeys';
 import CreateAccount from './screens/CreateAccount/CreateAccount';
 import Login from './screens/Login/Login';
 import Rooms from './screens/Rooms/Rooms';
@@ -76,7 +77,7 @@ export function RootNavigator() {
             <Stack.Screen
               name="EditRoom"
               options={{
-                title: 'Edit Room',
+                title: '',
                 headerLeft: BackButton,
               }}
               children={props => {
@@ -85,7 +86,16 @@ export function RootNavigator() {
                   onUpdate: (updatedRoom: IRoom) => void;
                 };
 
-                return <EditRoom room={room} onUpdate={onUpdate} {...props} />;
+                return (
+                  <EditRoom
+                    onDelete={function (): void {
+                      throw new Error('Function not implemented.');
+                    }}
+                    room={room}
+                    onUpdate={onUpdate}
+                    {...props}
+                  />
+                );
               }}
             />
 
@@ -130,6 +140,15 @@ export function RootNavigator() {
               }}
             />
             <Stack.Screen
+              name="GenerateKeys"
+              component={GenerateKeys}
+              options={{
+                title: '',
+                headerLeft: BackButton,
+              }}
+            />
+
+            <Stack.Screen
               name="CreateAccount"
               component={CreateAccount}
               options={{
@@ -141,7 +160,7 @@ export function RootNavigator() {
               name="Login"
               component={Login}
               options={{
-                title: 'Login',
+                title: '',
                 headerLeft: BackButton,
               }}
             />

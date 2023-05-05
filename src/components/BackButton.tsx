@@ -3,7 +3,7 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
-import {PRIMARY_COLOR} from '../utils/colors';
+import colorPallete from '../utils/colorPalette';
 
 export const BackButton = () => {
   const navigation = useNavigation();
@@ -17,7 +17,7 @@ export const BackButton = () => {
       <MaterialIcons
         name="arrow-back"
         size={22}
-        color={PRIMARY_COLOR}
+        color={colorPallete.PRIMARY_COLOR}
         marginLeft={12}
       />
     </TouchableOpacity>

@@ -6,11 +6,12 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import styles from './styles';
+import styles from './editRoomStyles';
 import {IRoom} from '../../utils/types';
 import {useNavigation} from '@react-navigation/native';
 
 interface EditRoomProps {
+  room: IRoom;
   route: any;
   onUpdate: (updatedRoom: IRoom) => void;
   onDelete: () => void;
@@ -46,6 +47,7 @@ export function EditRoom({route}: EditRoomProps) {
 
   return (
     <ScrollView style={styles.container}>
+      <Text style={styles.title}>Edit Room</Text>
       <View style={styles.formGroup}>
         <Text style={styles.label}>Room name</Text>
         <TextInput
@@ -67,7 +69,7 @@ export function EditRoom({route}: EditRoomProps) {
       <View style={styles.formGroup}>
         <Text style={styles.label}>About room</Text>
         <TextInput
-          style={[styles.input, styles.textArea]}
+          style={[styles.input, styles.multilineInput]}
           value={about}
           onChangeText={setAbout}
           placeholder="Enter room description"
@@ -94,8 +96,8 @@ export function EditRoom({route}: EditRoomProps) {
         />
       </View>
 
-      <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
-        <Text style={styles.updateButtonText}>Update Room</Text>
+      <TouchableOpacity style={styles.primaryButton} onPress={handleUpdate}>
+        <Text style={styles.primaryButtonText}>Update Room</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
         <Text style={styles.deleteButtonText}>Delete Room</Text>

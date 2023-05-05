@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Svg, {Circle} from 'react-native-svg'; // Import Circle instead of Rect
-import {PRIMARY_COLOR} from '../utils/colors';
+import colorPalette from '../utils/colorPalette';
 
 interface ProfilePicProps {
   style?: {
@@ -23,7 +23,7 @@ const ProfilePic = ({style}: ProfilePicProps) => {
         style,
       ]}>
       <Svg viewBox="0 0 100 100">
-        <Circle cx="50" cy="50" r="50" fill={PRIMARY_COLOR} />
+        <Circle cx="50" cy="50" r="50" fill={colorPalette.TEXT_COLOR_LIGHT} />
       </Svg>
     </View>
   );

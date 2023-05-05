@@ -2,17 +2,17 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import {styles} from './styles';
-import {PRIMARY_COLOR} from '../utils/colors';
+import colorPallete from '../utils/colorPalette';
 
 const ProposalStatus = ({status, timePassed}: any) => {
   const getStatusIndicatorColor = () => {
     switch (status) {
       case 'live':
-        return 'green';
+        return colorPallete.SUCCESS_COLOR;
       case 'passed':
-        return PRIMARY_COLOR;
+        return colorPallete.PRIMARY_COLOR;
       case 'rejected':
-        return 'red';
+        return colorPallete.ERROR_COLOR;
       default:
         return 'transparent';
     }

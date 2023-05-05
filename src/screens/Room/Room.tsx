@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, Pressable, Modal} from 'react-native';
-import styles from './styles';
+import {
+  View,
+  Text,
+  FlatList,
+  Pressable,
+  Modal,
+  TouchableOpacity,
+} from 'react-native';
 import ProfilePic from '../../components/ProfilePic';
 import {useNavigation} from '@react-navigation/native';
 import {getTimePassed} from '../../utils/time';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {IRoom, RootStackParamList} from '../../utils/types';
-import {PRIMARY_COLOR} from '../../utils/colors';
 import CreateProposal from '../CreateProposal/CreateProposal';
-import Button from '../../components/Button';
 import ProposalStatus from '../../components/ProposalStatus';
+import {roomStyles as styles} from './roomStyles';
 
 //fake data
 import fakeProposals from '../../utils/fakeProposals.json';
@@ -46,29 +51,36 @@ const RoomHeader = ({
   return (
     <View style={styles.roomContainer}>
       <View style={styles.roomHeaderContainer}>
-        <ProfilePic style={styles.roomPictureContainer} />
+        <ProfilePic style={styles.roomPicture} />
         <View style={styles.roomActionContainer}>
           {isCreator ? (
-            <Button
-              title="Edit Room"
-              onPress={handleEditRoom}
-              buttonColor={PRIMARY_COLOR}
-              titleColor={'white'}
-              buttonStyle={styles.roomActionButton}
-            />
+            <TouchableOpacity
+              style={styles.secondarySmallButton}
+              onPress={handleEditRoom}>
+              <Text style={styles.secondaryButtonText}>Edit</Text>
+            </TouchableOpacity>
           ) : (
-            <Button
-              title={isJoined ? 'Joined' : 'Join'}
+            <TouchableOpacity
               onPress={handleJoinRoom}
-              buttonColor={isJoined ? 'white' : PRIMARY_COLOR}
-              titleColor={isJoined ? PRIMARY_COLOR : 'white'}
-              buttonStyle={styles.roomActionButton}
-            />
+              style={
+                isJoined
+                  ? styles.secondarySmallButton
+                  : styles.primarySmallButton
+              }>
+              <Text
+                style={
+                  isJoined
+                    ? styles.secondaryButtonText
+                    : styles.primaryButtonText
+                }>
+                {isJoined ? 'Joined' : 'Join'}
+              </Text>
+            </TouchableOpacity>
           )}
         </View>
       </View>
       <View style={styles.roomNameContainer}>
-        <Text style={styles.roomTitle}>{room.roomName}</Text>
+        <Text style={styles.roomName}>{room.roomName}</Text>
         <Text style={styles.roomUsername}>{room.roomUsername}</Text>
       </View>
       <Text style={styles.roomAbout}>{room.roomAbout}</Text>
@@ -92,13 +104,13 @@ const Proposal = ({proposal}: any) => {
       style={styles.proposalContainer}
       onPress={handleProposalPress}>
       <View style={styles.porposalProfileContainer}>
-        <ProfilePic style={styles.profilePictureContainer} />
+        <ProfilePic style={styles.profilePicture} />
         <View style={styles.proposalTextContainer}>
           <Text style={styles.proposalCreator}>{proposal.creator}</Text>
           <View style={styles.proposalTitleContainer}>
             <Text style={styles.proposalTitle}>{proposal.proposal}</Text>
+            <ProposalStatus status={proposal.status} timePassed={timePassed} />
           </View>
-          <ProposalStatus status={proposal.status} timePassed={timePassed} />
         </View>
       </View>
     </Pressable>
@@ -131,12 +143,11 @@ export function Room({route}: any) {
   };
 
   return (
-    <View style={styles.screenContainer}>
+    <View style={styles.container}>
       <FlatList
         data={fakeProposals}
         renderItem={({item}) => <Proposal proposal={item} />}
         keyExtractor={item => item.id}
-        style={styles.proposalsListContainer}
         onScroll={handleScroll}
         scrollEventThrottle={16}
         ListHeaderComponent={
@@ -160,14 +171,12 @@ export function Room({route}: any) {
           <CreateProposal onClose={onModalClose} />
         </View>
       </Modal>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Create Proposal"
-          onPress={() => setIsModalVisible(true)}
-          buttonColor={PRIMARY_COLOR}
-          titleColor={'white'}
-          buttonStyle={styles.createProposalButtonContainer}
-        />
+      <View>
+        <TouchableOpacity
+          style={styles.primaryButton}
+          onPress={() => setIsModalVisible(true)}>
+          <Text style={styles.primaryButtonText}>Create Proposal</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

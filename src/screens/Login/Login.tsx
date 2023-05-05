@@ -1,28 +1,29 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput} from 'react-native';
-import {styles} from '../styles';
+import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {generatePublickKey} from '../../nostr/utils/generateKeys';
 import {useStorage} from '../../utils/useStorage';
-import {BackButton} from '../../components/BackButton';
-import {PRIMARY_COLOR} from '../../utils/colors';
-import {Button} from '../../components/Button';
+
+import {loginStyles as styles} from './loginStyles';
+
+function FormGroup({label, value, onChangeText, placeholder}: any) {
+  return (
+    <View style={styles.formGroup}>
+      <Text style={styles.label}>{label}</Text>
+      <TextInput
+        style={styles.input}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+      />
+    </View>
+  );
+}
 
 export function Login() {
   const {connectAccount} = useStorage();
   const navigation = useNavigation<any>();
   const [accountPrivateKey, setAccountPrivateKey] = useState('');
-
-  const loginTitle = 'Login';
-  const privateKeyText = `
-      Enter your private key to login.`;
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => <BackButton />,
-      headerTitle: '',
-    });
-  }, [navigation]);
 
   const onLoginPress = async () => {
     if (accountPrivateKey) {
@@ -31,28 +32,22 @@ export function Login() {
       connectAccount(publicKey, privateKey);
       navigation.navigate('Feed');
     } else {
-      alert('Invalid private key');
+      Alert.alert('Invalid private key');
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> {loginTitle} </Text>
-      <Text style={styles.text}> {privateKeyText} </Text>
-      <TextInput
-        style={styles.textInput}
+      <Text style={styles.title}>Login</Text>
+      <FormGroup
+        label="Enter your private key to login."
         value={accountPrivateKey}
         onChangeText={setAccountPrivateKey}
         placeholder="nsec1..."
       />
-
-      <Button
-        title={'Login'}
-        onPress={onLoginPress}
-        buttonColor={PRIMARY_COLOR}
-        titleColor={'white'}
-        buttonStyle={styles.button}
-      />
+      <TouchableOpacity style={styles.primaryButton} onPress={onLoginPress}>
+        <Text style={styles.primaryButtonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 }

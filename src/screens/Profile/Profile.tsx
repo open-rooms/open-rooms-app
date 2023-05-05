@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {useStorage} from '../../utils/useStorage';
-import {Button} from '../../components/Button';
-import {PRIMARY_COLOR} from '../../utils/colors';
-import styles from './styles';
+import {profileStyles as styles} from './profileStyles';
+import {shortenKeys} from '../../utils/shortenKeys';
+import ProfilePic from '../../components/ProfilePic';
+import copyToClipboard from '../../utils/copyToClipboard';
 
 export function Profile({route, navigation}: any) {
-  const {publicKey, privateKey, disconnectAccount} = useStorage();
+  const {publicKey, disconnectAccount} = useStorage();
 
   // Add state variables for the profile information
-  const [profilePicUrl, setProfilePicUrl] = useState(
-    'https://example.com/path/to/profile-pic.jpg',
-  );
+  const [profilePicUrl, setProfilePicUrl] = useState('');
   const [username, setUsername] = useState('John Doe');
   const [damus, setDamus] = useState('Some damus information');
+  const pubKey = shortenKeys(publicKey, 20);
 
   // Create a function to navigate to the EditProfile screen
   const handleEditProfile = () => {
@@ -22,6 +22,17 @@ export function Profile({route, navigation}: any) {
       username,
       damus,
     });
+  };
+
+  const handleLogout = () => {
+    disconnectAccount();
+    navigation.navigate('Login');
+  };
+
+  const handleDeleteAccount = () => {
+    // TODO: Delete account
+    disconnectAccount();
+    navigation.navigate('Welcome');
   };
 
   // Add useEffect to subscribe to 'focus' event
@@ -40,31 +51,36 @@ export function Profile({route, navigation}: any) {
     return unsubscribe;
   }, [navigation, route]);
 
+  const handleCopyPubKey = async () => {
+    await copyToClipboard(publicKey);
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.list}>
-        <Text style={styles.screenTitle}>Profile</Text>
-        <Text style={styles.text}>Public Key: {publicKey}</Text>
-        <Text style={styles.text}>Private Key: {privateKey}</Text>
+      <Text style={styles.title}>Profile</Text>
+      {profilePicUrl ? (
         <Image source={{uri: profilePicUrl}} style={styles.profileImage} />
-        <Text style={styles.text}>Username: {username}</Text>
-        <Text style={styles.text}>Damus: {damus}</Text>
-
-        <Button
-          title="Edit Profile"
-          onPress={handleEditProfile}
-          buttonColor={PRIMARY_COLOR}
-          titleColor={'white'}
-          buttonStyle={styles.button}
-        />
-        <Button
-          title="Logout"
-          onPress={disconnectAccount}
-          buttonColor={PRIMARY_COLOR}
-          titleColor={'white'}
-          buttonStyle={styles.button}
-        />
-      </View>
+      ) : (
+        <ProfilePic style={styles.profileImage} />
+      )}
+      <TouchableOpacity onPress={handleCopyPubKey}>
+        <Text style={styles.keys}>{pubKey}</Text>
+      </TouchableOpacity>
+      <Text style={styles.label}>Username: {username}</Text>
+      <Text style={styles.label}>Damus: {damus}</Text>
+      <TouchableOpacity
+        style={styles.primaryButton}
+        onPress={handleEditProfile}>
+        <Text style={styles.primaryButtonText}>Edit Profile</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.secondaryButton} onPress={handleLogout}>
+        <Text style={styles.secondaryButtonText}>Logout</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={handleDeleteAccount}>
+        <Text style={styles.deleteButtonText}>Delete Account</Text>
+      </TouchableOpacity>
     </View>
   );
 }

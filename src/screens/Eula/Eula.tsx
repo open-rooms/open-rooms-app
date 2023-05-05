@@ -1,16 +1,20 @@
 import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Button} from '../../components/Button';
-import {styles} from './styles';
-import {PRIMARY_COLOR} from '../../utils/colors';
-// import {eulaText} from '../../texts/eulaText';
+import {eulaStyles as styles} from './eulaStyles';
+import {eulaText} from '../../texts/eulaText';
 
 export function Eula({route}: any) {
   const navigation = useNavigation<any>();
   const [showHeaderTitle, setShowHeaderTitle] = React.useState(false);
   const eulaTitle = 'EULA';
-  const eulaPlaceholderText = 'EULA placeholder text';
+  // const eulaPlaceholderText = 'EULA placeholder text';
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: showHeaderTitle ? <Text>{eulaTitle}</Text> : '',
+    });
+  }, [navigation, showHeaderTitle]);
 
   const handleScroll = ({nativeEvent}: any) => {
     setShowHeaderTitle(nativeEvent.contentOffset.y > 0);
@@ -21,34 +25,26 @@ export function Eula({route}: any) {
     navigation.navigate(screen);
   };
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: showHeaderTitle ? <Text>{eulaTitle}</Text> : '',
-    });
-  }, [navigation, showHeaderTitle]);
+  const handleReject = () => {
+    navigation.navigate('Welcome');
+  };
 
   return (
-    <View style={styles.screenContainer}>
+    <View style={styles.container}>
       <ScrollView onScroll={handleScroll} scrollEventThrottle={16}>
-        <View style={styles.contentContainer}>
-          <Text style={styles.screenTitle}>{eulaTitle}</Text>
-          <Text style={styles.eulaText}>{eulaPlaceholderText}</Text>
+        <View style={styles.textGroup}>
+          <Text style={styles.title}>{eulaTitle}</Text>
+          <Text style={styles.text}>{eulaText}</Text>
         </View>
         <View style={styles.buttonsContainer}>
-          <Button
-            title="Accept"
-            onPress={handleAccept}
-            buttonColor={PRIMARY_COLOR}
-            titleColor={'white'}
-            buttonStyle={styles.buttonContainer}
-          />
-          <Button
-            title="Reject"
-            onPress={() => navigation.navigate('Welcome')}
-            titleColor={PRIMARY_COLOR}
-            buttonColor={'white'}
-            buttonStyle={styles.buttonContainer}
-          />
+          <TouchableOpacity style={styles.primaryButton} onPress={handleAccept}>
+            <Text style={styles.primaryButtonText}>Accept</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.secondaryButton}
+            onPress={handleReject}>
+            <Text style={styles.secondaryButtonText}>Reject</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>

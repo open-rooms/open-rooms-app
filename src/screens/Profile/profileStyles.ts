@@ -1,8 +1,7 @@
-// proposalStyles.ts
 import {StyleSheet} from 'react-native';
 import colorPalette from '../../utils/colorPalette';
 
-export const proposalStyles = StyleSheet.create({
+export const profileStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colorPalette.BACKGROUND_COLOR,
@@ -19,11 +18,9 @@ export const proposalStyles = StyleSheet.create({
     marginBottom: 24,
   },
   profileImage: {
-    width: 48,
-    height: 48,
-    borderRadius: 32,
-    alignSelf: 'flex-start',
-    marginBottom: 15,
+    width: 60,
+    height: 60,
+    marginBottom: 24,
   },
   label: {
     fontSize: 14,
@@ -82,34 +79,6 @@ export const proposalStyles = StyleSheet.create({
     marginTop: 12,
     marginBottom: 12,
   },
-  voteButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  voteUpButton: {
-    backgroundColor: colorPalette.PRIMARY_COLOR,
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    width: '48%',
-  },
-  voteDownButton: {
-    backgroundColor: colorPalette.ERROR_COLOR,
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    width: '48%',
-  },
-  voteButtonText: {
-    fontSize: 14,
-    color: 'white',
-  },
 });
 
-export default proposalStyles;
+export default profileStyles;
