@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {PRIMARY_COLOR, SECONDARY_COLOR} from '../utils/colorPalette';
+import colorPalette from '../utils/colorPalette';
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: PRIMARY_COLOR,
+    borderColor: colorPalette.PRIMARY_COLOR,
   },
   title: {
     fontSize: 14,
@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   },
   proposalStatus: {
     fontSize: 14,
-    color: SECONDARY_COLOR,
+    color: colorPalette.SECONDARY_COLOR,
     marginBottom: 4,
   },
   proposalStatusContainer: {
