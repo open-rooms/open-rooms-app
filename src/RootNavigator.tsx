@@ -19,10 +19,15 @@ import Proposal from './screens/Proposal/Proposal';
 import EditRoom from './screens/EditRoom/EditRoom';
 import EditProfile from './screens/EditProfile/EditProfile';
 import {IRoom} from './utils/types';
+import {useSelector} from 'react-redux';
+import {isConnected} from './redux/user-slice';
 
 export function RootNavigator() {
   const Stack = createNativeStackNavigator();
   const {accountConnected} = useStorage();
+
+  // will use for detecting that user is logged in. Is not yet activated
+  const connected = useSelector(isConnected);
   const [isAppReady, setIsAppReady] = useState(false);
 
   useEffect(() => {
