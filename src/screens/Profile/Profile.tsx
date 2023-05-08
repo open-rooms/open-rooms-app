@@ -26,7 +26,6 @@ export function Profile({route, navigation}: any) {
 
   const handleLogout = () => {
     disconnectAccount();
-    navigation.navigate('Login');
   };
 
   const handleDeleteAccount = () => {

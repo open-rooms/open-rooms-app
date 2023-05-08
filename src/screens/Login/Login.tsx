@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {generatePublickKey} from '../../nostr/utils/generateKeys';
 import {useStorage} from '../../utils/useStorage';
 
@@ -22,7 +21,6 @@ function FormGroup({label, value, onChangeText, placeholder}: any) {
 
 export function Login() {
   const {connectAccount} = useStorage();
-  const navigation = useNavigation<any>();
   const [accountPrivateKey, setAccountPrivateKey] = useState('');
 
   const onLoginPress = async () => {
@@ -30,7 +28,6 @@ export function Login() {
       const privateKey = accountPrivateKey.slice(5);
       const publicKey = generatePublickKey(privateKey);
       connectAccount(publicKey, privateKey);
-      navigation.navigate('Feed');
     } else {
       Alert.alert('Invalid private key');
     }
