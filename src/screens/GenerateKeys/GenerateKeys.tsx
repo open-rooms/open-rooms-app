@@ -1,15 +1,16 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {generateKeysStyle as styles} from './generateKeysStyle';
 import {generateKeys} from '../../nostr/utils/generateKeys';
-import {useStorage} from '../../utils/useStorage';
 import {copyToClipboard} from '../../utils/copyToClipboard';
 import {shortenKeys} from '../../utils/shortenKeys';
 
 import {publicKeyText, privateKeyText} from '../../texts/registerText';
+import {useDispatch} from 'react-redux';
+import {register} from '../../redux/user-slice';
 
 function KeyItem({title, text, shortKey, keyCopied, onPress}: any) {
   return (
@@ -31,8 +32,12 @@ function KeyItem({title, text, shortKey, keyCopied, onPress}: any) {
 }
 
 export function GenerateKeys() {
-  const {connectAccount} = useStorage();
-  const navigation = useNavigation<any>();
+  const route = useRoute<any>();
+  const username = route.params.username;
+  const profileImageUri = route.params.profileImageUri;
+  const damus = route.params.damus;
+  const dispatch = useDispatch();
+
   const [prvKey, setPrvKey] = React.useState(
     'nsec15558b158124e5da8dd850c10533aa984aae38eb612a2bad225a8ccc896a34dc2',
   );
@@ -66,9 +71,12 @@ export function GenerateKeys() {
 
   const onContinuePress = async () => {
     if (privateKeyCopied && publicKeyCopied) {
-      connectAccount(pubKey, prvKey).then(() => {
-        navigation.navigate('Rooms');
-      });
+      dispatch(
+        register({
+          userData: {username, damus, profileImageUri, pubKey},
+          privateKey: prvKey,
+        }),
+      );
     }
   };
 

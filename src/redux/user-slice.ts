@@ -5,9 +5,9 @@ import {getPublicKey} from 'nostr-tools';
 
 export type UserSlice = {
   userData: {
-    pubKey: string;
+    publicKey: string;
     username: string;
-    profileImgUrl: string;
+    profileImageUri: string;
     damus: string;
   };
   privateKey: string;
@@ -15,9 +15,9 @@ export type UserSlice = {
 
 const initialState: UserSlice = {
   userData: {
-    pubKey: '',
+    publicKey: '',
     username: '',
-    profileImgUrl: '',
+    profileImageUri: '',
     damus: '',
   },
   privateKey: '',
@@ -35,14 +35,16 @@ export const userSlice = createSlice({
     login: (state, action: PayloadAction<any>) => {
       // get data from nostr to fill userData
       state.userData = {
-        pubKey: getPublicKey(action.payload.privateKey),
+        publicKey: getPublicKey(action.payload.privateKey),
         username: '',
-        profileImgUrl: '',
+        profileImageUri: '',
         damus: '',
       };
       state.privateKey = action.payload.privateKey;
     },
     register: (state, action: PayloadAction<any>) => {
+      // use nostr to register on chain
+
       state.userData = action.payload;
       state.privateKey = action.payload.privateKey;
     },
@@ -58,6 +60,10 @@ const selectUser = (state: any) => state.user;
 export const isConnected = createSelector(
   [selectUser],
   user => user.privateKey !== '',
+);
+export const publicKey = createSelector(
+  [selectUser],
+  user => user.userData.publicKey,
 );
 
 export const {login, register, logout} = userSlice.actions;

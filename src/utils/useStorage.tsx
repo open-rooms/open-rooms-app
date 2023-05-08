@@ -5,8 +5,6 @@ import {StorageKeys} from './types';
 
 const defaultState: IStorageContext = {
   accountConnected: false,
-  connectAccount: () => Promise<void>,
-  disconnectAccount: () => Promise<void>,
   publicKey: '',
   privateKey: '',
 };
@@ -47,49 +45,12 @@ export function StorageContextProvider({children}: any) {
     fetchPublicKey();
   }, []);
 
-  const connectAccount = async (pubKey: string, prvKey: string) => {
-    try {
-      const resp =
-        (await storeData(pubKey, StorageKeys.PUBLIC_KEY)) &&
-        (await storeData(prvKey, StorageKeys.PRIVATE_KEY));
-      if (resp === true) {
-        setPublicKey(pubKey);
-        setPrivateKey(prvKey);
-        setAccountConnected(true);
-        Promise.resolve();
-      } else {
-        Promise.reject();
-      }
-    } catch {
-      Promise.reject();
-    }
-  };
-  const disconnectAccount = async () => {
-    try {
-      const resp =
-        (await removeData(StorageKeys.PUBLIC_KEY)) &&
-        (await removeData(StorageKeys.PRIVATE_KEY));
-      if (resp === true) {
-        setPublicKey('');
-        setPrivateKey('');
-        setAccountConnected(false);
-        Promise.resolve();
-      } else {
-        Promise.reject();
-      }
-    } catch {
-      Promise.reject();
-    }
-  };
-
   return (
     <StorageContext.Provider
       value={{
         accountConnected,
         publicKey,
         privateKey,
-        connectAccount,
-        disconnectAccount,
       }}>
       {children}
     </StorageContext.Provider>

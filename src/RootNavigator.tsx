@@ -2,7 +2,6 @@ import 'text-encoding-polyfill';
 import React, {useEffect, useState} from 'react';
 import {StatusBar, ViewStyle} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {useStorage} from './utils/useStorage';
 
 import Welcome from './screens/Welcome/Welcome';
 import Eula from './screens/Eula/Eula';
@@ -24,7 +23,6 @@ import {isConnected} from './redux/user-slice';
 
 export function RootNavigator() {
   const Stack = createNativeStackNavigator();
-  const {accountConnected} = useStorage();
 
   // will use for detecting that user is logged in. Is not yet activated
   const connected = useSelector(isConnected);
@@ -37,8 +35,8 @@ export function RootNavigator() {
   }, []);
 
   useEffect(() => {
-    StatusBar.setBarStyle(accountConnected ? 'dark-content' : 'light-content');
-  }, [accountConnected]);
+    StatusBar.setBarStyle(connected ? 'dark-content' : 'light-content');
+  }, [connected]);
 
   type HeaderStyleProps = ViewStyle & {
     backgroundColor?: string;
@@ -61,7 +59,7 @@ export function RootNavigator() {
             fontWeight: 'bold',
           },
         }}>
-        {accountConnected ? (
+        {connected ? (
           <>
             <Stack.Screen
               name="Rooms"

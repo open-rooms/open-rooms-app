@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
-import {generatePublickKey} from '../../nostr/utils/generateKeys';
-import {useStorage} from '../../utils/useStorage';
 
 import {loginStyles as styles} from './loginStyles';
+import {useDispatch} from 'react-redux';
+import {login} from '../../redux/user-slice';
 
 function FormGroup({label, value, onChangeText, placeholder}: any) {
   return (
@@ -20,14 +20,13 @@ function FormGroup({label, value, onChangeText, placeholder}: any) {
 }
 
 export function Login() {
-  const {connectAccount} = useStorage();
   const [accountPrivateKey, setAccountPrivateKey] = useState('');
+  const dispatch = useDispatch();
 
   const onLoginPress = async () => {
     if (accountPrivateKey) {
       const privateKey = accountPrivateKey.slice(5);
-      const publicKey = generatePublickKey(privateKey);
-      connectAccount(publicKey, privateKey);
+      dispatch(login({privateKey}));
     } else {
       Alert.alert('Invalid private key');
     }

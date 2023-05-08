@@ -5,15 +5,18 @@ import {profileStyles as styles} from './profileStyles';
 import {shortenKeys} from '../../utils/shortenKeys';
 import ProfilePic from '../../components/ProfilePic';
 import copyToClipboard from '../../utils/copyToClipboard';
+import {useDispatch} from 'react-redux';
+import {logout} from '../../redux/user-slice';
 
 export function Profile({route, navigation}: any) {
-  const {publicKey, disconnectAccount} = useStorage();
+  const {publicKey} = useStorage();
 
   // Add state variables for the profile information
   const [profilePicUrl, setProfilePicUrl] = useState('');
   const [username, setUsername] = useState('John Doe');
   const [damus, setDamus] = useState('Some damus information');
   const pubKey = shortenKeys(publicKey, 20);
+  const dispatch = useDispatch();
 
   // Create a function to navigate to the EditProfile screen
   const handleEditProfile = () => {
@@ -25,12 +28,11 @@ export function Profile({route, navigation}: any) {
   };
 
   const handleLogout = () => {
-    disconnectAccount();
+    dispatch(logout());
   };
 
   const handleDeleteAccount = () => {
     // TODO: Delete account
-    disconnectAccount();
     navigation.navigate('Welcome');
   };
 

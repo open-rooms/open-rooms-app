@@ -4,8 +4,6 @@ export enum StorageKeys {
 }
 export interface IStorageContext {
   accountConnected: boolean;
-  connectAccount: (publicKey: string, privateKey: string) => any;
-  disconnectAccount: () => any;
   publicKey: string;
   privateKey: string;
 }
