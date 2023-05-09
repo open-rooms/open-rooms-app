@@ -1,11 +1,13 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
 import userReducer from './user-slice';
+import roomsReducer from './rooms-slice';
 
 const configureCustomStore = () => {
   const reducer = combineReducers({
     // Persistent slices
     user: userReducer,
+    rooms: roomsReducer,
   });
 
   const store = configureStore({
