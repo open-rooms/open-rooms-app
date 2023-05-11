@@ -6,9 +6,12 @@ import ProfilePic from '../../components/ProfilePic';
 import {formatStartDate} from '../../utils/time';
 import {IRoom} from '../../utils/types';
 import {roomsStyles as styles} from './roomsStyles';
+import {useSelector} from 'react-redux';
+import {storedRooms} from '../../redux/rooms-slice';
 
-// Fake data
-import rooms from '../../utils/fakeRooms.json';
+// uncomment this if you want to continue work
+//import rooms from '../../utils/fakeRooms.json';
+// you need to update the fake json. first element is the one that will be for room
 
 // Room item component
 const RoomItem = ({item, onPress}: {item: IRoom; onPress: () => void}) => {
@@ -22,7 +25,7 @@ const RoomItem = ({item, onPress}: {item: IRoom; onPress: () => void}) => {
           <View style={styles.itemText}>
             <Text style={styles.itemName}>{item.name}</Text>
             <Text style={styles.itemUsername}>
-              {`${item.username} \u00B7 ${formattedStartDate}`}
+              {`${item.creator.username} \u00B7 ${formattedStartDate}`}
             </Text>
           </View>
         </View>
@@ -42,6 +45,9 @@ export function Rooms() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showHeaderTitle, setShowHeaderTitle] = useState(false);
 
+  // comment this if you want to continue work
+  const rooms = useSelector(storedRooms);
+
   // Handle closing the modal
   const onModalClose = () => {
     setIsModalVisible(false);
@@ -56,9 +62,10 @@ export function Rooms() {
         item={item}
         onPress={() =>
           navigation.navigate('Room', {
+            // pass the entire IRoom item like: room: item and in the next screen just use the entire object
             roomId: item.id,
             roomName: item.name,
-            roomUsername: item.username,
+            roomUsername: item.creator.username,
             roomAbout: item.about,
             roomMembers: item.members.length,
             roomDate: formattedStartDate,

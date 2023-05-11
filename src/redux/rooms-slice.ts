@@ -7,8 +7,11 @@ export type RoomsSlice = {
   rooms: IRoom[];
 };
 
+// Fake data
+import fakeRooms from '../utils/fakeRooms.json';
+
 const initialState: RoomsSlice = {
-  rooms: [],
+  rooms: fakeRooms,
 };
 
 const persistConfig = {
@@ -35,7 +38,7 @@ export const roomSlice = createSlice({
 
 const selectRooms = (state: any) => state.rooms;
 
-export const rooms = createSelector(
+export const storedRooms = createSelector(
   [selectRooms],
   roomsSlice => roomsSlice.rooms,
 );
