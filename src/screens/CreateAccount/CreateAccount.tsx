@@ -37,7 +37,7 @@ export function CreateAccount() {
     null,
   );
   const [usernameStatus, setUsernameStatus] = useState('');
-  const [profileImageUri, setProfileImageUri] = useState('');
+  const [imgUri, setImgUri] = useState('');
   const [damus, setDamus] = useState('');
 
   const onContinuePress = useCallback(async () => {
@@ -45,8 +45,8 @@ export function CreateAccount() {
       Alert.alert('Username has to be longer than 4 characters');
       return;
     }
-    navigation.navigate('GenerateKeys', {username, profileImageUri, damus});
-  }, [hasValidUsername, username, profileImageUri, damus, navigation]);
+    navigation.navigate('GenerateKeys', {username, imgUri, damus});
+  }, [hasValidUsername, username, imgUri, damus, navigation]);
 
   const handleUsernameChange = useCallback(
     (text: string) => {
@@ -82,8 +82,8 @@ export function CreateAccount() {
       <FormGroup
         label="Profile Image URL"
         placeholder="Profile Image URL"
-        value={profileImageUri}
-        onChangeText={setProfileImageUri}
+        value={imgUri}
+        onChangeText={setImgUri}
       />
       <FormGroup
         label="Damus"

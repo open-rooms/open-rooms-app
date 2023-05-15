@@ -7,7 +7,7 @@ export type UserSlice = {
   userData: {
     publicKey: string;
     username: string;
-    profileImageUri: string;
+    imgUri: string;
     damus: string;
   };
   privateKey: string;
@@ -17,7 +17,7 @@ const initialState: UserSlice = {
   userData: {
     publicKey: '',
     username: '',
-    profileImageUri: '',
+    imgUri: '',
     damus: '',
   },
   privateKey: '',
@@ -37,7 +37,7 @@ export const userSlice = createSlice({
       state.userData = {
         publicKey: getPublicKey(action.payload.privateKey),
         username: '',
-        profileImageUri: '',
+        imgUri: '',
         damus: '',
       };
       state.privateKey = action.payload.privateKey;

@@ -34,7 +34,7 @@ function KeyItem({title, text, shortKey, keyCopied, onPress}: any) {
 export function GenerateKeys() {
   const route = useRoute<any>();
   const username = route.params.username;
-  const profileImageUri = route.params.profileImageUri;
+  const imgUri = route.params.imgUri;
   const damus = route.params.damus;
   const dispatch = useDispatch();
 
@@ -73,7 +73,7 @@ export function GenerateKeys() {
     if (privateKeyCopied && publicKeyCopied) {
       dispatch(
         register({
-          userData: {username, damus, profileImageUri, pubKey},
+          userData: {username, damus, imgUri, pubKey},
           privateKey: prvKey,
         }),
       );
