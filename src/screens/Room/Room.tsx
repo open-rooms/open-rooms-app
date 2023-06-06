@@ -24,7 +24,7 @@ const RoomHeader = ({
   isCreator,
   isJoined,
   setIsJoined,
-  onUpdateRoom,
+  onUpdate,
 }: any) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -33,7 +33,7 @@ const RoomHeader = ({
     console.log('Edit room');
     navigation.navigate('EditRoom', {
       room,
-      onUpdate: onUpdateRoom, // Change the parameter name to onUpdate
+      onUpdate: onUpdate, // Change the parameter name to onUpdate
     });
   };
 
@@ -81,7 +81,6 @@ const RoomHeader = ({
       </View>
       <View style={styles.roomNameContainer}>
         <Text style={styles.roomName}>{room.roomName}</Text>
-        <Text style={styles.roomUsername}>{room.roomUsername}</Text>
       </View>
       <Text style={styles.roomAbout}>{room.roomAbout}</Text>
       <Text style={styles.roomMembers}>{room.roomMembers} Members </Text>
@@ -118,7 +117,7 @@ const Proposal = ({proposal}: any) => {
 };
 
 export function Room({route}: any) {
-  const {roomName, roomUsername, roomAbout, roomMembers} = route.params;
+  const {roomName, roomAbout, roomMembers} = route.params;
   const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showHeaderTitle, setShowHeaderTitle] = useState(false);
@@ -154,7 +153,6 @@ export function Room({route}: any) {
           <RoomHeader
             room={{
               roomName,
-              roomUsername,
               roomAbout,
               roomMembers,
             }}

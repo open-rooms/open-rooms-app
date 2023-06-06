@@ -5,12 +5,138 @@
     "creator": {
       "id": "creator",
       "pubKey": "pubKey",
-      "username": "@DORE",
-      "profilePic": "https://i.imgur.com/7YXWJjM.png",
+      "username": "@creator",
+      "profilePicUrl": "https://i.imgur.com/7YXWJjM.png",
       "damus": "@username"
     },
     "about": "We are a group of enthusiasts committed to increasing the adoption of renewable energy sources for a sustainable future.",
     "start_date": 1617295805,
     "members": ["9ad9239df5d9415eea2cabe7f143204c790655c2", "24d0bd5c44f92b47"]
+  },
+  {
+    "id": "2",
+    "name": "TechGurus",
+    "creator": {
+      "id": "techgurus_creator",
+      "pubKey": "techgurus_pubKey",
+      "username": "@techgurus",
+      "profilePicUrl": "https://i.imgur.com/abc123.png",
+      "damus": "@techgurus"
+    },
+    "about": "We are a team of technology enthusiasts passionate about sharing knowledge and exploring the latest tech trends.",
+    "start_date": 1634123456,
+    "members": ["2a3b4c5d6e7f8g9h", "1b2c3d4e5f6g7h8i"]
+  },
+  {
+    "id": "3",
+    "name": "ArtisanCraft",
+    "creator": {
+      "id": "artisancraft_creator",
+      "pubKey": "artisancraft_pubKey",
+      "username": "@artisancraft",
+      "profilePicUrl": "https://i.imgur.com/xyz789.png",
+      "damus": "@artisancraft"
+    },
+    "about": "We are a community of artisans dedicated to preserving traditional crafting techniques and promoting handmade creations.",
+    "start_date": 1647852369,
+    "members": ["3b2a1c4d6e7g9i", "1a2b3c4d5e6f7g8h"]
+  },
+  {
+    "id": "4",
+    "name": "HealthRevolution",
+    "creator": {
+      "id": "healthrevolution_creator",
+      "pubKey": "healthrevolution_pubKey",
+      "username": "@healthrevolution",
+      "profilePicUrl": "https://i.imgur.com/pqr456.png",
+      "damus": "@healthrevolution"
+    },
+    "about": "We strive to revolutionize the healthcare industry by promoting holistic well-being and preventive care practices.",
+    "start_date": 1659823478,
+    "members": ["1h2g3f4e5d6c7b8a", "9i8h7g6f5e4d3c2b"]
+  },
+  {
+    "id": "5",
+    "name": "CodeMasters",
+    "creator": {
+      "id": "codemasters_creator",
+      "pubKey": "codemasters_pubKey",
+      "username": "@codemasters",
+      "profilePicUrl": "https://i.imgur.com/uvw123.png",
+      "damus": "@codemasters"
+    },
+    "about": "We are a group of coding enthusiasts dedicated to improving programming skills and exploring innovative software solutions.",
+    "start_date": 1673145678,
+    "members": ["5a4b3c2d1e0f9g", "0h9i8j7k6l5m4n3o"]
+  },
+  {
+    "id": "6",
+    "name": "EcoWarriors",
+    "creator": {
+      "id": "ecowarriors_creator",
+      "pubKey": "ecowarriors_pubKey",
+      "username": "@ecowarriors",
+      "profilePicUrl": "https://i.imgur.com/xyz789.png",
+      "damus": "@ecowarriors"
+    },
+    "about": "We are a passionate group of environmental activists dedicated to raising awareness and taking action for a greener future.",
+    "start_date": 1687245890,
+    "members": ["6o5n4m3l2k1j0i", "9h8g7f6e5d4c3b"]
+  },
+  {
+    "id": "7",
+    "name": "MusicMakers",
+    "creator": {
+      "id": "musicmakers_creator",
+      "pubKey": "musicmakers_pubKey",
+      "username": "@musicmakers",
+      "profilePicUrl": "https://i.imgur.com/abc123.png",
+      "damus": "@musicmakers"
+    },
+    "about": "We are a community of musicians and music lovers who collaborate, create, and share our passion for all genres of music.",
+    "start_date": 1699534211,
+    "members": ["2c3d4e5f6g7h8i9j", "1a2b3c4d5e6f7g8h"]
+  },
+  {
+    "id": "8",
+    "name": "FoodExplorers",
+    "creator": {
+      "id": "foodexplorers_creator",
+      "pubKey": "foodexplorers_pubKey",
+      "username": "@foodexplorers",
+      "profilePicUrl": "https://i.imgur.com/pqr456.png",
+      "damus": "@foodexplorers"
+    },
+    "about": "We embark on culinary adventures, discovering diverse flavors, sharing recipes, and celebrating the joy of food exploration.",
+    "start_date": 1712356789,
+    "members": ["8a7b6c5d4e3f2g", "9h0i1j2k3l4m5n"]
+  },
+  {
+    "id": "9",
+    "name": "AdventureSeekers",
+    "creator": {
+      "id": "adventureseekers_creator",
+      "pubKey": "adventureseekers_pubKey",
+      "username": "@adventureseekers",
+      "profilePicUrl": "https://i.imgur.com/uvw123.png",
+      "damus": "@adventureseekers"
+    },
+    "about": "We are a community of thrill-seekers, always on the lookout for adrenaline-pumping adventures and exploring the great outdoors.",
+    "start_date": 1725768901,
+    "members": ["4d5e6f7g8h9i0j", "1k2l3m4n5o6p7q"]
+  },
+  {
+    "id": "10",
+    "name": "Bookworms",
+    "creator": {
+      "id": "bookworms_creator",
+      "pubKey": "bookworms_pubKey",
+      "username": "@bookworms",
+      "profilePicUrl": "https://i.imgur.com/7YXWJjM.png",
+      "damus": "@bookworms"
+    },
+    "about": "We are avid readers who gather to discuss, recommend, and delve into the captivating world of books and literature.",
+    "start_date": 1739481123,
+    "members": ["6p5o4n3m2l1k0j", "9i8h7g6f5e4d3c"]
   }
 ]

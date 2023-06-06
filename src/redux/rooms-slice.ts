@@ -23,12 +23,12 @@ export const roomSlice = createSlice({
   name: 'roomSlice',
   initialState,
   reducers: {
-    addRoom: (state, action: PayloadAction<any>) => {
-      // register on room on chain
+    addRoom: (state, action: PayloadAction<IRoom>) => {
+      // register the room on the chain
       state.rooms.push(action.payload);
     },
-    removeRoom: (state, action: PayloadAction<any>) => {
-      // use nostr to delete on chain
+    removeRoom: (state, action: PayloadAction<{id: string}>) => {
+      // use nostr to delete on the chain
       const {id} = action.payload;
 
       state.rooms = state.rooms.filter(item => item.id !== id);
@@ -36,12 +36,9 @@ export const roomSlice = createSlice({
   },
 });
 
-const selectRooms = (state: any) => state.rooms;
+const selectRooms = (state: any) => state.roomSlice;
 
-export const storedRooms = createSelector(
-  [selectRooms],
-  roomsSlice => roomsSlice.rooms,
-);
+export const storedRooms = createSelector([selectRooms], rooms => rooms.rooms);
 
 export const {addRoom, removeRoom} = roomSlice.actions;
 
