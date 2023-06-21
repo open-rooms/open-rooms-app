@@ -7,10 +7,10 @@ import {formatStartDate} from '../../utils/time';
 import {IRoom} from '../../utils/types';
 import {roomsStyles as styles} from './roomsStyles';
 
-// import {useSelector} from 'react-redux';
-// import {storedRooms} from '../../redux/rooms-slice';
+import {useSelector} from 'react-redux';
+import {storedRooms} from '../../redux/rooms-slice';
 
-import rooms from '../../utils/fakeRooms.json';
+// import rooms from '../../utils/fakeRooms.json';
 
 // Room item component
 const RoomItem = ({item, onPress}: {item: IRoom; onPress: () => void}) => {
@@ -45,7 +45,7 @@ export function Rooms() {
   const [showHeaderTitle, setShowHeaderTitle] = useState(false);
 
   // comment this if you want to continue work
-  // const rooms = useSelector(storedRooms);
+  const rooms = useSelector(storedRooms);
 
   // Handle closing the modal
   const onModalClose = () => {

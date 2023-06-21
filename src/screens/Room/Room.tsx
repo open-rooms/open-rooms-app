@@ -15,9 +15,11 @@ import {IRoom, RootStackParamList} from '../../utils/types';
 import CreateProposal from '../CreateProposal/CreateProposal';
 import ProposalStatus from '../../components/ProposalStatus';
 import {roomStyles as styles} from './roomStyles';
+import {storedProposals} from '../../redux/proposals-slice';
+import {useSelector} from 'react-redux';
 
 //fake data
-import fakeProposals from '../../utils/fakeProposals.json';
+// import fakeProposals from '../../utils/fakeProposals.json';
 
 const RoomHeader = ({
   room,
@@ -122,6 +124,7 @@ export function Room({route}: any) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showHeaderTitle, setShowHeaderTitle] = useState(false);
   const [isJoined, setIsJoined] = useState(false);
+  const proposals = useSelector(storedProposals);
   const handleUpdateRoom = (updatedRoom: IRoom) => {
     // Handle the room update here
     console.log('Updated room:', updatedRoom);
@@ -144,7 +147,7 @@ export function Room({route}: any) {
   return (
     <View style={styles.container}>
       <FlatList
-        data={fakeProposals}
+        data={proposals}
         renderItem={({item}) => <Proposal proposal={item} />}
         keyExtractor={item => item.id}
         onScroll={handleScroll}
