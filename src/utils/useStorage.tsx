@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {getData, removeData, storeData} from './storeData';
+import {getData} from './storeData';
 import {IStorageContext} from './types';
 import {StorageKeys} from './types';
 

@@ -4,6 +4,8 @@ import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createAccountStyles as styles} from './createAccountStyles';
 import {handleUsernameChange as handleUsernameChangeUtil} from '../../utils/usernameHandlers';
+import {useDispatch} from 'react-redux';
+import {createAccount} from '../../redux/user-slice';
 
 function FormGroup({
   label,
@@ -40,13 +42,17 @@ export function CreateAccount() {
   const [imgUri, setImgUri] = useState('');
   const [damus, setDamus] = useState('');
 
+  const dispatch = useDispatch();
+
   const onContinuePress = useCallback(async () => {
     if (!hasValidUsername) {
       Alert.alert('Username has to be longer than 4 characters');
       return;
     }
-    navigation.navigate('GenerateKeys', {username, imgUri, damus});
-  }, [hasValidUsername, username, imgUri, damus, navigation]);
+    const newAccountData = {username, imgUri, damus};
+    dispatch(createAccount(newAccountData));
+    navigation.navigate('GenerateKeys', newAccountData);
+  }, [hasValidUsername, username, imgUri, damus, navigation, dispatch]);
 
   const handleUsernameChange = useCallback(
     (text: string) => {

@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import {createProposalStyles as styles} from './createProposalStyles';
+import {useDispatch} from 'react-redux';
+import {addProposal} from '../../redux/proposals-slice';
 
 interface CreateProposalProps {
   onClose: () => void;
@@ -12,10 +13,20 @@ const CreateProposal: React.FC<CreateProposalProps> = ({onClose}) => {
   const [proposal, setProposal] = useState('');
   const maxLength = 280;
   const remainingChars = maxLength - proposal.length;
+  const dispatch = useDispatch();
   const onCreateProposalPress = async () => {
-    // Implement the logic for creating a proposal
+    const newProposal = {
+      id: Math.random().toString(), // Replace this with a unique ID
+      proposal: proposal,
+      start_date: Date.now(),
+      duration: 0,
+      status: 'New',
+      room: '',
+      creator: '',
+    };
+    // Dispatch the addProposal action
+    dispatch(addProposal(newProposal));
 
-    // Close the modal after the proposal is created
     onClose();
   };
 

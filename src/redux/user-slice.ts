@@ -48,6 +48,12 @@ export const userSlice = createSlice({
       state.userData = action.payload;
       state.privateKey = action.payload.privateKey;
     },
+    createAccount: (state, action: PayloadAction<any>) => {
+      // create account
+
+      state.userData = action.payload;
+      state.privateKey = action.payload.privateKey;
+    },
 
     logout: state => {
       state.userData = initialState.userData;
@@ -66,6 +72,6 @@ export const publicKey = createSelector(
   user => user.userData.publicKey,
 );
 
-export const {login, register, logout} = userSlice.actions;
+export const {login, register, logout, createAccount} = userSlice.actions;
 
 export default persistReducer(persistConfig, userSlice.reducer);

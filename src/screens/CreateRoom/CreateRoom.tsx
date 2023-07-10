@@ -2,10 +2,13 @@ import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createRoomStyles as styles} from './createRoomStyles';
+import {useDispatch} from 'react-redux';
+import {addRoom} from '../../redux/rooms-slice';
 
 const CreateRoom = (props: {onClose: () => void}) => {
   const [name, setName] = useState('');
   const [about, setAbout] = useState('');
+  const dispatch = useDispatch();
   const maxLength = 40;
 
   const onCreateRoomPress = async () => {
@@ -13,6 +16,29 @@ const CreateRoom = (props: {onClose: () => void}) => {
       Alert.alert('Please fill out all fields');
       return;
     }
+    // Create a new room
+
+    const newRoom = {
+      id: Math.random().toString(), // Replace this with a unique ID
+      name: name,
+      about: about,
+      start_date: Date.now(),
+      creator: {
+        id: '',
+        pubKey: '',
+        profilePicUrl: '',
+        username: '',
+        damus: '',
+      },
+      members: [],
+      proposals: [],
+    };
+
+    // Dispatch the addRoom action
+    dispatch(addRoom(newRoom));
+
+    // Close the modal after the room is created
+    props.onClose();
   };
 
   return (
