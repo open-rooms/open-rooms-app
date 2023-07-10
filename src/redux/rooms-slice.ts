@@ -1,17 +1,29 @@
-import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {
+  createSelector,
+  createSlice,
+  PayloadAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {IRoom} from '../utils/types';
+
+export const fetchRooms = createAsyncThunk(
+  'rooms/fetchRooms',
+  async (_, __) => {
+    const useNostr = require('../../nostr/useNostr').default;
+    const {getRooms} = useNostr();
+    const rooms = await getRooms();
+    return rooms;
+  },
+);
 
 export type RoomsSlice = {
   rooms: IRoom[];
 };
 
-// Fake data
-import fakeRooms from '../utils/fakeRooms.json';
-
 const initialState: RoomsSlice = {
-  rooms: fakeRooms,
+  rooms: [],
 };
 
 const persistConfig = {
@@ -33,6 +45,11 @@ export const roomSlice = createSlice({
 
       state.rooms = state.rooms.filter(item => item.id !== id);
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(fetchRooms.fulfilled, (state, action) => {
+      state.rooms = action.payload;
+    });
   },
 });
 

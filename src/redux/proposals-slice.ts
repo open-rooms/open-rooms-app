@@ -1,4 +1,9 @@
-import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {
+  createSelector,
+  createSlice,
+  PayloadAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -12,15 +17,26 @@ type Proposal = {
   creator: string;
 };
 
+export const fetchProposals = createAsyncThunk(
+  'proposals/fetchProposals',
+  async (_, {dispatch}) => {
+    const useNostr = require('../../nostr/useNostr').default;
+    const {getProposals} = useNostr();
+    const proposals = await getProposals();
+    proposals.forEach((proposal: Proposal) => {
+      dispatch(addProposal(proposal));
+    });
+
+    return proposals; // Return fetched proposals as payload
+  },
+);
+
 export type ProposalsSlice = {
   proposals: Proposal[];
 };
 
-// Fake data
-import fakeProposals from '../utils/fakeProposals.json';
-
 const initialState: ProposalsSlice = {
-  proposals: fakeProposals,
+  proposals: [],
 };
 
 const persistConfig = {
@@ -54,6 +70,11 @@ export const proposalSlice = createSlice({
         proposal.status = action.payload.status;
       }
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(fetchProposals.fulfilled, (state, action) => {
+      state.proposals = action.payload;
+    });
   },
 });
 

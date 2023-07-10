@@ -6,6 +6,7 @@ import {createAccountStyles as styles} from './createAccountStyles';
 import {handleUsernameChange as handleUsernameChangeUtil} from '../../utils/usernameHandlers';
 import {useDispatch} from 'react-redux';
 import {createAccount} from '../../redux/user-slice';
+import useNostr from '../../nostr/useNostr';
 
 function FormGroup({
   label,
@@ -41,6 +42,7 @@ export function CreateAccount() {
   const [usernameStatus, setUsernameStatus] = useState('');
   const [imgUri, setImgUri] = useState('');
   const [damus, setDamus] = useState('');
+  const {createUser} = useNostr();
 
   const dispatch = useDispatch();
 
@@ -50,9 +52,25 @@ export function CreateAccount() {
       return;
     }
     const newAccountData = {username, imgUri, damus};
-    dispatch(createAccount(newAccountData));
-    navigation.navigate('GenerateKeys', newAccountData);
-  }, [hasValidUsername, username, imgUri, damus, navigation, dispatch]);
+    const kind = 1;
+    const fields = newAccountData;
+    const tags: string[][] = []; // specify the tags???
+    try {
+      await createUser(kind, fields, tags);
+      dispatch(createAccount(newAccountData));
+      navigation.navigate('GenerateKeys', newAccountData);
+    } catch (error) {
+      console.error('Failed to create user:', error);
+    }
+  }, [
+    hasValidUsername,
+    username,
+    imgUri,
+    damus,
+    navigation,
+    dispatch,
+    createUser,
+  ]);
 
   const handleUsernameChange = useCallback(
     (text: string) => {

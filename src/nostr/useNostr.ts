@@ -9,11 +9,44 @@ import {
 import {useStorage} from '../utils/useStorage';
 import {formatEvent} from './utils/utils';
 import {IRoom} from '../utils/types';
+import {IProposal} from '../utils/types';
 
 const useNostr = () => {
   const [rooms, setRooms] = useState<IRoom[]>([]);
+  const [proposals, setProposals] = useState<IProposal[]>([]);
   const {privateKey} = useStorage();
   const pool = new SimplePool();
+
+  const createUser = (
+    kind: number,
+    fields: {[key: string]: string},
+    tags: string[][],
+  ) => {
+    return new Promise((resolve, reject) => {
+      const content = JSON.stringify(fields);
+
+      const defaultTags: string[][] = [DEFAULT_TAG];
+
+      const event = formatEvent(
+        kind,
+        content,
+        privateKey,
+        defaultTags.concat(tags),
+      );
+      console.log('start creating user');
+
+      const pubEvent = pool.publish(RELAYS_URL, event);
+
+      pubEvent.on('ok', (reason: any) => {
+        console.log('Event published to relays: ', reason);
+        resolve(reason);
+      });
+      pubEvent.on('failed', (reason: any) => {
+        console.log('failed to publish to relays:', reason);
+        reject(reason);
+      });
+    });
+  };
 
   const publishRoom = async (
     kind: number,
@@ -23,7 +56,7 @@ const useNostr = () => {
   ) => {
     // const poolNew = new SimplePool();
 
-    const defaultTags: string[][] = [DEFAULT_TAG];
+    const defaultTags: string[][] = [DEFAULT_TAG, ROOM_TAG];
 
     const event = formatEvent(
       kind,
@@ -46,31 +79,28 @@ const useNostr = () => {
 
   const publishProposal = (
     kind: number,
-
     fields: {[key: string]: string},
     tags: string[][],
-    callback: () => void,
   ) => {
-    const content = JSON.stringify(fields);
-
-    const defaultTags: string[][] = [DEFAULT_TAG, PROPOSAL_TAG];
-
-    const event = formatEvent(
-      kind,
-      content,
-      privateKey,
-      defaultTags.concat(tags),
-    );
-    console.log('start posting proposal');
-
-    const pubEvent = pool.publish(RELAYS_URL, event);
-
-    pubEvent.on('ok', (reason: any) => {
-      console.log('Event published to relays: ', reason);
-      callback();
-    });
-    pubEvent.on('failed', (reason: any) => {
-      console.log('failed to publish to relays:', reason);
+    return new Promise((resolve, reject) => {
+      const content = JSON.stringify(fields);
+      const defaultTags: string[][] = [DEFAULT_TAG, PROPOSAL_TAG];
+      const event = formatEvent(
+        kind,
+        content,
+        privateKey,
+        defaultTags.concat(tags),
+      );
+      console.log('start posting proposal');
+      const pubEvent = pool.publish(RELAYS_URL, event);
+      pubEvent.on('ok', (reason: any) => {
+        console.log('Event published to relays: ', reason);
+        resolve(reason);
+      });
+      pubEvent.on('failed', (reason: any) => {
+        console.log('failed to publish to relays:', reason);
+        reject(reason);
+      });
     });
   };
 
@@ -90,42 +120,30 @@ const useNostr = () => {
     });
   };
 
-  const createUser = (
-    kind: number,
+  // what it can be the #t for proposals?
 
-    fields: {[key: string]: string},
-    tags: string[][],
-    callback: () => void,
-  ) => {
-    const content = JSON.stringify(fields);
-
-    const defaultTags: string[][] = [DEFAULT_TAG];
-
-    const event = formatEvent(
-      kind,
-      content,
-      privateKey,
-      defaultTags.concat(tags),
-    );
-    console.log('start creating user');
-
-    const pubEvent = pool.publish(RELAYS_URL, event);
-
-    pubEvent.on('ok', (reason: any) => {
-      console.log('Event published to relays: ', reason);
-      callback();
-    });
-    pubEvent.on('failed', (reason: any) => {
-      console.log('failed to publish to relays:', reason);
+  const getProposals = () => {
+    console.log('Fetching proposals');
+    let proposalsSub = pool.sub(RELAYS_URL, [{'#t': ['to be defined']}]);
+    proposalsSub.on('event', (event: any) => {
+      console.log('event generated', event.id, event.tags);
+      const proposalContent: IProposal = JSON.parse(event.content);
+      proposalContent.id = event.id;
+      setProposals(prevProposals => [
+        ...prevProposals.filter(proposal => proposal.id !== event.id),
+        proposalContent,
+      ]);
     });
   };
 
   return {
     createUser,
-    getRooms,
-    rooms2: rooms,
     publishRoom,
     publishProposal,
+    getRooms,
+    rooms2: rooms,
+    getProposals,
+    proposals2: proposals,
   };
 };
 

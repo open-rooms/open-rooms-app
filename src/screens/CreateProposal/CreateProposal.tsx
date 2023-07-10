@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createProposalStyles as styles} from './createProposalStyles';
 import {useDispatch} from 'react-redux';
 import {addProposal} from '../../redux/proposals-slice';
+import useNostr from '../../nostr/useNostr';
 
 interface CreateProposalProps {
   onClose: () => void;
@@ -13,7 +14,9 @@ const CreateProposal: React.FC<CreateProposalProps> = ({onClose}) => {
   const [proposal, setProposal] = useState('');
   const maxLength = 280;
   const remainingChars = maxLength - proposal.length;
+  const {publishProposal} = useNostr();
   const dispatch = useDispatch();
+
   const onCreateProposalPress = async () => {
     const newProposal = {
       id: Math.random().toString(), // Replace this with a unique ID
@@ -24,9 +27,25 @@ const CreateProposal: React.FC<CreateProposalProps> = ({onClose}) => {
       room: '',
       creator: '',
     };
-    // Dispatch the addProposal action
-    dispatch(addProposal(newProposal));
 
+    // Create a new object for publishProposal with start_date and duration as strings
+    const fieldsForPublish = {
+      ...newProposal,
+      start_date: newProposal.start_date.toString(),
+      duration: newProposal.duration.toString(),
+    };
+
+    const kind = 1;
+    const tags: string[][] = []; // specify the tags
+
+    try {
+      // Use fieldsForPublish for the publishProposal call
+      await publishProposal(kind, fieldsForPublish, tags);
+      // Use newProposal for the addProposal action
+      dispatch(addProposal(newProposal));
+    } catch (error) {
+      console.error('Failed to create proposal:', error);
+    }
     onClose();
   };
 

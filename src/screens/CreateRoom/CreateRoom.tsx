@@ -4,12 +4,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createRoomStyles as styles} from './createRoomStyles';
 import {useDispatch} from 'react-redux';
 import {addRoom} from '../../redux/rooms-slice';
+import useNostr from '../../nostr/useNostr';
 
 const CreateRoom = (props: {onClose: () => void}) => {
   const [name, setName] = useState('');
   const [about, setAbout] = useState('');
   const dispatch = useDispatch();
   const maxLength = 40;
+  const publishRoom = useNostr().publishRoom;
 
   const onCreateRoomPress = async () => {
     if (!name || !about) {
@@ -17,7 +19,6 @@ const CreateRoom = (props: {onClose: () => void}) => {
       return;
     }
     // Create a new room
-
     const newRoom = {
       id: Math.random().toString(), // Replace this with a unique ID
       name: name,
@@ -34,8 +35,19 @@ const CreateRoom = (props: {onClose: () => void}) => {
       proposals: [],
     };
 
-    // Dispatch the addRoom action
-    dispatch(addRoom(newRoom));
+    // Call publishRoom with required parameters
+    const kind = 1; // specify the kind
+    const content = JSON.stringify(newRoom); // convert newRoom to a string
+    const tags: string[][] = []; // specify the tags
+    try {
+      await publishRoom(kind, content, tags, () => {
+        console.log('Room published successfully');
+      });
+      // Dispatch the addRoom action
+      dispatch(addRoom(newRoom));
+    } catch (error) {
+      console.error('Failed to create room:', error);
+    }
 
     // Close the modal after the room is created
     props.onClose();
