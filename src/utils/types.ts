@@ -63,7 +63,6 @@ export interface EditRoomProps {
 export type RootStackParamList = {
   Welcome: undefined;
   Eula: undefined;
-  CreateAccount: undefined;
   Login: undefined;
   Rooms: undefined;
   Room: {roomId: string};
@@ -75,4 +74,5 @@ export type RootStackParamList = {
   };
   EditProfile: undefined;
   GenerateKeys: undefined;
+  CreateAccount: {prvKey: string};
 };

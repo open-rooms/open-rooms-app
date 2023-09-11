@@ -9,7 +9,7 @@ export function Welcome() {
   const welcomeTitle = 'Open Rooms';
 
   const onCreateAccountPress = () => {
-    navigation.navigate('Eula', {screen: 'CreateAccount'});
+    navigation.navigate('Eula', {screen: 'GenerateKeys'});
   };
 
   const onLoginPress = () => {

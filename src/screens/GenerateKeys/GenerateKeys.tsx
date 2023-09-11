@@ -1,16 +1,14 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import {generateKeysStyle as styles} from './generateKeysStyle';
 import {generateKeys} from '../../nostr/utils/generateKeys';
 import {copyToClipboard} from '../../utils/copyToClipboard';
 import {shortenKeys} from '../../utils/shortenKeys';
-
 import {publicKeyText, privateKeyText} from '../../texts/registerText';
-import {useDispatch} from 'react-redux';
-import {register} from '../../redux/user-slice';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../utils/types';
 
 function KeyItem({title, text, shortKey, keyCopied, onPress}: any) {
   return (
@@ -32,18 +30,11 @@ function KeyItem({title, text, shortKey, keyCopied, onPress}: any) {
 }
 
 export function GenerateKeys() {
-  const route = useRoute<any>();
-  const username = route.params.username;
-  const imgUri = route.params.imgUri;
-  const damus = route.params.damus;
-  const dispatch = useDispatch();
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, 'GenerateKeys'>>();
 
-  const [prvKey, setPrvKey] = React.useState(
-    'nsec15558b158124e5da8dd850c10533aa984aae38eb612a2bad225a8ccc896a34dc2',
-  );
-  const [pubKey, setPubKey] = React.useState(
-    'npub1291f8dd2fa4f568eec41f6f202a75cd12394e8edfd66a3b2524c1d9f478bddd2',
-  );
+  const [prvKey, setPrvKey] = React.useState('');
+  const [pubKey, setPubKey] = React.useState('');
   const [privateKeyCopied, setPrivateKeyCopied] = React.useState(false);
   const [publicKeyCopied, setPublicKeyCopied] = React.useState(false);
   const accountPrivateKey = `nsec1${prvKey}`;
@@ -69,14 +60,12 @@ export function GenerateKeys() {
     setPrivateKeyCopied(true);
   };
 
-  const onContinuePress = async () => {
+  const onContinuePress = () => {
     if (privateKeyCopied && publicKeyCopied) {
-      dispatch(
-        register({
-          userData: {username, damus, imgUri, pubKey},
-          privateKey: prvKey,
-        }),
-      );
+      console.log('Passing Private Key:', prvKey); // Add this log
+      navigation.navigate('CreateAccount', {
+        prvKey,
+      });
     }
   };
 

@@ -1,12 +1,15 @@
 import React, {useState, useCallback} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createAccountStyles as styles} from './createAccountStyles';
 import {handleUsernameChange as handleUsernameChangeUtil} from '../../utils/usernameHandlers';
 import {useDispatch} from 'react-redux';
-import {createAccount} from '../../redux/user-slice';
+import {register} from '../../redux/user-slice';
 import useNostr from '../../nostr/useNostr';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../utils/types';
+import {getPublicKey} from 'nostr-tools';
 
 function FormGroup({
   label,
@@ -33,7 +36,12 @@ function FormGroup({
 }
 
 export function CreateAccount() {
-  const navigation = useNavigation<any>();
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, 'CreateAccount'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'CreateAccount'>>();
+
+  const privateKey = route.params.prvKey;
+  console.log('Received Private Key:', privateKey); // Add this log
   const [username, setUsername] = useState('');
   const [hasValidUsername, setHasValidUsername] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
@@ -57,8 +65,9 @@ export function CreateAccount() {
     const tags: string[][] = []; // specify the tags???
     try {
       await createUser(kind, fields, tags);
-      dispatch(createAccount(newAccountData));
-      navigation.navigate('GenerateKeys', newAccountData);
+      dispatch(register({...newAccountData, privateKey: privateKey}));
+      // Navigate to Rooms upon successful account creation:
+      navigation.navigate('Rooms');
     } catch (error) {
       console.error('Failed to create user:', error);
     }
@@ -67,9 +76,10 @@ export function CreateAccount() {
     username,
     imgUri,
     damus,
-    navigation,
+    privateKey, // Include privateKey in the dependencies
     dispatch,
     createUser,
+    navigation,
   ]);
 
   const handleUsernameChange = useCallback(

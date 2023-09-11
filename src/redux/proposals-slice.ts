@@ -6,6 +6,7 @@ import {
 } from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useNostr from '../nostr/useNostr';
 
 type Proposal = {
   id: string;
@@ -20,14 +21,19 @@ type Proposal = {
 export const fetchProposals = createAsyncThunk(
   'proposals/fetchProposals',
   async (_, {dispatch}) => {
-    const useNostr = require('../../nostr/useNostr').default;
     const {getProposals} = useNostr();
-    const proposals = await getProposals();
-    proposals.forEach((proposal: Proposal) => {
-      dispatch(addProposal(proposal));
-    });
-
-    return proposals; // Return fetched proposals as payload
+    const proposals = getProposals();
+    if (Array.isArray(proposals)) {
+      // Check if proposals is an array
+      proposals.forEach((proposal: Proposal) => {
+        dispatch(addProposal(proposal));
+      });
+      return proposals; // Return fetched proposals as payload
+    } else {
+      throw new Error(
+        'Expected proposals to be an array but received a different type.',
+      );
+    }
   },
 );
 

@@ -104,19 +104,23 @@ const useNostr = () => {
     });
   };
 
-  const getRooms = () => {
-    console.log('efect nostr');
-    let roomsSub = pool.sub(RELAYS_URL, [
-      {'#t': ['white-room', 'white-room2']},
-    ]); // get everything from me
-    roomsSub.on('event', (event: any) => {
-      console.log('event generated', event.id, event.tags);
-      const roomContent: IRoom = JSON.parse(event.content);
-      roomContent.id = event.id;
-      setRooms(prevRooms => [
-        ...prevRooms.filter(room => room.id !== event.id),
-        roomContent,
+  const getRooms = (): Promise<IRoom[]> => {
+    return new Promise((resolve, reject) => {
+      let fetchedRooms: IRoom[] = [];
+      let roomsSub = pool.sub(RELAYS_URL, [
+        {'#t': ['white-room', 'white-room2']},
       ]);
+      roomsSub.on('event', (event: any) => {
+        const roomContent: IRoom = JSON.parse(event.content);
+        roomContent.id = event.id;
+        fetchedRooms.push(roomContent);
+      });
+      (roomsSub as any).on('end', () => {
+        resolve(fetchedRooms);
+      });
+      (roomsSub as any).on('error', (err: any) => {
+        reject(err);
+      });
     });
   };
 
