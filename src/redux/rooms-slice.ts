@@ -55,7 +55,9 @@ export const roomSlice = createSlice({
 
 const selectRooms = (state: any) => state.roomSlice;
 
-export const storedRooms = createSelector([selectRooms], rooms => rooms.rooms);
+export const storedRooms = createSelector([selectRooms], rooms =>
+  rooms ? rooms.rooms : [],
+);
 
 export const {addRoom, removeRoom} = roomSlice.actions;
 

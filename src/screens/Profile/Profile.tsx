@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import {useStorage} from '../../utils/useStorage';
+import {useStorage} from '../../storage/useStorage';
 import {profileStyles as styles} from './profileStyles';
 import {shortenKeys} from '../../utils/shortenKeys';
 import ProfilePic from '../../components/ProfilePic';

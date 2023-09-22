@@ -6,7 +6,7 @@ import {
   RELAYS_URL,
   ROOM_TAG,
 } from '../utils/constants';
-import {useStorage} from '../utils/useStorage';
+import {useStorage} from '../storage/useStorage';
 import {formatEvent} from './utils/utils';
 import {IRoom} from '../utils/types';
 import {IProposal} from '../utils/types';
@@ -116,6 +116,7 @@ const useNostr = () => {
         fetchedRooms.push(roomContent);
       });
       (roomsSub as any).on('end', () => {
+        setRooms(fetchedRooms); // <-- Update the state
         resolve(fetchedRooms);
       });
       (roomsSub as any).on('error', (err: any) => {

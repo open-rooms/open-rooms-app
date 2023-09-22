@@ -9,7 +9,6 @@ import {register} from '../../redux/user-slice';
 import useNostr from '../../nostr/useNostr';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../utils/types';
-import {getPublicKey} from 'nostr-tools';
 
 function FormGroup({
   label,
@@ -41,7 +40,7 @@ export function CreateAccount() {
   const route = useRoute<RouteProp<RootStackParamList, 'CreateAccount'>>();
 
   const privateKey = route.params.prvKey;
-  console.log('Received Private Key:', privateKey); // Add this log
+  console.log('Received Private Key:', privateKey);
   const [username, setUsername] = useState('');
   const [hasValidUsername, setHasValidUsername] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(

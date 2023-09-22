@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {generateKeysStyle as styles} from './generateKeysStyle';
-import {generateKeys} from '../../nostr/utils/generateKeys';
+import {generatePrivate, generatePublic} from '../../nostr/utils/generateKeys';
 import {copyToClipboard} from '../../utils/copyToClipboard';
 import {shortenKeys} from '../../utils/shortenKeys';
 import {publicKeyText, privateKeyText} from '../../texts/registerText';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../utils/types';
+import {useStorage} from '../../storage/useStorage';
 
 function KeyItem({title, text, shortKey, keyCopied, onPress}: any) {
   return (
@@ -33,24 +34,31 @@ export function GenerateKeys() {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, 'GenerateKeys'>>();
 
-  const [prvKey, setPrvKey] = React.useState('');
-  const [pubKey, setPubKey] = React.useState('');
-  const [privateKeyCopied, setPrivateKeyCopied] = React.useState(false);
-  const [publicKeyCopied, setPublicKeyCopied] = React.useState(false);
+  const [prvKey, setPrvKey] = useState('');
+  const [pubKey, setPubKey] = useState('');
+  const [privateKeyCopied, setPrivateKeyCopied] = useState(false);
+  const [publicKeyCopied, setPublicKeyCopied] = useState(false);
+
   const accountPrivateKey = `nsec1${prvKey}`;
   const accountPublicKey = `npub1${pubKey}`;
+
   const shortPrivateKey = shortenKeys(accountPrivateKey, 40);
   const shortPublicKey = shortenKeys(accountPublicKey, 40);
-  const publicKeyTitle = 'Public Key';
-  const privateKeyTitle = 'Private Key';
 
-  React.useEffect(() => {
-    const {publicKey, privateKey} = generateKeys();
+  const {storePrivateKey} = useStorage();
+
+  useEffect(() => {
+    // This will run only once when the component mounts
+    const privateKey = generatePrivate();
+    const publicKey = generatePublic(privateKey);
     setPrvKey(privateKey);
     setPubKey(publicKey);
-  }, []);
+    if (storePrivateKey) {
+      storePrivateKey(privateKey);
+    }
+  }, []); // Empty dependency array ensures this runs only once
 
-  const onPublickKeyPress = () => {
+  const onPublicKeyPress = () => {
     copyToClipboard(accountPublicKey);
     setPublicKeyCopied(true);
   };
@@ -62,42 +70,27 @@ export function GenerateKeys() {
 
   const onContinuePress = () => {
     if (privateKeyCopied && publicKeyCopied) {
-      console.log('Passing Private Key:', prvKey); // Add this log
-      navigation.navigate('CreateAccount', {
-        prvKey,
-      });
+      navigation.navigate('CreateAccount', {prvKey});
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.textGroup}>
-        {publicKeyCopied ? (
-          <>
-            <KeyItem
-              title={publicKeyTitle}
-              text={publicKeyText}
-              shortKey={shortPublicKey}
-              keyCopied={publicKeyCopied}
-              onPress={onPublickKeyPress}
-            />
-            <KeyItem
-              title={privateKeyTitle}
-              text={privateKeyText}
-              shortKey={shortPrivateKey}
-              keyCopied={privateKeyCopied}
-              onPress={onPrivateKeyPress}
-            />
-          </>
-        ) : (
-          <KeyItem
-            title={publicKeyTitle}
-            text={publicKeyText}
-            shortKey={shortPublicKey}
-            keyCopied={publicKeyCopied}
-            onPress={onPublickKeyPress}
-          />
-        )}
+        <KeyItem
+          title="Public Key"
+          text={publicKeyText}
+          shortKey={shortPublicKey}
+          keyCopied={publicKeyCopied}
+          onPress={onPublicKeyPress}
+        />
+        <KeyItem
+          title="Private Key"
+          text={privateKeyText}
+          shortKey={shortPrivateKey}
+          keyCopied={privateKeyCopied}
+          onPress={onPrivateKeyPress}
+        />
         {privateKeyCopied && publicKeyCopied && (
           <TouchableOpacity
             style={styles.primaryButton}

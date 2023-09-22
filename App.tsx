@@ -4,7 +4,7 @@ import 'react-native-url-polyfill/auto';
 import React from 'react';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
-import {StorageContextProvider} from './src/utils/useStorage';
+import {StorageContextProvider} from './src/storage/useStorage';
 import RootNavigator from './src/RootNavigator';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';

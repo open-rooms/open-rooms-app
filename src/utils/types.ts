@@ -6,7 +6,9 @@ export interface IStorageContext {
   accountConnected: boolean;
   publicKey: string;
   privateKey: string;
+  storePrivateKey?: (key: string) => Promise<void>;
 }
+
 export interface IButtonProps {
   title: string;
   onPress(): void;
