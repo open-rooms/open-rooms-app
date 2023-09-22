@@ -34,21 +34,29 @@ export function StorageContextProvider({children}: any) {
         console.log('Fetching keys from storage...');
         const pubKey = await getData(StorageKeys.PUBLIC_KEY);
         const privKey = await getData(StorageKeys.PRIVATE_KEY);
-
+  
+        // Check if it's likely the first time the app is launched
+        if (!pubKey && !privKey) {
+          console.log('No keys found in storage. This is likely the first app launch.');
+          // Optionally, generate new keys here or navigate the user to a setup screen
+          // to handle first-time scenarios.
+          return;
+        }
+  
         if (pubKey) {
           console.log('Fetched public key:', pubKey);
           setPublicKey(pubKey);
         } else {
           console.log('No public key found.');
         }
-
+  
         if (privKey) {
           console.log('Fetched private key:', privKey);
           setPrivateKey(privKey);
         } else {
           console.log('No private key found.');
         }
-
+  
         if (pubKey && privKey) {
           setAccountConnected(true);
         } else {
@@ -56,7 +64,6 @@ export function StorageContextProvider({children}: any) {
         }
       } catch (error: any) {
         console.error('Error occurred while fetching keys:', error.message);
-        // Check if the error message is "No value found" and handle it differently
         if (error.message === 'No value found') {
           console.log(
             'No stored keys found, this is expected for first-time users.',
@@ -67,9 +74,10 @@ export function StorageContextProvider({children}: any) {
         setAccountConnected(false);
       }
     }
-
+  
     fetchKeys();
   }, []);
+  
 
   return (
     <StorageContext.Provider
