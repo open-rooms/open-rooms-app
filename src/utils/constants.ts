@@ -1,9 +1,5 @@
 // constants.ts
-export const RELAYS_URL = [
-  'wss://relay.taxi',
-  'wss://nostramsterdam.vpx.moe',
-  'wss://nostr.anchel.nl',
-];
+export const RELAYS_URL = ['wss://relayable.org', 'wss://nostr.wine'];
 
 export const DEFAULT_TAG: string[] = ['e', 'open-rooms'];
 

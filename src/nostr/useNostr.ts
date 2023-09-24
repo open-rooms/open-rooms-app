@@ -55,6 +55,9 @@ const useNostr = () => {
       // Publish the event to the relays
       const pubEvent = pool.publish(relays, event);
 
+      // Log for debugging
+      console.log('Publication initiated, waiting for callbacks or timeout.');
+
       // Set a timeout for the Promise
       const timeout = setTimeout(() => {
         console.log('Operation timed out');
