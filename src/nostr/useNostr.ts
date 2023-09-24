@@ -23,11 +23,20 @@ const useNostr = () => {
     tags: string[][],
   ) => {
     return new Promise((resolve, reject) => {
-      const content = JSON.stringify(fields);
-      console.log('Converted fields to JSON:', content); // Debugging Step 1
+      // Check for the availability of the private key
+      if (!privateKey) {
+        reject(new Error('Private Key is not available'));
+        return;
+      }
 
+      // Convert fields to JSON
+      const content = JSON.stringify(fields);
+      console.log('Converted fields to JSON:', content);
+
+      // Set default tags
       const defaultTags: string[][] = [DEFAULT_TAG];
 
+      // Create and validate the event
       const event = formatEvent(
         kind,
         content,
@@ -37,26 +46,30 @@ const useNostr = () => {
       console.log(
         'Event object to be published:',
         JSON.stringify(event, null, 2),
-      ); // Debugging Step 2
+      );
 
-      console.log('Start creating user');
+      // Prepare relay URLs as an array
+      const relays = Array.isArray(RELAYS_URL) ? RELAYS_URL : [RELAYS_URL];
+
       console.log('About to publish user');
+      // Publish the event to the relays
+      const pubEvent = pool.publish(relays, event);
 
-      const pubEvent = pool.publish(RELAYS_URL, event);
-      console.log('pubEvent object:', JSON.stringify(pubEvent, null, 2)); // Debugging Step 3
-
-      // Implement a timeout for the Promise (Debugging Step 4)
-      setTimeout(() => {
+      // Set a timeout for the Promise
+      const timeout = setTimeout(() => {
         console.log('Operation timed out');
         reject(new Error('Operation timed out'));
-      }, 5000); // Adjust the time as needed
+      }, 100000); // Adjust the time as needed
 
       pubEvent.on('ok', (reason: any) => {
-        console.log('User published to relays:', reason);
+        console.log('User successfully published to all relays:', reason);
+        clearTimeout(timeout);
         resolve(reason);
       });
+
       pubEvent.on('failed', (reason: any) => {
-        console.log('User failed to publish to relays:', reason);
+        console.log('Failed to publish user:', reason);
+        clearTimeout(timeout);
         reject(reason);
       });
     });
