@@ -7,7 +7,7 @@ import {
   ROOM_TAG,
 } from '../utils/constants';
 import {useStorage} from '../storage/useStorage';
-import {formatEvent} from './utils/utils';
+import {formatEvent} from '../nostr/formatEvent';
 import {IRoom} from '../utils/types';
 import {IProposal} from '../utils/types';
 

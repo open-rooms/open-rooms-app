@@ -6,9 +6,9 @@ import {createAccountStyles as styles} from './createAccountStyles';
 import {handleUsernameChange as handleUsernameChangeUtil} from '../../utils/usernameHandlers';
 import {useDispatch} from 'react-redux';
 import {register} from '../../redux/user-slice';
-import useNostr from '../../nostr/useNostr';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../utils/types';
+import publishUser from '../../nostr/multipleRelaysUsers';
 
 function FormGroup({
   label,
@@ -49,7 +49,6 @@ export function CreateAccount() {
   const [usernameStatus, setUsernameStatus] = useState('');
   const [imgUri, setImgUri] = useState('');
   const [damus, setDamus] = useState('');
-  const {createUser} = useNostr();
 
   const dispatch = useDispatch();
 
@@ -63,7 +62,7 @@ export function CreateAccount() {
     const fields = newAccountData;
     const tags: string[][] = []; // specify the tags???
     try {
-      await createUser(kind, fields, tags);
+      await publishUser(kind, fields, tags, privateKey);
       dispatch(register({...newAccountData, privateKey: privateKey}));
       navigation.navigate('Rooms');
     } catch (error) {
@@ -76,7 +75,7 @@ export function CreateAccount() {
     damus,
     privateKey,
     dispatch,
-    createUser,
+    publishUser,
     navigation,
   ]);
 

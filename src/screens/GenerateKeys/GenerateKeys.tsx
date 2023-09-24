@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {generateKeysStyle as styles} from './generateKeysStyle';
-import {generatePrivate, generatePublic} from '../../nostr/utils/generateKeys';
+import {generatePrivate, generatePublic} from '../../nostr/generateKeys';
 import {copyToClipboard} from '../../utils/copyToClipboard';
 import {shortenKeys} from '../../utils/shortenKeys';
 import {publicKeyText, privateKeyText} from '../../texts/registerText';
