@@ -85,7 +85,7 @@ export function StorageContextProvider({children}: any) {
         accountConnected,
         publicKey,
         privateKey,
-        storePrivateKey, // make sure to include this
+        storePrivateKey,
       }}>
       {children}
     </StorageContext.Provider>

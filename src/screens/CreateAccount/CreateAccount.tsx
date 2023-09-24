@@ -1,14 +1,14 @@
 import React, {useState, useCallback} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../utils/types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createAccountStyles as styles} from './createAccountStyles';
 import {handleUsernameChange as handleUsernameChangeUtil} from '../../utils/usernameHandlers';
 import {useDispatch} from 'react-redux';
 import {register} from '../../redux/user-slice';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../utils/types';
-import publishUser from '../../nostr/multipleRelaysUsers';
+import publishOnMultipleRelays from '../../nostr/publishOnMultipleRelays';
 
 function FormGroup({
   label,
@@ -49,7 +49,6 @@ export function CreateAccount() {
   const [usernameStatus, setUsernameStatus] = useState('');
   const [imgUri, setImgUri] = useState('');
   const [damus, setDamus] = useState('');
-
   const dispatch = useDispatch();
 
   const onContinuePress = useCallback(async () => {
@@ -60,9 +59,9 @@ export function CreateAccount() {
     const newAccountData = {username, imgUri, damus};
     const kind = 1;
     const fields = newAccountData;
-    const tags: string[][] = []; // specify the tags???
+    const tags: string[][] = [];
     try {
-      await publishUser(kind, fields, tags, privateKey);
+      await publishOnMultipleRelays(kind, fields, tags, privateKey);
       dispatch(register({...newAccountData, privateKey: privateKey}));
       navigation.navigate('Rooms');
     } catch (error) {
@@ -75,7 +74,7 @@ export function CreateAccount() {
     damus,
     privateKey,
     dispatch,
-    publishUser,
+    publishOnMultipleRelays,
     navigation,
   ]);
 

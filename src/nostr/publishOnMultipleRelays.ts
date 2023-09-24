@@ -2,9 +2,9 @@ import {SimplePool} from 'nostr-tools';
 import {DEFAULT_TAG, RELAYS_URL} from '../utils/constants';
 import {formatEvent} from './formatEvent';
 
-export const publishUser = (
+export const publishOnMultipleRelays = (
   kind: number,
-  fields: {[key: string]: string},
+  fields: string | {[key: string]: string},
   tags: string[][],
   privateKey: string,
 ) => {
@@ -66,4 +66,4 @@ export const publishUser = (
   });
 };
 
-export default publishUser;
+export default publishOnMultipleRelays;

@@ -1,26 +1,32 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {createRoomStyles as styles} from './createRoomStyles';
-import {useDispatch} from 'react-redux';
-import {addRoom} from '../../redux/rooms-slice';
-import useNostr from '../../nostr/useNostr';
+import { createRoomStyles as styles } from './createRoomStyles';
+import { useDispatch } from 'react-redux';
+import { addRoom } from '../../redux/rooms-slice';
+import { ROOM_TAG } from '../../utils/constants';
+import { useStorage } from '../../storage/useStorage';
+import publishOnMultipleRelays from '../../nostr/publishOnMultipleRelays';
 
-const CreateRoom = (props: {onClose: () => void}) => {
+const CreateRoom = (props: { onClose: () => void }) => {
   const [name, setName] = useState('');
   const [about, setAbout] = useState('');
   const dispatch = useDispatch();
   const maxLength = 40;
-  const publishRoom = useNostr().publishRoom;
+
+  // Define privateKey here
+  const { privateKey } = useStorage(); 
 
   const onCreateRoomPress = async () => {
+    // The privateKey variable is now directly accessible in this function
+
     if (!name || !about) {
       Alert.alert('Please fill out all fields');
       return;
     }
-    // Create a new room
+
     const newRoom = {
-      id: Math.random().toString(), // Replace this with a unique ID
+      id: Math.random().toString(),
       name: name,
       about: about,
       start_date: Date.now(),
@@ -35,21 +41,17 @@ const CreateRoom = (props: {onClose: () => void}) => {
       proposals: [],
     };
 
-    // Call publishRoom with required parameters
-    const kind = 1; // specify the kind
-    const content = JSON.stringify(newRoom); // convert newRoom to a string
-    const tags: string[][] = []; // specify the tags
+    const kind = 1;
+    const fields = JSON.stringify(newRoom);
+    const tags: string[][] = [ROOM_TAG];
+
     try {
-      await publishRoom(kind, content, tags, () => {
-        console.log('Room published successfully');
-      });
-      // Dispatch the addRoom action
+      await publishOnMultipleRelays(kind, fields, tags, privateKey);
       dispatch(addRoom(newRoom));
     } catch (error) {
       console.error('Failed to create room:', error);
     }
 
-    // Close the modal after the room is created
     props.onClose();
   };
 
@@ -82,7 +84,8 @@ const CreateRoom = (props: {onClose: () => void}) => {
       </View>
       <TouchableOpacity
         style={styles.primaryButton}
-        onPress={onCreateRoomPress}>
+        onPress={onCreateRoomPress}
+      >
         <Text style={styles.primaryButtonText}>Create Room</Text>
       </TouchableOpacity>
     </View>
