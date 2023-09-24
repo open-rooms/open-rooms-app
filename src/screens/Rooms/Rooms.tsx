@@ -6,11 +6,9 @@ import ProfilePic from '../../components/ProfilePic';
 import {formatStartDate} from '../../utils/time';
 import {IRoom} from '../../utils/types';
 import {roomsStyles as styles} from './roomsStyles';
-
 import {useSelector} from 'react-redux';
 import {storedRooms} from '../../redux/rooms-slice';
 
-// import rooms from '../../utils/fakeRooms.json';
 
 // Room item component
 const RoomItem = ({item, onPress}: {item: IRoom; onPress: () => void}) => {

@@ -4,27 +4,23 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createRoomStyles as styles } from './createRoomStyles';
 import { useDispatch } from 'react-redux';
 import { addRoom } from '../../redux/rooms-slice';
-import { ROOM_TAG } from '../../utils/constants';
+import { ROOM_TAG } from '../../nostr-tools/nostrTags';
 import { useStorage } from '../../storage/useStorage';
-import publishOnMultipleRelays from '../../nostr/publishOnMultipleRelays';
+import publishEvent from '../../nostr-tools/publishEvent';
 
 const CreateRoom = (props: { onClose: () => void }) => {
   const [name, setName] = useState('');
   const [about, setAbout] = useState('');
-  const dispatch = useDispatch();
   const maxLength = 40;
-
-  // Define privateKey here
+  const dispatch = useDispatch();
   const { privateKey } = useStorage(); 
 
   const onCreateRoomPress = async () => {
-    // The privateKey variable is now directly accessible in this function
-
     if (!name || !about) {
       Alert.alert('Please fill out all fields');
       return;
     }
-
+    
     const newRoom = {
       id: Math.random().toString(),
       name: name,
@@ -46,7 +42,7 @@ const CreateRoom = (props: { onClose: () => void }) => {
     const tags: string[][] = [ROOM_TAG];
 
     try {
-      await publishOnMultipleRelays(kind, fields, tags, privateKey);
+      await publishEvent(kind, fields, tags, privateKey);
       dispatch(addRoom(newRoom));
     } catch (error) {
       console.error('Failed to create room:', error);

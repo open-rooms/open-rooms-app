@@ -6,26 +6,16 @@ import {
 } from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import useNostr from '../nostr/useNostr';
-
-type Proposal = {
-  id: string;
-  proposal: string;
-  start_date: number;
-  duration: number;
-  status: string;
-  room: string;
-  creator: string;
-};
+import {IProposal} from '../utils/types';
+import {getProposals} from '../nostr-tools/getProposals';
 
 export const fetchProposals = createAsyncThunk(
   'proposals/fetchProposals',
   async (_, {dispatch}) => {
-    const {getProposals} = useNostr();
     const proposals = getProposals();
     if (Array.isArray(proposals)) {
       // Check if proposals is an array
-      proposals.forEach((proposal: Proposal) => {
+      proposals.forEach((proposal: IProposal) => {
         dispatch(addProposal(proposal));
       });
       return proposals; // Return fetched proposals as payload
@@ -38,7 +28,7 @@ export const fetchProposals = createAsyncThunk(
 );
 
 export type ProposalsSlice = {
-  proposals: Proposal[];
+  proposals: IProposal[];
 };
 
 const initialState: ProposalsSlice = {
@@ -54,7 +44,7 @@ export const proposalSlice = createSlice({
   name: 'proposalSlice',
   initialState,
   reducers: {
-    addProposal: (state, action: PayloadAction<Proposal>) => {
+    addProposal: (state, action: PayloadAction<IProposal>) => {
       // register the proposal on the chain
       state.proposals.push(action.payload);
     },

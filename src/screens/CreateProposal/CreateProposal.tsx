@@ -4,54 +4,53 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createProposalStyles as styles} from './createProposalStyles';
 import {useDispatch} from 'react-redux';
 import {addProposal} from '../../redux/proposals-slice';
-import useNostr from '../../nostr/useNostr';
+import {PROPOSAL_TAG} from '../../nostr-tools/nostrTags';
+import {useStorage} from '../../storage/useStorage';
+import publishEvent from '../../nostr-tools/publishEvent';
 
-interface CreateProposalProps {
-  onClose: () => void;
-}
-
-const CreateProposal: React.FC<CreateProposalProps> = ({onClose}) => {
+const CreateProposal = (props: { onClose: () => void }) => {
   const [proposal, setProposal] = useState('');
   const maxLength = 280;
   const remainingChars = maxLength - proposal.length;
-  const {publishProposal} = useNostr();
   const dispatch = useDispatch();
+  const { privateKey } = useStorage(); 
 
   const onCreateProposalPress = async () => {
     const newProposal = {
-      id: Math.random().toString(), // Replace this with a unique ID
+      id: Math.random().toString(),
       proposal: proposal,
       start_date: Date.now(),
       duration: 0,
       status: 'New',
       room: '',
-      creator: '',
-    };
-
-    // Create a new object for publishProposal with start_date and duration as strings
-    const fieldsForPublish = {
-      ...newProposal,
-      start_date: newProposal.start_date.toString(),
-      duration: newProposal.duration.toString(),
+      creator: {
+        id: '',
+        pubKey: '',
+        profilePicUrl: '',
+        username: '',
+        damus: '',
+      },
     };
 
     const kind = 1;
-    const tags: string[][] = []; // specify the tags
+    const fileds = {
+      ...newProposal,
+      duration: newProposal.duration.toString(),
+    };
+    const tags: string[][] = [PROPOSAL_TAG]; // specify the tags
 
     try {
-      // Use fieldsForPublish for the publishProposal call
-      await publishProposal(kind, fieldsForPublish, tags);
-      // Use newProposal for the addProposal action
+      await publishEvent(kind, fileds, tags, privateKey);
       dispatch(addProposal(newProposal));
     } catch (error) {
       console.error('Failed to create proposal:', error);
     }
-    onClose();
+    props.onClose();
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onClose}>
+      <TouchableOpacity onPress={props.onClose}>
         <Icon name="close" style={styles.closeIcon} />
       </TouchableOpacity>
       <Text style={styles.title}>Create Proposal</Text>

@@ -8,7 +8,7 @@ import {createAccountStyles as styles} from './createAccountStyles';
 import {handleUsernameChange as handleUsernameChangeUtil} from '../../utils/usernameHandlers';
 import {useDispatch} from 'react-redux';
 import {register} from '../../redux/user-slice';
-import publishOnMultipleRelays from '../../nostr/publishOnMultipleRelays';
+import publishEvent from '../../nostr-tools/publishEvent';
 
 function FormGroup({
   label,
@@ -61,7 +61,7 @@ export function CreateAccount() {
     const fields = newAccountData;
     const tags: string[][] = [];
     try {
-      await publishOnMultipleRelays(kind, fields, tags, privateKey);
+      await publishEvent(kind, fields, tags, privateKey);
       dispatch(register({...newAccountData, privateKey: privateKey}));
       navigation.navigate('Rooms');
     } catch (error) {
@@ -74,7 +74,7 @@ export function CreateAccount() {
     damus,
     privateKey,
     dispatch,
-    publishOnMultipleRelays,
+    publishEvent,
     navigation,
   ]);
 

@@ -7,12 +7,11 @@ import {
 import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {IRoom} from '../utils/types';
-import useNostr from '../nostr/useNostr';
+import {getRooms} from '../nostr-tools/getRooms';
 
 export const fetchRooms = createAsyncThunk(
   'rooms/fetchRooms',
   async (_, __) => {
-    const {getRooms} = useNostr();
     const rooms = await getRooms();
     return rooms;
   },

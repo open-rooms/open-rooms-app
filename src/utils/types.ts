@@ -34,11 +34,17 @@ export interface IRoom {
 export interface IProposal {
   id: string;
   proposal: string;
-  start_date: Date;
+  start_date: number;
   duration: number;
-  status: ProposalStatus;
+  status: string;
   room: string;
-  creator: string;
+  creator: {
+    id: string;
+    pubKey: string;
+    profilePicUrl: string;
+    username: string;
+    damus: string;
+  };
 }
 export enum ProposalStatus {
   LIVE = 'Live',
