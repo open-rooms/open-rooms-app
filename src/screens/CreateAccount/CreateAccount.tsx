@@ -65,7 +65,6 @@ export function CreateAccount() {
     try {
       await createUser(kind, fields, tags);
       dispatch(register({...newAccountData, privateKey: privateKey}));
-      // Navigate to Rooms upon successful account creation:
       navigation.navigate('Rooms');
     } catch (error) {
       console.error('Failed to create user:', error);
@@ -75,7 +74,7 @@ export function CreateAccount() {
     username,
     imgUri,
     damus,
-    privateKey, // Include privateKey in the dependencies
+    privateKey,
     dispatch,
     createUser,
     navigation,

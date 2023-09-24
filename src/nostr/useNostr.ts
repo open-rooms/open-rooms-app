@@ -24,6 +24,7 @@ const useNostr = () => {
   ) => {
     return new Promise((resolve, reject) => {
       const content = JSON.stringify(fields);
+      console.log('Converted fields to JSON:', content); // Debugging Step 1
 
       const defaultTags: string[][] = [DEFAULT_TAG];
 
@@ -33,16 +34,29 @@ const useNostr = () => {
         privateKey,
         defaultTags.concat(tags),
       );
-      console.log('start creating user');
+      console.log(
+        'Event object to be published:',
+        JSON.stringify(event, null, 2),
+      ); // Debugging Step 2
+
+      console.log('Start creating user');
+      console.log('About to publish user');
 
       const pubEvent = pool.publish(RELAYS_URL, event);
+      console.log('pubEvent object:', JSON.stringify(pubEvent, null, 2)); // Debugging Step 3
+
+      // Implement a timeout for the Promise (Debugging Step 4)
+      setTimeout(() => {
+        console.log('Operation timed out');
+        reject(new Error('Operation timed out'));
+      }, 5000); // Adjust the time as needed
 
       pubEvent.on('ok', (reason: any) => {
-        console.log('Event published to relays: ', reason);
+        console.log('User published to relays:', reason);
         resolve(reason);
       });
       pubEvent.on('failed', (reason: any) => {
-        console.log('failed to publish to relays:', reason);
+        console.log('User failed to publish to relays:', reason);
         reject(reason);
       });
     });

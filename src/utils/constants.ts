@@ -1,12 +1,11 @@
 // constants.ts
 export const RELAYS_URL = [
-  'wss://relay.nostrati.com',
   'wss://relay.taxi',
   'wss://nostramsterdam.vpx.moe',
   'wss://nostr.anchel.nl',
 ];
 
-export const DEFAULT_TAG: string[] = ['e', 'white-roomx'];
+export const DEFAULT_TAG: string[] = ['e', 'open-rooms'];
 
 export const ROOM_TAG: string[] = ['t', 'room'];
 
