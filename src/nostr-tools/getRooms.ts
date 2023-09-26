@@ -9,6 +9,7 @@ export const getRooms = (): Promise<IRoom[]> => {
     let fetchedRooms: IRoom[] = [];
     let roomsSub = pool.sub(RELAYS_URL, [{'#t': ['open-rooms', 'room']}]);
     roomsSub.on('event', (event: any) => {
+      console.log('Event received:', event);
       const roomContent: IRoom = JSON.parse(event.content);
       roomContent.id = event.id;
       fetchedRooms.push(roomContent);

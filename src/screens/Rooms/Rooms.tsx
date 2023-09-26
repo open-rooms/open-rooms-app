@@ -7,7 +7,8 @@ import {formatStartDate} from '../../utils/time';
 import {IRoom} from '../../utils/types';
 import {roomsStyles as styles} from './roomsStyles';
 import {useSelector} from 'react-redux';
-import {storedRooms} from '../../redux/rooms-slice';
+import { RootState } from '../../redux/rootReducer';
+
 
 
 // Room item component
@@ -43,7 +44,9 @@ export function Rooms() {
   const [showHeaderTitle, setShowHeaderTitle] = useState(false);
 
   // comment this if you want to continue work
-  const rooms = useSelector(storedRooms);
+  const rooms = useSelector((state: RootState) => state.rooms.rooms);
+  console.log("Rooms from Redux: ", rooms);
+
 
   // Handle closing the modal
   const onModalClose = () => {
@@ -52,6 +55,7 @@ export function Rooms() {
 
   // Render rooms in the list
   const renderRooms = ({item}: {item: IRoom}) => {
+    console.log("Rendering room with ID:", item.id);
     return (
       <RoomItem
         item={item}
