@@ -13,18 +13,13 @@ import {RootState} from './rootReducer';
 export const fetchProposals = createAsyncThunk(
   'proposals/fetchProposals',
   async (_, {dispatch}) => {
-    console.log('fetchProposals initiated');
     const proposals = await getProposals();
     if (Array.isArray(proposals)) {
-      console.log('Fetched proposals:', proposals);
       proposals.forEach((proposal: IProposal) => {
         dispatch(addProposal(proposal));
       });
-      return proposals; // Return fetched proposals as payload
+      return proposals;
     } else {
-      console.error(
-        'Expected proposals to be an array but received a different type.',
-      );
       throw new Error(
         'Expected proposals to be an array but received a different type.',
       );
@@ -50,12 +45,9 @@ export const proposalSlice = createSlice({
   initialState,
   reducers: {
     addProposal: (state, action: PayloadAction<IProposal>) => {
-      console.log('State before:', state);
       state.proposals.push(action.payload);
-      console.log('State after:', state);
     },
     removeProposal: (state, action: PayloadAction<{id: string}>) => {
-      console.log('Removing proposal with id:', action.payload.id);
       state.proposals = state.proposals.filter(
         item => item.id !== action.payload.id,
       );
@@ -64,10 +56,6 @@ export const proposalSlice = createSlice({
       state,
       action: PayloadAction<{id: string; status: string}>,
     ) => {
-      console.log(
-        `Updating proposal ${action.payload.id} with status ${action.payload.status}`,
-      );
-      // find the proposal and update its status
       const proposal = state.proposals.find(
         item => item.id === action.payload.id,
       );
@@ -83,10 +71,7 @@ export const proposalSlice = createSlice({
   },
 });
 
-const selectProposals = (state: RootState) => {
-  console.log('Proposal Slice State:', state.proposalSlice);
-  return state.proposalSlice;
-};
+const selectProposals = (state: RootState) => state.proposalSlice;
 
 export const storedProposals = createSelector([selectProposals], proposals =>
   proposals ? proposals.proposals : [],

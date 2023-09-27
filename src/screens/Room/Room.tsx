@@ -18,9 +18,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { roomStyles as styles } from './roomStyles';
 import { fetchProposals, storedProposals } from '../../redux/proposals-slice';
 import { AppDispatch } from '../../redux/store';
-import { ThunkDispatch } from 'redux-thunk';
-import { RootState } from '../../redux/rootReducer';
-import { AnyAction } from 'redux';
 
 const RoomHeader = ({
   room,
@@ -148,8 +145,12 @@ export function Room({ route }: any) {
   };
 
   useEffect(() => {
-    dispatch(fetchProposals());
+    dispatch(fetchProposals()).then(() => {
+      const currentProposals = useSelector(storedProposals);
+      console.log("Current Proposals: ", currentProposals);
+    });
   }, []);
+  
 
   useEffect(() => {
     navigation.setOptions({
