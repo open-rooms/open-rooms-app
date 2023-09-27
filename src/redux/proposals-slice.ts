@@ -8,18 +8,23 @@ import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {IProposal} from '../utils/types';
 import {getProposals} from '../nostr-tools/getProposals';
+import {RootState} from './rootReducer';
 
 export const fetchProposals = createAsyncThunk(
   'proposals/fetchProposals',
   async (_, {dispatch}) => {
-    const proposals = getProposals();
+    console.log('fetchProposals initiated');
+    const proposals = await getProposals();
     if (Array.isArray(proposals)) {
-      // Check if proposals is an array
+      console.log('Fetched proposals:', proposals);
       proposals.forEach((proposal: IProposal) => {
         dispatch(addProposal(proposal));
       });
       return proposals; // Return fetched proposals as payload
     } else {
+      console.error(
+        'Expected proposals to be an array but received a different type.',
+      );
       throw new Error(
         'Expected proposals to be an array but received a different type.',
       );
@@ -35,6 +40,7 @@ const initialState: ProposalsSlice = {
   proposals: [],
 };
 
+
 const persistConfig = {
   key: 'proposalSlice',
   storage: AsyncStorage,
@@ -45,19 +51,22 @@ export const proposalSlice = createSlice({
   initialState,
   reducers: {
     addProposal: (state, action: PayloadAction<IProposal>) => {
-      // register the proposal on the chain
+      console.log('Adding proposal:', action.payload);
       state.proposals.push(action.payload);
     },
     removeProposal: (state, action: PayloadAction<{id: string}>) => {
-      // use nostr to delete on the chain
-      const {id} = action.payload;
-
-      state.proposals = state.proposals.filter(item => item.id !== id);
+      console.log('Removing proposal with id:', action.payload.id);
+      state.proposals = state.proposals.filter(
+        item => item.id !== action.payload.id,
+      );
     },
     updateProposalStatus: (
       state,
       action: PayloadAction<{id: string; status: string}>,
     ) => {
+      console.log(
+        `Updating proposal ${action.payload.id} with status ${action.payload.status}`,
+      );
       // find the proposal and update its status
       const proposal = state.proposals.find(
         item => item.id === action.payload.id,
@@ -74,11 +83,14 @@ export const proposalSlice = createSlice({
   },
 });
 
-const selectProposals = (state: any) => state.proposalSlice;
+const selectProposals = (state: RootState) => {
+  console.log('Proposal Slice State:', state.proposalSlice);
+  return state.proposalSlice;
+};
 
 export const storedProposals = createSelector(
   [selectProposals],
-  proposals => proposals.proposals,
+  proposals => proposals ? proposals.proposals : []
 );
 
 export const {addProposal, removeProposal, updateProposalStatus} =

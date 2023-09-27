@@ -1,25 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   FlatList,
-  Pressable,
-  Modal,
   TouchableOpacity,
+  Modal,
+  Pressable,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import ProfilePic from '../../components/ProfilePic';
-import {useNavigation} from '@react-navigation/native';
-import {getTimePassed} from '../../utils/time';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {IRoom, RootStackParamList} from '../../utils/types';
-import CreateProposal from '../CreateProposal/CreateProposal';
 import ProposalStatus from '../../components/ProposalStatus';
-import {roomStyles as styles} from './roomStyles';
-import {storedProposals} from '../../redux/proposals-slice';
-import {useSelector} from 'react-redux';
-
-//fake data
-// import fakeProposals from '../../utils/fakeProposals.json';
+import CreateProposal from '../CreateProposal/CreateProposal';
+import { getTimePassed } from '../../utils/time';
+import { IRoom, RootStackParamList } from '../../utils/types';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { roomStyles as styles } from './roomStyles';
+import { storedProposals } from '../../redux/proposals-slice';
 
 const RoomHeader = ({
   room,
@@ -29,24 +26,23 @@ const RoomHeader = ({
   onUpdate,
 }: any) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
-  // Update the handleEditRoom function
+  
+  // Your handleEditRoom function
   const handleEditRoom = () => {
     console.log('Edit room');
     navigation.navigate('EditRoom', {
       room,
-      onUpdate: onUpdate, // Change the parameter name to onUpdate
+      onUpdate,
     });
   };
 
+  // Your handleJoinRoom function
   const handleJoinRoom = () => {
     setIsJoined(!isJoined);
     if (isJoined) {
       console.log('Leave room');
-      // Implement the logic for leaving the room
     } else {
       console.log('Join room');
-      // Implement the logic for joining the room
     }
   };
 
@@ -118,16 +114,24 @@ const Proposal = ({proposal}: any) => {
   );
 };
 
-export function Room({route}: any) {
-  const {roomName, roomAbout, roomMembers} = route.params;
+export function Room({ route }: any) {
+  console.log('Route Params:', route.params);
   const navigation = useNavigation();
+  const { roomName, roomAbout, roomMembers } = route.params;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showHeaderTitle, setShowHeaderTitle] = useState(false);
   const [isJoined, setIsJoined] = useState(false);
+
   const proposals = useSelector(storedProposals);
+  console.log('Redux Proposals:', proposals);
+
   const handleUpdateRoom = (updatedRoom: IRoom) => {
-    // Handle the room update here
     console.log('Updated room:', updatedRoom);
+  };
+
+  const handleScroll = ({ nativeEvent }: any) => {
+    console.log('Scroll event:', nativeEvent.contentOffset.y);
+    setShowHeaderTitle(nativeEvent.contentOffset.y > 0);
   };
 
   const onModalClose = () => {
@@ -140,42 +144,44 @@ export function Room({route}: any) {
     });
   }, [navigation, roomName, showHeaderTitle]);
 
-  const handleScroll = ({nativeEvent}: any) => {
-    setShowHeaderTitle(nativeEvent.contentOffset.y > 0);
-  };
-
   return (
     <View style={styles.container}>
-      <FlatList
-        data={proposals}
-        renderItem={({item}) => <Proposal proposal={item} />}
-        keyExtractor={item => item.id}
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-        ListHeaderComponent={
-          <RoomHeader
-            room={{
-              roomName,
-              roomAbout,
-              roomMembers,
-            }}
-            isCreator={true} // Change this to your actual logic to determine if the user is the creator
-            isJoined={isJoined}
-            setIsJoined={setIsJoined}
-            onUpdateRoom={handleUpdateRoom} // Pass handleUpdateRoom as a prop
-          />
-        }
-      />
+      {proposals && proposals.length > 0 ? (
+        <FlatList
+          data={proposals}
+          renderItem={({ item }) => <Proposal proposal={item} />}
+          keyExtractor={item => item.id}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          ListHeaderComponent={
+            <RoomHeader
+              room={{
+                roomName,
+                roomAbout,
+                roomMembers,
+              }}
+              isCreator={true}
+              isJoined={isJoined}
+              setIsJoined={setIsJoined}
+              onUpdate={handleUpdateRoom}
+            />
+          }
+        />
+      ) : (
+        <Text>No proposals to display.</Text>
+      )}
 
       <Modal visible={isModalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <CreateProposal onClose={onModalClose} />
         </View>
       </Modal>
+
       <View>
         <TouchableOpacity
           style={styles.primaryButton}
-          onPress={() => setIsModalVisible(true)}>
+          onPress={() => setIsModalVisible(true)}
+        >
           <Text style={styles.primaryButtonText}>Create Proposal</Text>
         </TouchableOpacity>
       </View>

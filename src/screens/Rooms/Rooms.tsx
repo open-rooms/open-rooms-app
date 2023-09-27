@@ -54,19 +54,23 @@ export function Rooms() {
   };
 
   // Render rooms in the list
-  const renderRooms = ({item}: {item: IRoom}) => {
-    console.log("Rendering room with ID:", item.id);
-    return (
-      <RoomItem
-        item={item}
-        onPress={() =>
-          navigation.navigate('Room', {
-            room: item,
-          })
-        }
-      />
-    );
-  };
+const renderRooms = ({item}: {item: IRoom}) => {
+  console.log("Rendering room with ID:", item.id);
+
+  return (
+    <RoomItem
+      item={item}
+      onPress={() => {
+        console.log("Attempting to navigate to Room view");
+        navigation.navigate('Room', {
+          room: item,
+        });
+        console.log("Navigation to Room view completed");
+      }}
+    />
+  );
+};
+
 
   // Set header title when scrolling
   useEffect(() => {
