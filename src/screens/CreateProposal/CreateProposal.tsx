@@ -33,14 +33,14 @@ const CreateProposal = (props: { onClose: () => void }) => {
     };
 
     const kind = 1;
-    const fileds = {
+    const fields = {
       ...newProposal,
       duration: newProposal.duration.toString(),
     };
     const tags: string[][] = [PROPOSAL_TAG]; // specify the tags
 
     try {
-      await publishEvent(kind, fileds, tags, privateKey);
+      await publishEvent(kind, fields, tags, privateKey);
       dispatch(addProposal(newProposal));
     } catch (error) {
       console.error('Failed to create proposal:', error);
