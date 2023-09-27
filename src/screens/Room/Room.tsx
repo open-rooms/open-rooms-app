@@ -8,7 +8,7 @@ import {
   Pressable,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProfilePic from '../../components/ProfilePic';
 import ProposalStatus from '../../components/ProposalStatus';
 import CreateProposal from '../CreateProposal/CreateProposal';
@@ -16,7 +16,11 @@ import { getTimePassed } from '../../utils/time';
 import { IRoom, RootStackParamList } from '../../utils/types';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { roomStyles as styles } from './roomStyles';
-import { storedProposals } from '../../redux/proposals-slice';
+import { fetchProposals, storedProposals } from '../../redux/proposals-slice';
+import { AppDispatch } from '../../redux/store';
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from '../../redux/rootReducer';
+import { AnyAction } from 'redux';
 
 const RoomHeader = ({
   room,
@@ -25,6 +29,7 @@ const RoomHeader = ({
   setIsJoined,
   onUpdate,
 }: any) => {
+  console.log("Received room data in RoomHeader component:", room);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   
   // Your handleEditRoom function
@@ -38,7 +43,7 @@ const RoomHeader = ({
 
   // Your handleJoinRoom function
   const handleJoinRoom = () => {
-    setIsJoined(!isJoined);
+    setIsJoined((prevIsJoined: any) => !prevIsJoined);
     if (isJoined) {
       console.log('Leave room');
     } else {
@@ -87,6 +92,7 @@ const RoomHeader = ({
 };
 
 const Proposal = ({proposal}: any) => {
+  console.log("Received proposal in Proposal component:", proposal);
   const timePassed = getTimePassed(proposal.start_date);
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, 'Room'>>();
@@ -100,7 +106,7 @@ const Proposal = ({proposal}: any) => {
       key={proposal.id}
       style={styles.proposalContainer}
       onPress={handleProposalPress}>
-      <View style={styles.porposalProfileContainer}>
+      <View style={styles.proposalProfileContainer}>
         <ProfilePic style={styles.profilePicture} />
         <View style={styles.proposalTextContainer}>
           <Text style={styles.proposalCreator}>{proposal.creator}</Text>
@@ -121,6 +127,9 @@ export function Room({ route }: any) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showHeaderTitle, setShowHeaderTitle] = useState(false);
   const [isJoined, setIsJoined] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+
+ 
 
   const proposals = useSelector(storedProposals);
   console.log('Redux Proposals:', proposals);
@@ -139,6 +148,10 @@ export function Room({ route }: any) {
   };
 
   useEffect(() => {
+    dispatch(fetchProposals());
+  }, []);
+
+  useEffect(() => {
     navigation.setOptions({
       headerTitle: showHeaderTitle ? roomName : '',
     });
@@ -148,9 +161,9 @@ export function Room({ route }: any) {
     <View style={styles.container}>
       {proposals && proposals.length > 0 ? (
         <FlatList
-          data={proposals}
-          renderItem={({ item }) => <Proposal proposal={item} />}
-          keyExtractor={item => item.id}
+        data={proposals}
+        renderItem={({ item }) => <Proposal proposal={item} />}
+        keyExtractor={item => item.id.toString()}
           onScroll={handleScroll}
           scrollEventThrottle={16}
           ListHeaderComponent={

@@ -72,7 +72,7 @@ export const roomStyles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginBottom: 12,
   },
-  porposalProfileContainer: {
+  proposalProfileContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },

@@ -8,9 +8,7 @@ export const getProposals = (): Promise<IProposal[]> => {
   console.log('Initializing getProposals...');
   return new Promise((resolve, reject) => {
     let fetchedProposals: IProposal[] = [];
-    let proposalsSub = pool.sub(RELAYS_URL, [
-      {'#t': ['proposals', 'proposal']},
-    ]);
+    let proposalsSub = pool.sub(RELAYS_URL, [{'#t': ['proposal']}]);
     proposalsSub.on('event', (event: any) => {
       const proposalContent: IProposal = JSON.parse(event.content);
       proposalContent.id = event.id;

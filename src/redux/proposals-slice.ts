@@ -40,7 +40,6 @@ const initialState: ProposalsSlice = {
   proposals: [],
 };
 
-
 const persistConfig = {
   key: 'proposalSlice',
   storage: AsyncStorage,
@@ -51,8 +50,9 @@ export const proposalSlice = createSlice({
   initialState,
   reducers: {
     addProposal: (state, action: PayloadAction<IProposal>) => {
-      console.log('Adding proposal:', action.payload);
+      console.log('State before:', state);
       state.proposals.push(action.payload);
+      console.log('State after:', state);
     },
     removeProposal: (state, action: PayloadAction<{id: string}>) => {
       console.log('Removing proposal with id:', action.payload.id);
@@ -88,9 +88,8 @@ const selectProposals = (state: RootState) => {
   return state.proposalSlice;
 };
 
-export const storedProposals = createSelector(
-  [selectProposals],
-  proposals => proposals ? proposals.proposals : []
+export const storedProposals = createSelector([selectProposals], proposals =>
+  proposals ? proposals.proposals : [],
 );
 
 export const {addProposal, removeProposal, updateProposalStatus} =
