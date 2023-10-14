@@ -33,18 +33,17 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<any>) => {
-      // get data from nostr to fill userData
+      console.log('Action received in reducer:', action);
       state.userData = {
         publicKey: getPublicKey(action.payload.privateKey),
-        username: '',
-        imgUri: '',
-        damus: '',
+        username: action.payload.userData.username, // Update these fields
+        imgUri: action.payload.userData.imgUri,
+        damus: action.payload.userData.damus,
       };
       state.privateKey = action.payload.privateKey;
+      console.log('New State after login:', state);
     },
     register: (state, action: PayloadAction<any>) => {
-      // use nostr to register on chain
-
       state.userData = action.payload;
       state.privateKey = action.payload.privateKey;
     },

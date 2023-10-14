@@ -1,6 +1,7 @@
 import {SimplePool} from 'nostr-tools';
 import {IRoom} from '../utils/types';
 import {RELAYS_URL} from '../nostr-tools/nostrRelays';
+import {DEFAULT_TAG, ROOM_TAG} from './nostrTags';
 
 const pool = new SimplePool();
 

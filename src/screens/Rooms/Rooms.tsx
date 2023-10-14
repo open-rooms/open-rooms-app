@@ -39,6 +39,7 @@ const RoomItem = ({item, onPress}: {item: IRoom; onPress: () => void}) => {
 
 // Rooms component
 export function Rooms() {
+  console.log("Rooms component is being rendered");
   const navigation = useNavigation<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showHeaderTitle, setShowHeaderTitle] = useState(false);

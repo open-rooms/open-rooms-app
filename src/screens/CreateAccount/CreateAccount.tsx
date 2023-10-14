@@ -9,6 +9,7 @@ import {handleUsernameChange as handleUsernameChangeUtil} from '../../utils/user
 import {useDispatch} from 'react-redux';
 import {register} from '../../redux/user-slice';
 import publishEvent from '../../nostr-tools/publishEvent';
+import {USER_TAG, DEFAULT_TAG} from '../../nostr-tools/nostrTags';
 
 function FormGroup({
   label,
@@ -40,7 +41,7 @@ export function CreateAccount() {
   const route = useRoute<RouteProp<RootStackParamList, 'CreateAccount'>>();
 
   const privateKey = route.params.prvKey;
-  console.log('Received Private Key:', privateKey);
+  console.log('CreateAccount - Received Private Key:', privateKey);
   const [username, setUsername] = useState('');
   const [hasValidUsername, setHasValidUsername] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
@@ -59,7 +60,8 @@ export function CreateAccount() {
     const newAccountData = {username, imgUri, damus};
     const kind = 1;
     const fields = newAccountData;
-    const tags: string[][] = [];
+    const tags: string[][] = [USER_TAG, DEFAULT_TAG];
+;
     try {
       await publishEvent(kind, fields, tags, privateKey);
       dispatch(register({...newAccountData, privateKey: privateKey}));

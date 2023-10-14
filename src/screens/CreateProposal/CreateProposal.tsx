@@ -4,9 +4,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createProposalStyles as styles} from './createProposalStyles';
 import {useDispatch} from 'react-redux';
 import {addProposal} from '../../redux/proposals-slice';
-import {PROPOSAL_TAG} from '../../nostr-tools/nostrTags';
 import {useStorage} from '../../storage/useStorage';
 import publishEvent from '../../nostr-tools/publishEvent';
+import {DEFAULT_TAG, PROPOSAL_TAG} from '../../nostr-tools/nostrTags';
 
 const CreateProposal = (props: { onClose: () => void }) => {
   const [proposal, setProposal] = useState('');
@@ -37,7 +37,7 @@ const CreateProposal = (props: { onClose: () => void }) => {
       ...newProposal,
       duration: newProposal.duration.toString(),
     };
-    const tags: string[][] = [PROPOSAL_TAG]; // specify the tags
+    const tags: string[][] = [PROPOSAL_TAG, DEFAULT_TAG]; // specify the tags
 
     try {
       await publishEvent(kind, fields, tags, privateKey);

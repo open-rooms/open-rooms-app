@@ -25,9 +25,9 @@ export const getData = async (key: string): Promise<any> => {
     } else {
       return null; // Return null if no value is found
     }
-  } catch (e) {
-    console.error('Error fetching data for key:', key, 'Error:', e);
-    throw new Error('Could not fetch data: ' + e.message);
+  } catch (error: unknown) {
+    console.error('Error fetching data for key:', key, 'Error:', error);
+    throw new Error('Could not fetch data: ' + error);
   }
 };
 

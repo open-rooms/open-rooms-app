@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createRoomStyles as styles } from './createRoomStyles';
 import { useDispatch } from 'react-redux';
 import { addRoom } from '../../redux/rooms-slice';
-import { ROOM_TAG } from '../../nostr-tools/nostrTags';
+import { DEFAULT_TAG, ROOM_TAG } from '../../nostr-tools/nostrTags';
 import { useStorage } from '../../storage/useStorage';
 import publishEvent from '../../nostr-tools/publishEvent';
 
@@ -39,7 +39,7 @@ const CreateRoom = (props: { onClose: () => void }) => {
 
     const kind = 1;
     const fields = JSON.stringify(newRoom);
-    const tags: string[][] = [ROOM_TAG];
+    const tags: string[][] = [ROOM_TAG, DEFAULT_TAG];
 
     try {
       await publishEvent(kind, fields, tags, privateKey);
