@@ -86,4 +86,18 @@ export const roomsStyles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
+  toggleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+  },
+  toggleText: {
+    fontSize: 16,
+    color: colorPalette.TEXT_COLOR_LIGHT,
+  },
+  toggleTextSelected: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colorPalette.TEXT_COLOR,
+  },
 });

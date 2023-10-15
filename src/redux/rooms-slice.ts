@@ -8,12 +8,27 @@ import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {IRoom} from '../utils/types';
 import {getRooms} from '../nostr-tools/getRooms';
+import {selectPrivateKey} from './user-slice';
+import {generatePublic} from '../nostr-tools/generateKeys';
 
 export const fetchRooms = createAsyncThunk(
   'rooms/fetchRooms',
-  async (_, __) => {
-    const rooms = await getRooms();
-    return rooms;
+  async (filterByAuthor: boolean, {getState}) => {
+    try {
+      const state = getState();
+      const privateKey = selectPrivateKey(state);
+      if (!privateKey) {
+        throw new Error('Private key not found');
+      }
+      const rooms = await getRooms(privateKey);
+      if (filterByAuthor) {
+        const publicKey = generatePublic(privateKey);
+        return rooms.filter(room => room.creator.pubKey === publicKey);
+      }
+      return rooms;
+    } catch (error) {
+      throw new Error(String(error));
+    }
   },
 );
 

@@ -1,20 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, Modal, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, Modal, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/rootReducer';
+import { fetchRooms } from '../../redux/rooms-slice';
+
 import CreateRoom from '../CreateRoom/CreateRoom';
 import ProfilePic from '../../components/ProfilePic';
-import {formatStartDate} from '../../utils/time';
-import {IRoom} from '../../utils/types';
-import {roomsStyles as styles} from './roomsStyles';
-import {useSelector} from 'react-redux';
-import { RootState } from '../../redux/rootReducer';
+import { formatStartDate } from '../../utils/time';
+import { IRoom } from '../../utils/types';
+import { roomsStyles as styles } from './roomsStyles';
+import { AppDispatch } from '../../redux/store'
+import { publicKey } from '../../redux/user-slice';
 
-
-
-// Room item component
-const RoomItem = ({item, onPress}: {item: IRoom; onPress: () => void}) => {
+const RoomItem = ({ item, onPress }: { item: IRoom; onPress: () => void }) => {
   const formattedStartDate = formatStartDate(item.start_date);
-
   return (
     <View key={item.id} style={styles.itemContainer}>
       <TouchableOpacity onPress={onPress}>
@@ -29,93 +29,110 @@ const RoomItem = ({item, onPress}: {item: IRoom; onPress: () => void}) => {
         </View>
         <View style={styles.itemAbout}>
           <Text style={styles.itemDescription}>{item.about}</Text>
-          <Text
-            style={styles.itemMembers}>{`${item.members.length} Members`}</Text>
+          <Text style={styles.itemMembers}>{`${item.members.length} Members`}</Text>
         </View>
       </TouchableOpacity>
     </View>
   );
 };
 
-// Rooms component
-export function Rooms() {
-  console.log("Rooms component is being rendered");
+const Rooms = () => {
   const navigation = useNavigation<any>();
+  const rooms = useSelector((state: RootState) => state.rooms.rooms);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showHeaderTitle, setShowHeaderTitle] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('All');
+  const dispatch: AppDispatch = useDispatch();
+  const allRooms = useSelector((state: RootState) => state.rooms.rooms);
+  const [filteredRooms, setFilteredRooms] = useState<IRoom[]>([]);
+  
 
-  // comment this if you want to continue work
-  const rooms = useSelector((state: RootState) => state.rooms.rooms);
-  console.log("Rooms from Redux: ", rooms);
+  const pubKey = useSelector(publicKey);
+  console.log("My public Key:", pubKey);  // Debug line
 
+  useEffect(() => {
+    if (selectedOption === 'My') {
+      const myRooms = allRooms.filter(room => room.creator.pubKey === pubKey);
+      console.log("My Rooms:", myRooms);  // Debug line
+      console.log("All Rooms Data:", allRooms);  // Debug line
+      setFilteredRooms(myRooms);
+    } else {
+      setFilteredRooms(allRooms);
+    }
+  }, [allRooms, selectedOption, pubKey]);
+  
 
-  // Handle closing the modal
-  const onModalClose = () => {
-    setIsModalVisible(false);
-  };
-
-  // Render rooms in the list
-const renderRooms = ({item}: {item: IRoom}) => {
-  console.log("Rendering room with ID:", item.id);
-
-  return (
-    <RoomItem
-      item={item}
-      onPress={() => {
-        console.log("Attempting to navigate to Room view");
-        navigation.navigate('Room', {
-          room: item,
-        });
-        console.log("Navigation to Room view completed");
-      }}
-    />
-  );
-};
-
-
-  // Set header title when scrolling
   useEffect(() => {
     navigation.setOptions({
       headerTitle: showHeaderTitle ? 'Rooms' : '',
     });
   }, [navigation, showHeaderTitle]);
 
-  // Handle scrolling
-  const handleScroll = ({nativeEvent}: any) => {
+  const handleFetchRooms = (option: string) => {
+    const filterByAuthor = option === 'My';
+    console.log("Filter by Author:", filterByAuthor);  // Add this line in handleFetchRooms
+    dispatch(fetchRooms(filterByAuthor));
+  };
+
+  const handleToggleOption = (option: string) => {
+    setSelectedOption(option);
+    handleFetchRooms(option);
+  };
+
+  const handleScroll = ({ nativeEvent }: any) => {
     setShowHeaderTitle(nativeEvent.contentOffset.y > 0);
   };
 
-  // Handle create room button press
-  const onPressCreateRoom = () => {
+  const handlePressCreateRoom = () => {
     setIsModalVisible(true);
   };
 
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+  };
+
+  const renderRoomItem = ({ item }: { item: IRoom }) => (
+    <RoomItem
+      item={item}
+      onPress={() => navigation.navigate('Room', { room: item })}
+    />
+  );
+
   return (
     <View style={styles.container}>
+      <View style={styles.toggleContainer}>
+        {['All', 'My'].map((option) => (
+          <TouchableOpacity key={option} onPress={() => handleToggleOption(option)}>
+            <Text style={selectedOption === option ? styles.toggleTextSelected : styles.toggleText}>
+              {`${option} Rooms`}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       <FlatList
-        data={rooms}
-        renderItem={renderRooms}
+         data={filteredRooms} 
+        renderItem={renderRoomItem}
         keyExtractor={item => item.id?.toString() || ''}
         onScroll={handleScroll}
         scrollEventThrottle={16}
-        ListHeaderComponent={
-          showHeaderTitle ? null : <Text style={styles.title}>Rooms</Text>
-        }
+        ListHeaderComponent={showHeaderTitle ? null : <Text style={styles.title}>Rooms</Text>}
       />
+
       <Modal visible={isModalVisible} animationType="slide">
         <View style={styles.modalContainer}>
-          <CreateRoom onClose={onModalClose} />
+          <CreateRoom onClose={handleModalClose} />
         </View>
       </Modal>
+
       <View>
-        <TouchableOpacity
-          style={styles.primaryButton}
-          onPress={onPressCreateRoom}>
+        <TouchableOpacity style={styles.primaryButton} onPress={handlePressCreateRoom}>
           <Text style={styles.primaryButtonText}>Create Room</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-}
+};
 
 export default Rooms;

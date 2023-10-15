@@ -36,7 +36,7 @@ export const userSlice = createSlice({
       console.log('Action received in reducer:', action);
       state.userData = {
         publicKey: getPublicKey(action.payload.privateKey),
-        username: action.payload.userData.username, // Update these fields
+        username: action.payload.userData.username,
         imgUri: action.payload.userData.imgUri,
         damus: action.payload.userData.damus,
       };
@@ -61,6 +61,11 @@ export const userSlice = createSlice({
   },
 });
 const selectUser = (state: any) => state.user;
+
+export const selectPrivateKey = createSelector(
+  [selectUser],
+  user => user.privateKey,
+);
 
 export const isConnected = createSelector(
   [selectUser],
