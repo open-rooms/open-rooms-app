@@ -23,7 +23,7 @@ export const fetchRooms = createAsyncThunk(
       const rooms = await getRooms(privateKey);
       if (filterByAuthor) {
         const publicKey = generatePublic(privateKey);
-        return rooms.filter(room => room.creator.pubKey === publicKey);
+        return rooms.filter(room => room.pubkey === publicKey);
       }
       return rooms;
     } catch (error) {
@@ -49,7 +49,7 @@ export const roomSlice = createSlice({
   name: 'roomSlice',
   initialState,
   reducers: {
-    addRoom: (state, action: PayloadAction<IRoom>) => {
+    addRoom: (state, action: PayloadAction<any>) => {
       // register the room on the chain
       state.rooms.push(action.payload);
     },

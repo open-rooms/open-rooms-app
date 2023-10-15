@@ -16,10 +16,10 @@ const CreateProposal = (props: { onClose: () => void }) => {
   const { privateKey } = useStorage(); 
 
   const onCreateProposalPress = async () => {
-    const newProposal = {
-      id: Math.random().toString(),
+    const newProposalContent = {
+
       proposal: proposal,
-      start_date: Date.now(),
+      start_date: new Date(),
       duration: 0,
       status: 'New',
       room: '',
@@ -29,19 +29,20 @@ const CreateProposal = (props: { onClose: () => void }) => {
         profilePicUrl: '',
         username: '',
         damus: '',
-      },
+
+    }
     };
 
     const kind = 1;
     const fields = {
-      ...newProposal,
-      duration: newProposal.duration.toString(),
+      ...newProposalContent,
+      duration: newProposalContent.duration.toString(),
     };
     const tags: string[][] = [PROPOSAL_TAG, DEFAULT_TAG]; // specify the tags
 
     try {
       await publishEvent(kind, fields, tags, privateKey);
-      dispatch(addProposal(newProposal));
+      dispatch(addProposal(newProposalContent));
     } catch (error) {
       console.error('Failed to create proposal:', error);
     }

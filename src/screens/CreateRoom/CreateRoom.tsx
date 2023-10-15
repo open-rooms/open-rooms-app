@@ -21,29 +21,27 @@ const CreateRoom = (props: { onClose: () => void }) => {
       return;
     }
     
-    const newRoom = {
-      id: Math.random().toString(),
+    const newRoomContent = {
+
       name: name,
       about: about,
-      start_date: Date.now(),
       creator: {
-        id: '',
-        pubKey: '',
-        profilePicUrl: '',
-        username: '',
-        damus: '',
+        pubkey: 'pubkey',
+        username: 'username',
+        imgUri: 'imgUri',
+        damus: 'damus',
       },
       members: [],
-      proposals: [],
+
     };
 
     const kind = 1;
-    const fields = JSON.stringify(newRoom);
+    const fields = JSON.stringify(newRoomContent);
     const tags: string[][] = [ROOM_TAG, DEFAULT_TAG];
 
     try {
       await publishEvent(kind, fields, tags, privateKey);
-      dispatch(addRoom(newRoom));
+      dispatch(addRoom(newRoomContent));
     } catch (error) {
       console.error('Failed to create room:', error);
     }

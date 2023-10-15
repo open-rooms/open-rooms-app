@@ -44,7 +44,7 @@ export const proposalSlice = createSlice({
   name: 'proposalSlice',
   initialState,
   reducers: {
-    addProposal: (state, action: PayloadAction<IProposal>) => {
+    addProposal: (state, action: PayloadAction<any>) => {
       state.proposals.push(action.payload);
     },
     removeProposal: (state, action: PayloadAction<{id: string}>) => {

@@ -57,14 +57,20 @@ export function CreateAccount() {
       Alert.alert('Username has to be longer than 4 characters');
       return;
     }
-    const newAccountData = {username, imgUri, damus};
+    const newAccountContent = {
+
+        username: username,
+        imgUri: imgUri,
+        damus: damus,
+
+    };
     const kind = 1;
-    const fields = newAccountData;
+    const fields = JSON.stringify(newAccountContent);
     const tags: string[][] = [USER_TAG, DEFAULT_TAG];
 ;
     try {
       await publishEvent(kind, fields, tags, privateKey);
-      dispatch(register({...newAccountData, privateKey: privateKey}));
+      dispatch(register({...newAccountContent, privateKey: privateKey}));
       navigation.navigate('Rooms');
     } catch (error) {
       console.error('Failed to create user:', error);

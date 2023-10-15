@@ -14,7 +14,7 @@ import { AppDispatch } from '../../redux/store'
 import { publicKey } from '../../redux/user-slice';
 
 const RoomItem = ({ item, onPress }: { item: IRoom; onPress: () => void }) => {
-  const formattedStartDate = formatStartDate(item.start_date);
+  const formattedStartDate = formatStartDate(item.created_at);
   return (
     <View key={item.id} style={styles.itemContainer}>
       <TouchableOpacity onPress={onPress}>
@@ -29,6 +29,7 @@ const RoomItem = ({ item, onPress }: { item: IRoom; onPress: () => void }) => {
         </View>
         <View style={styles.itemAbout}>
           <Text style={styles.itemDescription}>{item.about}</Text>
+          <Text style={styles.itemMembers}>{`${item.pubkey} Author`}</Text>
           <Text style={styles.itemMembers}>{`${item.members.length} Members`}</Text>
         </View>
       </TouchableOpacity>
@@ -53,7 +54,7 @@ const Rooms = () => {
 
   useEffect(() => {
     if (selectedOption === 'My') {
-      const myRooms = allRooms.filter(room => room.creator.pubKey === pubKey);
+      const myRooms = allRooms.filter(room => room.creator.pubkey === pubKey);
       console.log("My Rooms:", myRooms);  // Debug line
       console.log("All Rooms Data:", allRooms);  // Debug line
       setFilteredRooms(myRooms);
@@ -114,7 +115,7 @@ const Rooms = () => {
       <FlatList
          data={filteredRooms} 
         renderItem={renderRoomItem}
-        keyExtractor={item => item.id?.toString() || ''}
+        keyExtractor={(item, index) => item.id?.toString() || index.toString()}
         onScroll={handleScroll}
         scrollEventThrottle={16}
         ListHeaderComponent={showHeaderTitle ? null : <Text style={styles.title}>Rooms</Text>}
