@@ -29,7 +29,7 @@ const RoomItem = ({ item, onPress }: { item: IRoom; onPress: () => void }) => {
         </View>
         <View style={styles.itemAbout}>
           <Text style={styles.itemDescription}>{item.about}</Text>
-          <Text style={styles.itemMembers}>{`${item.pubkey} Author`}</Text>
+          <Text style={styles.itemMembers}>{`Author: ${item.pubkey}`}</Text>
           <Text style={styles.itemMembers}>{`${item.members.length} Members`}</Text>
         </View>
       </TouchableOpacity>
@@ -54,7 +54,7 @@ const Rooms = () => {
 
   useEffect(() => {
     if (selectedOption === 'My') {
-      const myRooms = allRooms.filter(room => room.creator.pubkey === pubKey);
+      const myRooms = allRooms.filter(room => room.pubkey === pubKey);
       console.log("My Rooms:", myRooms);  // Debug line
       console.log("All Rooms Data:", allRooms);  // Debug line
       setFilteredRooms(myRooms);
