@@ -2,6 +2,7 @@ import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getPublicKey} from 'nostr-tools';
+import {RootState} from './rootReducer';
 
 export type UserSlice = {
   userData: {
@@ -67,13 +68,14 @@ export const selectPrivateKey = createSelector(
   user => user.privateKey,
 );
 
+export const selectPublicKey = createSelector(
+  [selectUser],
+  user => user.pubkey,
+);
+
 export const isConnected = createSelector(
   [selectUser],
   user => user.privateKey !== '',
-);
-export const publicKey = createSelector(
-  [selectUser],
-  user => user.userData.publicKey,
 );
 
 export const {login, register, logout, createAccount} = userSlice.actions;

@@ -14,41 +14,26 @@ const CreateRoom = (props: { onClose: () => void }) => {
   const maxLength = 40;
   const dispatch = useDispatch();
   const { privateKey } = useStorage(); 
-
   const onCreateRoomPress = async () => {
     if (!name || !about) {
       Alert.alert('Please fill out all fields');
       return;
     }
-    
     const newRoomContent = {
-
       name: name,
       about: about,
-      creator: {
-        pubkey: 'pubkey',
-        username: 'username',
-        imgUri: 'imgUri',
-        damus: 'damus',
-      },
-      members: [],
-
     };
-
     const kind = 1;
     const fields = JSON.stringify(newRoomContent);
     const tags: string[][] = [ROOM_TAG, DEFAULT_TAG];
-
     try {
       await publishEvent(kind, fields, tags, privateKey);
       dispatch(addRoom(newRoomContent));
     } catch (error) {
       console.error('Failed to create room:', error);
     }
-
     props.onClose();
   };
-
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={props.onClose}>

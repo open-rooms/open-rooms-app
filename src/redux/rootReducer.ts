@@ -4,8 +4,8 @@ import roomsReducer from './rooms-slice';
 import proposalsReducer from './proposals-slice';
 
 const rootReducer = combineReducers({
-  user: userReducer,
-  rooms: roomsReducer,
+  userSlice: userReducer,
+  roomsSlice: roomsReducer,
   proposalSlice: proposalsReducer,
 });
 

@@ -2,16 +2,23 @@ export enum StorageKeys {
   PRIVATE_KEY = 'private_key',
   PUBLIC_KEY = 'public_key',
 }
+
+export enum ProposalStatus {
+  LIVE = 'Live',
+  PASSED = 'Passed',
+  REJECTED = 'Rejected',
+}
+
+export enum VoteType {
+  YES = 'Yes',
+  NO = 'No',
+}
+
 export interface IStorageContext {
   accountConnected: boolean;
   publicKey: string;
   privateKey: string;
   storePrivateKey?: (key: string) => Promise<void>;
-}
-export enum ProposalStatus {
-  LIVE = 'Live',
-  PASSED = 'Passed',
-  REJECTED = 'Rejected',
 }
 
 export interface EditRoomProps {
@@ -65,18 +72,15 @@ export interface IUser extends IEvent {
   damus?: string;
 }
 
+// Extended interfaces
 export interface IRoom extends IEvent {
   name: string;
   about: string;
-  creator: IUser; // Note that creator is of type IUser
-  members: string[];
 }
 
+// Extended interfaces
 export interface IProposal extends IEvent {
   proposal: string;
-  start_date: number;
   duration: number;
-  status: string;
-  room: IRoom; // Note that room is of type IRoom
-  creator: IUser; // Note that creator is of type IUser
+  votes: VoteType;
 }
