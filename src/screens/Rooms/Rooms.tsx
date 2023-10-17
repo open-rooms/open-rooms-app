@@ -3,17 +3,18 @@ import { View, Text, FlatList, Modal, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRooms, selectRooms, selectMyRooms } from '../../redux/rooms-slice';
-import CreateRoom from '../CreateRoom/CreateRoom';
-import ProfilePic from '../../components/ProfilePic';
 import { formatStartDate } from '../../utils/time';
 import { IRoom } from '../../utils/types';
 import { roomsStyles as styles } from './roomsStyles';
 import { AppDispatch } from '../../redux/store';
 import { selectPrivateKey } from '../../redux/user-slice';
 import { generatePublic } from '../../nostr-tools/generateKeys';
+import CreateRoom from '../CreateRoom/CreateRoom';
+import ProfilePic from '../../components/ProfilePic';
 
 // Renders a single room item
 const RoomItem = ({ item, onPress }: { item: IRoom; onPress: () => void }) => {
+  console.log('Rooms - Rendering a single room item');  // Debug line
   const formattedStartDate = formatStartDate(item.created_at);
   return (
     <View key={item.id} style={styles.itemContainer}>
@@ -37,16 +38,17 @@ const RoomItem = ({ item, onPress }: { item: IRoom; onPress: () => void }) => {
 };
 
 const Rooms = () => {
+  console.log('Rooms - Component mounted'); 
   const navigation = useNavigation<any>();
   const dispatch: AppDispatch = useDispatch();
   const allRooms = useSelector(selectRooms);
-  console.log("All Rooms from Redux Store:", allRooms);
-  const myRooms = useSelector(selectMyRooms)
-  console.log("My Rooms from Redux Store:", myRooms);
+  console.log('Rooms - All Rooms from Redux Store:', allRooms); 
+  const myRooms = useSelector(selectMyRooms);
+  console.log('Rooms - My Rooms from Redux Store:', myRooms);  
   const privKey = useSelector(selectPrivateKey);
 
   useEffect(() => {
-    console.log("Redux State has changed:", allRooms, myRooms);
+    console.log('Rooms - Redux State has changed:', allRooms, myRooms); 
   }, [allRooms, myRooms]);
   
 
@@ -70,16 +72,16 @@ const Rooms = () => {
     if (shouldFetch) {
       dispatch(fetchRooms(selectedOption === 'My'))
         .then(() => {
-          console.log("Rooms fetched successfully");
+          console.log('Rooms - Rooms fetched successfully');  // Debug line
           setIsLoading(false);
           setShouldFetch(false);  // Set the flag to false
         })
         .catch(err => {
-          console.error("Error fetching rooms:", err);
+          console.error('Rooms - Error fetching rooms:', err);  // Debug line
           setIsLoading(false);
         });
     }
-  }, [dispatch, selectedOption, shouldFetch]);  // Use shouldFetch in the dependency array
+  }, [dispatch, selectedOption, shouldFetch]);
   
 
 
@@ -94,7 +96,10 @@ const Rooms = () => {
   const renderRoomItem = ({ item }: { item: IRoom }) => (
     <RoomItem
       item={item}
-      onPress={() => navigation.navigate('Room', { room: item })}
+      onPress={() => {
+        console.log('Rooms - Navigating to specific room');  // Debug line
+        navigation.navigate('Room', { room: item });
+      }}
     />
   );
 

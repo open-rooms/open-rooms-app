@@ -8,10 +8,9 @@ import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {IRoom} from '../utils/types';
 import {getRooms} from '../nostr-tools/getRooms';
-import {selectPrivateKey} from './user-slice';
+import {selectPrivateKey, selectPublicKey} from './user-slice';
 import {generatePublic} from '../nostr-tools/generateKeys';
 import {RootState} from './rootReducer';
-import {selectPublicKey} from './user-slice';
 
 export const fetchRooms = createAsyncThunk(
   'rooms/fetchRooms',
@@ -22,14 +21,12 @@ export const fetchRooms = createAsyncThunk(
       const privateKey = selectPrivateKey(state);
       console.log('Private key in rooms-slice:', privateKey); // Debug line
       if (!privateKey) {
-        console.log('Private key not found'); // Add this log
+        console.log('Private key in rooms-slice not found'); // Debug line
         throw new Error('Private key not found');
       }
-
-      console.log('About to call getRooms'); // Debug line
+      console.log('Rooms-slice: About to call getRooms'); // Debug line
       const rooms = await getRooms(privateKey);
       console.log('Rooms fetched in fetchRooms:', rooms); // Debug line
-
       if (filterByAuthor) {
         const publicKey = generatePublic(privateKey);
         return rooms.filter(room => room.pubkey === publicKey);
@@ -46,24 +43,21 @@ export type RoomsSlice = {
   rooms: IRoom[];
 };
 
-// Initial state
 const initialState: RoomsSlice = {
   rooms: [],
 };
 
-// Selector for getting all rooms
 export const selectRooms = createSelector(
   (state: RootState) => state.roomsSlice ?? {},
   roomsSlice => roomsSlice.rooms ?? [],
 );
 
-// Selector for filtering rooms by public key
 export const selectMyRooms = createSelector(
   [selectRooms, selectPublicKey],
   (rooms, publicKey) => {
     console.log(
       'My Rooms from Redux Store:',
-      rooms?.filter((room: IRoom) => room.pubkey === publicKey) ?? [],
+      JSON.stringify(rooms.filter((room: IRoom) => room.pubkey === publicKey)),
     ); // Debug line
     return rooms
       ? rooms.filter((room: IRoom) => room.pubkey === publicKey)
@@ -81,10 +75,14 @@ export const roomsSlice = createSlice({
   initialState,
   reducers: {
     addRoom: (state, action: PayloadAction<any>) => {
-      // existing logic
+      // register the room on the chain
+      state.rooms.push(action.payload);
     },
     removeRoom: (state, action: PayloadAction<{id: string}>) => {
-      // existing logic
+      // use nostr to delete on the chain
+      const {id} = action.payload;
+
+      state.rooms = state.rooms.filter(item => item.id !== id);
     },
   },
   extraReducers: builder => {

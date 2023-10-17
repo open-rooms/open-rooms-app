@@ -66,17 +66,19 @@ export interface IEvent {
 }
 
 // Extended interfaces
+export interface IRoom extends IEvent {
+  name?: string;
+  about?: string;
+}
+
+// Extended interfaces
 export interface IUser extends IEvent {
   profilePicUrl: string;
   username: string;
   damus?: string;
 }
 
-// Extended interfaces
-export interface IRoom extends IEvent {
-  name: string;
-  about: string;
-}
+
 
 // Extended interfaces
 export interface IProposal extends IEvent {
