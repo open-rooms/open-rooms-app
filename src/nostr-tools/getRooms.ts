@@ -3,6 +3,7 @@ import {IRoom} from '../utils/types';
 import {RELAYS_URL} from '../nostr-tools/nostrRelays';
 import {DEFAULT_TAG, ROOM_TAG} from './nostrTags';
 import {generatePublic} from './generateKeys';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const pool = new SimplePool();
 
@@ -53,17 +54,20 @@ export const getRooms = (privateKey: string): Promise<IRoom[]> => {
       console.log('getRooms - Event received:', JSON.stringify(event, null, 2));
 
       try {
+        const content = JSON.parse(event.content);
+        console.log('getRooms - Content:', content);
+        console.log('getRooms - Content.name:', content.name);
         // First, parse the content to get "name" and "about"
-        const roomContent: IRoom = JSON.parse(event.content);
-
-        // Then, populate the additional fields from the event
-        roomContent.id = event.id;
-        roomContent.pubkey = event.pubkey;
-        roomContent.created_at = event.created_at;
-        roomContent.kind = event.kind;
-        roomContent.tags = event.tags;
-        roomContent.sig = event.sig;
-
+        const roomContent: IRoom = {
+          id: event.id,
+          pubkey: event.pubkey,
+          created_at: event.created_at,
+          kind: event.kind,
+          tags: event.tags,
+          sig: event.sig,
+          name: content.name,
+          about: content.about,
+        };
         // Log the fully populated roomContent before validation
         console.log(
           'Pre-validation roomContent:',
