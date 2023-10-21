@@ -3,12 +3,11 @@ import {IRoom} from '../utils/types';
 import {RELAYS_URL} from '../nostr-tools/nostrRelays';
 import {DEFAULT_TAG, ROOM_TAG} from './nostrTags';
 import {generatePublic} from './generateKeys';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const pool = new SimplePool();
 
 export const getRooms = (privateKey: string): Promise<IRoom[]> => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     console.log('getRooms - Starting the process to fetch rooms.');
 
     let fetchedRooms: IRoom[] = [];
@@ -54,7 +53,7 @@ export const getRooms = (privateKey: string): Promise<IRoom[]> => {
       console.log('getRooms - Event received:', JSON.stringify(event, null, 2));
 
       try {
-        const content = JSON.parse(event.content);
+        const content = JSON.parse(JSON.parse(event.content));
         console.log('getRooms - Content:', content);
         console.log('getRooms - Content.name:', content.name);
         // First, parse the content to get "name" and "about"
