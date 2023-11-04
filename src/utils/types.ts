@@ -85,4 +85,7 @@ export interface IProposal extends IEvent {
   proposal: string;
   duration: number;
   votes: VoteType;
+  status?: string; // Add this if your proposals have a status
 }
+
+

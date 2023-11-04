@@ -34,28 +34,28 @@ export const getRooms = (privateKey: string): Promise<IRoom[]> => {
         {name: 'about', type: 'string'},
       ];
 
-      for (const field of requiredFields) {
-        console.log(
-          `Checking field ${field.name}: Value = ${
-            room[field.name]
-          }, Type = ${typeof room[field.name]}`,
-        );
-        if (!room || typeof room[field.name] !== field.type) {
-          console.log(`Rejected room due to invalid or missing ${field.name}`);
-          return false;
-        }
-      }
+      // for (const field of requiredFields) {
+      //   console.log(
+      //     `Checking field ${field.name}: Value = ${
+      //       room[field.name]
+      //     }, Type = ${typeof room[field.name]}`,
+      //   );
+      //   if (!room || typeof room[field.name] !== field.type) {
+      //     console.log(`Rejected room due to invalid or missing ${field.name}`);
+      //     return false;
+      //   }
+      // }
 
       return true;
     };
 
     roomsSub.on('event', (event: any) => {
-      console.log('getRooms - Event received:', JSON.stringify(event, null, 2));
+      //console.log('getRooms - Event received:', JSON.stringify(event, null, 2));
 
       try {
         const content = JSON.parse(JSON.parse(event.content));
-        console.log('getRooms - Content:', content);
-        console.log('getRooms - Content.name:', content.name);
+        // console.log('getRooms - Content:', content);
+        // console.log('getRooms - Content.name:', content.name);
         // First, parse the content to get "name" and "about"
         const roomContent: IRoom = {
           id: event.id,
@@ -68,19 +68,19 @@ export const getRooms = (privateKey: string): Promise<IRoom[]> => {
           about: content.about,
         };
         // Log the fully populated roomContent before validation
-        console.log(
-          'Pre-validation roomContent:',
-          JSON.stringify(roomContent, null, 2),
-        );
+        // console.log(
+        //   'Pre-validation roomContent:',
+        //   JSON.stringify(roomContent, null, 2),
+        // );
 
         // Finally, check for validity
         if (isValidRoom(roomContent)) {
           fetchedRooms.push(roomContent);
         } else {
-          console.log(
-            'getRooms - Invalid room:',
-            JSON.stringify(roomContent, null, 2),
-          );
+          // console.log(
+          //   'getRooms - Invalid room:',
+          //   JSON.stringify(roomContent, null, 2),
+          // );
         }
       } catch (error) {
         console.log('getRooms - Error while processing event:', error);

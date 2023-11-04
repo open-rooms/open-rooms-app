@@ -44,7 +44,7 @@ export const proposalSlice = createSlice({
   name: 'proposalSlice',
   initialState,
   reducers: {
-    addProposal: (state, action: PayloadAction<any>) => {
+    addProposal: (state, action: PayloadAction<IProposal>) => {
       state.proposals.push(action.payload);
     },
     removeProposal: (state, action: PayloadAction<{id: string}>) => {
@@ -56,11 +56,11 @@ export const proposalSlice = createSlice({
       state,
       action: PayloadAction<{id: string; status: string}>,
     ) => {
-      const proposal = state.proposals.find(
+      const index = state.proposals.findIndex(
         item => item.id === action.payload.id,
       );
-      if (proposal) {
-        proposal.status = action.payload.status;
+      if (index !== -1) {
+        state.proposals[index].status = action.payload.status; // Assuming status is now part of the IProposal interface
       }
     },
   },

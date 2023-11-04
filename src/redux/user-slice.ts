@@ -70,7 +70,7 @@ export const selectPrivateKey = createSelector(
 
 export const selectPublicKey = createSelector(
   [selectUser],
-  user => user.pubkey,
+  user => user.userData.pubkey,
 );
 
 export const isConnected = createSelector(

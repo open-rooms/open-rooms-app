@@ -26,7 +26,7 @@ export const fetchRooms = createAsyncThunk(
       }
       console.log('Rooms-slice: About to call getRooms'); // Debug line
       const rooms = await getRooms(privateKey);
-      console.log('Rooms fetched in fetchRooms:', rooms); // Debug line
+      // console.log('Rooms fetched in fetchRooms:', rooms); // Debug line
       if (filterByAuthor) {
         const publicKey = generatePublic(privateKey);
         return rooms.filter(room => room.pubkey === publicKey);
@@ -46,22 +46,21 @@ export type RoomsSlice = {
 const initialState: RoomsSlice = {
   rooms: [],
 };
+console.log('Initial State:', initialState);
 
 export const selectRooms = createSelector(
-  (state: RootState) => state.roomsSlice ?? {},
-  roomsSlice => roomsSlice.rooms ?? [],
+  (state: RootState) => state.rooms.rooms, // This matches the actual state shape
+  rooms => rooms,
 );
 
 export const selectMyRooms = createSelector(
-  [selectRooms, selectPublicKey],
-  (rooms, publicKey) => {
-    console.log(
-      'My Rooms from Redux Store:',
-      JSON.stringify(rooms.filter((room: IRoom) => room.pubkey === publicKey)),
-    ); // Debug line
-    return rooms
-      ? rooms.filter((room: IRoom) => room.pubkey === publicKey)
-      : [];
+  [selectRooms, selectPrivateKey],
+  (rooms, privateKey) => {
+    if (!privateKey) {
+      return [];
+    }
+    const publicKey = generatePublic(privateKey);
+    return rooms.filter((room: IRoom) => room.pubkey === publicKey);
   },
 );
 
@@ -92,8 +91,12 @@ export const roomsSlice = createSlice({
         'Structure of action.payload:',
         JSON.stringify(action.payload, null, 2),
       );
+      console.log('Received action:', action);
+      console.log('State before update:', state);
       state.rooms = action.payload;
-      console.log('Reducer received rooms:', action.payload); // Debug line
+      console.log('State after update:', state.rooms);
+      //console.log('New state after setting rooms:', state); // Debug line
+      //console.log('Reducer received rooms:', action.payload); // Debug line
     });
 
     // You can add more cases for other asynchronous actions if needed
