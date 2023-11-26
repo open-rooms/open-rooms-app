@@ -7,14 +7,11 @@ import { formatStartDate } from '../../utils/time';
 import { IRoom } from '../../utils/types';
 import { roomsStyles as styles } from './roomsStyles';
 import { AppDispatch } from '../../redux/store';
-import { selectPrivateKey } from '../../redux/user-slice';
-import { generatePublic } from '../../nostr-tools/generateKeys';
 import CreateRoom from '../CreateRoom/CreateRoom';
 import ProfilePic from '../../components/ProfilePic';
 
 // Renders a single room item
 const RoomItem = ({ item, onPress }: { item: IRoom; onPress: () => void }) => {
-  console.log('Rooms - Rendering a single room item');  // Debug line
   const formattedStartDate = formatStartDate(item.created_at);
   return (
     <View key={item.id} style={styles.itemContainer}>
@@ -23,9 +20,7 @@ const RoomItem = ({ item, onPress }: { item: IRoom; onPress: () => void }) => {
           <ProfilePic style={styles.itemPicture} />
           <View style={styles.itemText}>
             <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemUsername}>
-              {` \u00B7 ${formattedStartDate}`}
-            </Text>
+            <Text style={styles.itemUsername}>{` \u00B7 ${formattedStartDate}`}</Text>
           </View>
         </View>
         <View style={styles.itemAbout}>
@@ -38,77 +33,39 @@ const RoomItem = ({ item, onPress }: { item: IRoom; onPress: () => void }) => {
 };
 
 const Rooms = () => {
-  console.log('Rooms - Component mounted'); 
-  const navigation = useNavigation<any>();
-  const dispatch: AppDispatch = useDispatch();
+  const navigation = useNavigation<any>(); // Specify the type if necessary
+  const dispatch = useDispatch<AppDispatch>();
   const allRooms = useSelector(selectRooms);
-  console.log('Rooms - All Rooms from Redux Store:', allRooms); 
   const myRooms = useSelector(selectMyRooms);
-  console.log('Rooms - My Rooms from Redux Store:', myRooms);  
-  const privKey = useSelector(selectPrivateKey);
-
-  useEffect(() => {
-    console.log('Rooms - Redux State has changed:', allRooms, myRooms); 
-  }, [allRooms, myRooms]);
-  
-
-  // Local state variables
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<'All' | 'My'>('All');
-
-  // Derived public key
-  const pubKey = generatePublic(privKey);
-
-  // Fetch rooms on component mount
   const [isLoading, setIsLoading] = useState(true);
-
-  const [shouldFetch, setShouldFetch] = useState(true);
+  const [selectedOption, setSelectedOption] = useState<'All' | 'My'>('All');
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
-    setShouldFetch(true);
-  }, [selectedOption]);
-  
-  useEffect(() => {
-    if (shouldFetch) {
-      dispatch(fetchRooms(selectedOption === 'My'))
-        .then(() => {
-          console.log('Rooms - Rooms fetched successfully');  // Debug line
-          setIsLoading(false);
-          setShouldFetch(false);  // Set the flag to false
-        })
-        .catch(err => {
-          console.error('Rooms - Error fetching rooms:', err);  // Debug line
-          setIsLoading(false);
-        });
-    }
-  }, [dispatch, selectedOption, shouldFetch]);
-  
-
+    setIsLoading(true);
+    dispatch(fetchRooms()) // Call without argument
+      .finally(() => setIsLoading(false));
+  }, [dispatch, selectedOption]);
 
   const roomsToDisplay = selectedOption === 'My' ? myRooms : allRooms;
 
-  // Function to toggle between 'All' and 'My' rooms
   const handleToggleOption = (option: 'All' | 'My') => {
     setSelectedOption(option);
   };
 
-  // Function to render a single room item
   const renderRoomItem = ({ item }: { item: IRoom }) => (
     <RoomItem
       item={item}
-      onPress={() => {
-        console.log('Rooms - Navigating to specific room');  // Debug line
-        navigation.navigate('Room', { room: item });
-      }}
+      onPress={() => navigation.navigate('Room', { room: item })} // Ensure this matches your navigation structure
     />
   );
 
+
   return (
     <View style={styles.container}>
-      {/* Toggle between 'All' and 'My' rooms */}
       <View style={styles.toggleContainer}>
-        {['All', 'My'].map(option => (
-          <TouchableOpacity key={option} onPress={() => handleToggleOption(option as 'All' | 'My')}>
+        {(['All', 'My'] as const).map(option => ( // Use 'as const' to infer literal types
+          <TouchableOpacity key={option} onPress={() => handleToggleOption(option)}>
             <Text style={selectedOption === option ? styles.toggleTextSelected : styles.toggleText}>
               {`${option} Rooms`}
             </Text>
@@ -116,22 +73,19 @@ const Rooms = () => {
         ))}
       </View>
 
-      {/* List of rooms */}
       {isLoading ? <Text>Loading...</Text> : (
-      <FlatList
-    data={roomsToDisplay}
-    renderItem={renderRoomItem}
-    keyExtractor={(item, index) => item.id?.toString() || index.toString()}
-    ListEmptyComponent={<Text>No Rooms Available</Text>}
-    />
+        <FlatList
+          data={roomsToDisplay}
+          renderItem={renderRoomItem}
+          keyExtractor={(item, index) => item.id?.toString() || index.toString()}
+          ListEmptyComponent={<Text>No Rooms Available</Text>}
+        />
       )}
-  
-      {/* Create Room Modal */}
+
       <Modal visible={isModalVisible} animationType="slide">
         <CreateRoom onClose={() => setIsModalVisible(false)} />
       </Modal>
 
-      {/* Create Room Button */}
       <View>
         <TouchableOpacity style={styles.primaryButton} onPress={() => setIsModalVisible(true)}>
           <Text style={styles.primaryButtonText}>Create Room</Text>

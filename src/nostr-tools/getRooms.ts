@@ -6,17 +6,18 @@ import {generatePublic} from './generateKeys';
 
 const pool = new SimplePool();
 
-export const getRooms = (privateKey: string): Promise<IRoom[]> => {
+export const getRooms = (privateKey: string, fetchAll: boolean = false): Promise<IRoom[]> => {
   return new Promise(resolve => {
     console.log('getRooms - Starting the process to fetch rooms.');
 
     let fetchedRooms: IRoom[] = [];
     const publicKey = generatePublic(privateKey);
+    let filter = fetchAll ? {} : { authors: [publicKey] };
     console.log(`getRooms - Generated public key: ${publicKey}`);
 
     let roomsSub = pool.sub(RELAYS_URL, [
       {
-        authors: [publicKey],
+        ...filter,
         ...DEFAULT_TAG,
         ...ROOM_TAG,
       },
@@ -35,15 +36,15 @@ export const getRooms = (privateKey: string): Promise<IRoom[]> => {
       ];
 
       // for (const field of requiredFields) {
-      //   console.log(
-      //     `Checking field ${field.name}: Value = ${
-      //       room[field.name]
-      //     }, Type = ${typeof room[field.name]}`,
-      //   );
-      //   if (!room || typeof room[field.name] !== field.type) {
-      //     console.log(`Rejected room due to invalid or missing ${field.name}`);
-      //     return false;
-      //   }
+        //   console.log(
+          //     `Checking field ${field.name}: Value = ${
+            //       room[field.name]
+          //     }, Type = ${typeof room[field.name]}`,
+        //   );
+        //   if (!room || typeof room[field.name] !== field.type) {
+          //     console.log(`Rejected room due to invalid or missing ${field.name}`);
+          //     return false;
+        //   }
       // }
 
       return true;
