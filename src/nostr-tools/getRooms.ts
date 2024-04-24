@@ -6,18 +6,19 @@ import {generatePublic} from './generateKeys';
 
 const pool = new SimplePool();
 
-export const getRooms = (privateKey: string, fetchAll: boolean = false): Promise<IRoom[]> => {
+export const getRooms = (
+  privateKey: string,
+  fetchAll: boolean = false,
+): Promise<IRoom[]> => {
   return new Promise(resolve => {
     console.log('getRooms - Starting the process to fetch rooms.');
 
     let fetchedRooms: IRoom[] = [];
     const publicKey = generatePublic(privateKey);
-    let filter = fetchAll ? {} : { authors: [publicKey] };
-    console.log(`getRooms - Generated public key: ${publicKey}`);
 
     let roomsSub = pool.sub(RELAYS_URL, [
       {
-        ...filter,
+        authors: [publicKey],
         ...DEFAULT_TAG,
         ...ROOM_TAG,
       },
@@ -36,22 +37,22 @@ export const getRooms = (privateKey: string, fetchAll: boolean = false): Promise
       ];
 
       // for (const field of requiredFields) {
-        //   console.log(
-          //     `Checking field ${field.name}: Value = ${
-            //       room[field.name]
-          //     }, Type = ${typeof room[field.name]}`,
-        //   );
-        //   if (!room || typeof room[field.name] !== field.type) {
-          //     console.log(`Rejected room due to invalid or missing ${field.name}`);
-          //     return false;
-        //   }
+      //   console.log(
+      //     `Checking field ${field.name}: Value = ${
+      //       room[field.name]
+      //     }, Type = ${typeof room[field.name]}`,
+      //   );
+      //   if (!room || typeof room[field.name] !== field.type) {
+      //     console.log(`Rejected room due to invalid or missing ${field.name}`);
+      //     return false;
+      //   }
       // }
 
       return true;
     };
 
     roomsSub.on('event', (event: any) => {
-      //console.log('getRooms - Event received:', JSON.stringify(event, null, 2));
+      console.log('getRooms - Event received:', JSON.stringify(event, null, 2));
 
       try {
         const content = JSON.parse(JSON.parse(event.content));
@@ -67,6 +68,8 @@ export const getRooms = (privateKey: string, fetchAll: boolean = false): Promise
           sig: event.sig,
           name: content.name,
           about: content.about,
+          rooms: [],
+          publicKeys: []
         };
         // Log the fully populated roomContent before validation
         // console.log(

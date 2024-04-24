@@ -1,5 +1,5 @@
 // Define your default tags
-export const DEFAULT_TAG: string[] = ['g', 'open-rooms'];
+export const DEFAULT_TAG: string[] = ['g', 'open_rooms'];
 export const USER_TAG: string[] = ['t', 'user'];
 export const ROOM_TAG: string[] = ['t', 'room'];
 export const PROPOSAL_TAG: string[] = ['t', 'proposal'];
